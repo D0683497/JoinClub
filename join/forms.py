@@ -36,12 +36,12 @@ class JoinForm(forms.Form):
                             required=True, 
                             max_length=15, 
                             help_text="請輸入可以聯絡到您的手機", 
-                            widget=forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'phoneHelp', 'placeholder': ''}), 
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'phoneHelp', 'placeholder': '請輸入電話號碼'}), 
                             error_messages={'required': '必須填寫電話', 'max_length': '你的電話太長囉'})
     email = forms.EmailField(label='E-mail', 
                             required=True, 
                             help_text="請輸入您常用的 E-mail", 
-                            widget=forms.EmailInput(attrs={'class': 'form-control', 'aria-describedby': 'emailHelp', 'placeholder': ''}), 
+                            widget=forms.EmailInput(attrs={'class': 'form-control', 'aria-describedby': 'emailHelp', 'placeholder': '請輸入點子郵件'}), 
                             error_messages={'required': '必須填寫 E-mail'})
     
     #驗證 phone
