@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import JoinForm
@@ -17,3 +17,13 @@ def join(request):
     else:
         form = JoinForm()
     return render(request, 'join.html', {'form': form})
+
+def review(request):
+    if request.method == 'POST':
+        member = get_object_or_404(Member, nid=request.POST.get('nid'))
+        print(member)
+        return render(request, 'review.html', {'member': member})
+    return render(request, 'review.html', {})
+
+def edit(request):
+    return render(request, 'edit.html', {})

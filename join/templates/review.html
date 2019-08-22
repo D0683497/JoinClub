@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}黑課社 - 審核{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>審核</h3>
+    <hr>
+    {% if member %}
+        <div class="card">
+            <h5 class="card-header">社員資料</h5>
+            <div class="card-body">
+                <p class="card-text">姓名：{{ member.name }}</p>
+                <p class="card-text">學號：{{ member.nid }}</p>
+                <p class="card-text">系級：{{ member.dept }}</p>
+                <p class="card-text">年級：{{ member.level }}</p>
+                <p class="card-text">電話：{{ member.phone }}</p>
+                <p class="card-text">E-mail：{{ member.email }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="" class="btn btn-success" role="button">審核通過</a>
+                <a href="{% url 'edit' %}" class="btn btn-primary" role="button">修改資料</a>
+            </div>
+        </div>
+        
+    {% else %}
+        <form action="{% url 'review' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <label class="sr-only" for="nid">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">學號</div>
+                        </div>
+                        <input type="text" class="form-control" id="nid" placeholder="請輸入欲查詢學號" name="nid">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-secondary">查詢</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+    
+    
+</div>
+{% endblock %}
