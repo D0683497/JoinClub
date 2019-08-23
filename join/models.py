@@ -1,18 +1,18 @@
 from django.db import models
 
 LEVEL_CHOICES = [
-    ('B1', 'freshman'), #大一
-    ('B2', 'sophomore'), #大二
-    ('B3', 'junior'), #大三
-    ('B4', 'senior'), #大四
-    ('M1', 'first year of graduate school'), #碩一
-    ('M2', 'second year of graduate school'), #碩二
+    ('B1', '大一'), 
+    ('B2', '大二'), 
+    ('B3', '大三'), 
+    ('B4', '大四'), 
+    ('M1', '碩一'), 
+    ('M2', '碩二'), 
 ]
 
 STATUS_CHOICES = [
-    ('UR', 'under review'), #審核中
-    ('M', 'member'), #社員
-    ('NP', 'non-payment'), #未付款
+    ('UR', '審核中'), 
+    ('M', '已入社'),
+    ('NP', '未付款'),
 ]
 
 class Member(models.Model):
