@@ -6,7 +6,7 @@
 <div class="container">
     <h3>入社表單</h3>
     <hr>
-    <form action="{% url 'join' %}" method="POST">
+    <form action="{% url 'join:join' %}" method="POST">
         {% csrf_token %}
         <div class="form-group">
             {{ form.name.label_tag }}
