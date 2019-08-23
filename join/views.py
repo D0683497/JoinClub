@@ -26,6 +26,13 @@ def search(request):
 
 def review(request, id):
     member = get_object_or_404(Member, id=id)
+    if request.method == 'POST':
+        if member.status == 'UR':
+            member.status = 'NP'
+            member.save()
+        elif member.status == 'NP':
+            member.status = 'M'
+            member.save()
     return render(request, 'review.html', {'member': member})
 
 def edit(request, id):
