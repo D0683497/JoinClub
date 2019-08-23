@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}黑課社 - 查詢{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>查詢</h3>
+    <hr>
+    <form action="{% url 'join:search' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <label class="sr-only" for="nid">Username</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">學號</div>
+                    </div>
+                    <input type="text" class="form-control" id="nid" placeholder="請輸入欲查詢學號" name="nid">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">查詢</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form> 
+</div>
+{% endblock %}
