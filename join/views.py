@@ -13,7 +13,7 @@ def join(request):
         if form.is_valid():
             Member(name=form['name'].value(), nid=form['nid'].value(), dept=form['dept'].value(), level=form['level'].value(), phone=form['phone'].value(), email=form['email'].value()).save()
             form = JoinForm()
-        return HttpResponseRedirect(reverse('join:index'))
+            return HttpResponseRedirect(reverse('join:index'))
     else:
         form = JoinForm()
     return render(request, 'join.html', {'form': form})

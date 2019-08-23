@@ -11,29 +11,77 @@
         <div class="form-group">
             {{ form.name.label_tag }}
             {{ form.name }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-group">
             {{ form.nid.label_tag }}
             {{ form.nid }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.nid.errors %}
+                {% for error in form.nid.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-group">
             {{ form.dept.label_tag }}
             {{ form.dept }}
             <small id="deptHelp" class="form-text text-muted">{{ form.dept.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.dept.errors %}
+                {% for error in form.dept.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-group">
             {{ form.level.label_tag }}
             {{ form.level }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.level.errors %}
+                {% for error in form.level.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-group">
             {{ form.phone.label_tag }}
             {{ form.phone }}
             <small id="phoneHelp" class="form-text text-muted">{{ form.phone.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.phone.errors %}
+                {% for error in form.phone.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-group">
             {{ form.email.label_tag }}
             {{ form.email }}
             <small id="emailHelp" class="form-text text-muted">{{ form.email.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="custom-control custom-checkbox my-3">
             <input type="checkbox" class="custom-control-input" id="privacy" name="privacy" required>
@@ -45,4 +93,27 @@
         </button>
     </form>
 </div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    {% if form.name.errors %}
+        document.getElementById("id_name").classList.add("is-invalid");
+    {% endif %}
+    {% if form.nid.errors %}
+        document.getElementById("id_nid").classList.add("is-invalid");
+    {% endif %}
+    {% if form.dept.errors %}
+        document.getElementById("id_dept").classList.add("is-invalid");
+    {% endif %}
+    {% if form.level.errors %}
+        document.getElementById("id_level").classList.add("is-invalid");
+    {% endif %}
+    {% if form.phone.errors %}
+        document.getElementById("id_phone").classList.add("is-invalid");
+    {% endif %}
+    {% if form.email.errors %}
+        document.getElementById("id_email").classList.add("is-invalid");
+    {% endif %}
+</script>
 {% endblock %}
