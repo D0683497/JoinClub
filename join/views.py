@@ -40,7 +40,6 @@ def edit(request, id):
     if request.method == 'POST':
         form = JoinForm(request.POST)
         if form.is_valid():
-            # Member(name=form['name'].value(), nid=form['nid'].value(), dept=form['dept'].value(), level=form['level'].value(), phone=form['phone'].value(), email=form['email'].value()).save()
             member.name = form['name'].value()
             member.nid = form['nid'].value()
             member.dept = form['dept'].value()
