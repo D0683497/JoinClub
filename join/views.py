@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from .forms import JoinForm
 from .models import Member
 
@@ -18,12 +19,14 @@ def join(request):
         form = JoinForm()
     return render(request, 'join.html', {'form': form})
 
+@login_required
 def search(request):
     if request.method == 'POST':
         member = get_object_or_404(Member, nid=request.POST.get('nid'))
         return HttpResponseRedirect(reverse('join:review', args=[member.id]))
     return render(request, 'search.html', {})
 
+@login_required
 def review(request, id):
     member = get_object_or_404(Member, id=id)
     if request.method == 'POST':
@@ -35,6 +38,7 @@ def review(request, id):
             member.save()
     return render(request, 'review.html', {'member': member})
 
+@login_required
 def edit(request, id):
     member = get_object_or_404(Member, id=id)
     if request.method == 'POST':
