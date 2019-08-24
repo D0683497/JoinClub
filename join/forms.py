@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from .models import Member
 import re
 
 LEVEL_CHOICES = (
@@ -42,9 +44,16 @@ class JoinForm(forms.Form):
                             required=True, 
                             help_text="請輸入您常用的 E-mail", 
                             widget=forms.EmailInput(attrs={'class': 'form-control', 'aria-describedby': 'emailHelp', 'placeholder': '請輸入點子郵件'}), 
-                            error_messages={'required': '必須填寫 E-mail'})
+                            error_messages={'required': '必須填寫 E-mail', 'invalid': '您的 E-mail 看起來怪怪的喔'})
     
     #驗證 phone
     def clean_phone(self):
         data = self.cleaned_data['phone']
         return data
+    
+    #驗證 email 是否重複
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if Member.objects.filter(email=email).exists():
+            raise ValidationError("Email 已經被使用過囉")
+        return email
