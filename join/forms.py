@@ -46,14 +46,23 @@ class JoinForm(forms.Form):
                             widget=forms.EmailInput(attrs={'class': 'form-control', 'aria-describedby': 'emailHelp', 'placeholder': '請輸入點子郵件'}), 
                             error_messages={'required': '必須填寫 E-mail', 'invalid': '您的 E-mail 看起來怪怪的喔'})
     
-    #驗證 phone
-    def clean_phone(self):
-        data = self.cleaned_data['phone']
-        return data
+    #驗證 nid 是否重複
+    def clean_nid(self):
+        nid = self.cleaned_data['nid']
+        if Member.objects.filter(nid=nid).exists():
+            raise ValidationError("您的學號已經被使用過囉")
+        return nid
     
+    #驗證 phone 是否重複
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        if Member.objects.filter(phone=phone).exists():
+            raise ValidationError("您的手機號碼已經被使用過囉")
+        return phone
+
     #驗證 email 是否重複
     def clean_email(self):
         email = self.cleaned_data['email']
         if Member.objects.filter(email=email).exists():
-            raise ValidationError("Email 已經被使用過囉")
+            raise ValidationError("您的 Email 已經被使用過囉")
         return email
