@@ -10,4 +10,6 @@ urlpatterns = [
     path('search', views.search, name="search"),
     path('review/<int:id>', views.review, name="review"),
     path('edit/<int:id>', views.edit, name="edit"),
+    path('view', views.view, name="view"),
+    path('chart', views.chart, name="chart"),
 ]

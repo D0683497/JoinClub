@@ -56,3 +56,10 @@ def edit(request, id):
     else:
         form = JoinForm()
     return render(request, 'edit.html', {'form': form, 'member': member})
+
+@login_required
+def view(request):
+    return render(request, 'view.html', {})
+
+def chart(request):
+    return render(request, 'chart.html', {})
