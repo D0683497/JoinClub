@@ -35,11 +35,11 @@ class JoinForm(forms.Form):
                             widget=forms.Select(attrs={'class': 'form-control', 'placeholder': ''}), 
                             error_messages={'required': '必須選擇年級', 'invalid_choice': '請勿亂來'})
     phone = forms.CharField(label='電話', 
-                            required=True, 
+                            required=False, 
                             max_length=15, 
                             help_text="請輸入可以聯絡到您的手機", 
                             widget=forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'phoneHelp', 'placeholder': '請輸入電話號碼'}), 
-                            error_messages={'required': '必須填寫電話', 'max_length': '你的電話太長囉'})
+                            error_messages={'max_length': '你的電話太長囉'})
     email = forms.EmailField(label='E-mail', 
                             required=True, 
                             help_text="請輸入您常用的 E-mail", 
