@@ -9,13 +9,28 @@
     <form action="{% url 'join:search' %}" method="POST">
         {% csrf_token %}
         <div class="form-row align-items-center">
-            <div class="col-auto">
-                <label class="sr-only" for="nid">Username</label>
+            <div class="col-auto mr-4">
+                <label class="sr-only" for="nid">NID</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">學號</div>
                     </div>
                     <input type="text" class="form-control" id="nid" placeholder="請輸入欲查詢學號" name="nid">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-search"></i>
+                            查詢
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto my-4">
+                <label class="sr-only" for="name">Name</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">姓名</div>
+                    </div>
+                    <input type="text" class="form-control" id="name" placeholder="請輸入欲查詢姓名" name="name">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-outline-secondary">
                             <i class="fas fa-search"></i>

@@ -22,8 +22,14 @@ def join(request):
 @login_required
 def search(request):
     if request.method == 'POST':
-        member = get_object_or_404(Member, nid=request.POST.get('nid'))
-        return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+        nid = request.POST.get('nid')
+        name = request.POST.get('name')
+        if nid:
+            member = get_object_or_404(Member, nid=nid)
+            return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+        elif name:
+            member = get_object_or_404(Member, name=name)
+            return HttpResponseRedirect(reverse('join:review', args=[member.id]))
     return render(request, 'search.html', {})
 
 @login_required
