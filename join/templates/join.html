@@ -92,11 +92,37 @@
             提交
         </button>
     </form>
+    
+    <!-- 入社表單注意事項 -->
+    <div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="joinModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="joinModalTitle">入社表單填寫注意事項</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ol>
+                    　<li>除了電話號碼外其他欄位都是必填</li>
+                    　<li>請填寫完正確資料，送出表單後，至櫃台將您的學生證交給事務，確認完您的個人資料後，繳交社費 200 元後，即可入社</li>
+                    　<li>若您不小心填寫錯誤資訊，請至櫃檯找事務更正，您無法自己更改資訊</li>
+                    </ol>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">我以閱讀完注意事項</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block js %}
 <script type="text/javascript">
+    $('#joinModal').modal();
+
     {% if form.name.errors %}
         document.getElementById("id_name").classList.add("is-invalid");
     {% endif %}
