@@ -56,9 +56,12 @@ class JoinForm(forms.Form):
     #驗證 phone 是否重複
     def clean_phone(self):
         phone = self.cleaned_data['phone']
-        if Member.objects.filter(phone=phone).exists():
+        if phone == '':
+            return None
+        elif Member.objects.filter(phone=phone).exists():
             raise ValidationError("您的手機號碼已經被使用過囉")
-        return phone
+        else:
+            return phone
 
     #驗證 email 是否重複
     def clean_email(self):
