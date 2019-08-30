@@ -65,7 +65,10 @@ def edit(request, id):
 
 @login_required
 def view(request):
-    return render(request, 'view.html', {})
+    M_members = Member.objects.filter(status='M')
+    NP_members = Member.objects.filter(status='NP')
+    UR_members = Member.objects.filter(status='UR')
+    return render(request, 'view.html', {'M_members': M_members, 'NP_members': NP_members, 'UR_members': UR_members})
 
 def chart(request):
     return render(request, 'chart.html', {})
