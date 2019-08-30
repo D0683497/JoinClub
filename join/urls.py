@@ -12,4 +12,5 @@ urlpatterns = [
     path('edit/<int:id>', views.edit, name="edit"),
     path('view', views.view, name="view"),
     path('chart', views.chart, name="chart"),
+    path('export', views.export, name="export"),
 ]

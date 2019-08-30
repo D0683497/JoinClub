@@ -4,7 +4,15 @@
 
 {% block content %}
 <div class="container">
-    <h3>查詢</h3>
+    <div class="row d-flex justify-content-between">
+        <div class="col-auto">
+            <h3>查詢</h3>
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-info" href="{% url 'join:export' %}" role="button">匯出 CSV</a>
+        </div>
+    </div>
+    
     <hr>
     <form action="{% url 'join:search' %}" method="POST">
         {% csrf_token %}

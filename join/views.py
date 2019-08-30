@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import JoinForm
 from .models import Member
+import csv, codecs
+from django.utils.http import urlquote
 
 def index(request):
     return render(request, 'index.html', {})
@@ -78,3 +80,28 @@ def view(request):
 
 def chart(request):
     return render(request, 'chart.html', {})
+
+def export(request):
+    members = Member.objects.all()
+    for i in members:
+        print(i.name)
+        print(i.nid)
+        print(i.get_status_display())
+    return render(request, 'chart.html', {})
+
+@login_required
+def export(request):
+    members = Member.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response.write(codecs.BOM_UTF8)
+    response['Content-Disposition'] = 'attachment; filename="%s"' %(urlquote("社員資料.csv"))
+
+    writer = csv.writer(response)
+    writer.writerow(['姓名', '學號', '系級', '年級', '手機號碼', '電子郵件', '入社狀態'])
+    for member in members:
+        writer.writerow([member.name, member.nid, member.dept, member.level, member.phone, member.email, member.get_status_display()])
+
+    return response
+
+
+
