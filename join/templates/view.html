@@ -5,20 +5,20 @@
 {% block content %}
 <div class="container">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item active">
-            <a class="nav-link" id="M-tab" data-toggle="tab" href="#M" role="tab" aria-controls="M" aria-selected="true">已入社</a>
+        <li class="nav-item">
+            <a class="nav-link" id="M-tab" data-toggle="tab" href="#M" role="tab" aria-controls="M" aria-selected="false">已入社</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="NP-tab" data-toggle="tab" href="#NP" role="tab" aria-controls="NP" aria-selected="false">未付款</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" id="UR-tab" data-toggle="tab" href="#UR" role="tab" aria-controls="UR" aria-selected="false">審核中</a>
+        <li class="nav-item active">
+            <a class="nav-link" id="UR-tab" data-toggle="tab" href="#UR" role="tab" aria-controls="UR" aria-selected="true">審核中</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="M" role="tabpanel" aria-labelledby="M-tab">
+        <div class="tab-pane fade" id="M" role="tabpanel" aria-labelledby="M-tab">
             {% for member in M_members %}
-                <div class="card my-2">
+                <div class="card my-2 border-success">
                     <h5 class="card-header">
                         <div class="row justify-content-between">
                             <div class="col-auto">
@@ -53,7 +53,7 @@
         </div>
         <div class="tab-pane fade" id="NP" role="tabpanel" aria-labelledby="NP-tab">
             {% for member in NP_members %}
-                <div class="card my-2">
+                <div class="card my-2 border-danger">
                     <h5 class="card-header">
                         <div class="row justify-content-between">
                             <div class="col-auto">
@@ -86,9 +86,9 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="tab-pane fade" id="UR" role="tabpanel" aria-labelledby="UR-tab">
+        <div class="tab-pane fade show active" id="UR" role="tabpanel" aria-labelledby="UR-tab">
             {% for member in UR_members %}
-                <div class="card my-2">
+                <div class="card my-2 border-info">
                     <h5 class="card-header">
                         <div class="row justify-content-between">
                             <div class="col-auto">
@@ -123,4 +123,10 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    $('#UR-tab').tab('show');
+</script>
 {% endblock %}
