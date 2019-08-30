@@ -25,11 +25,17 @@ def search(request):
         nid = request.POST.get('nid')
         name = request.POST.get('name')
         if nid:
-            member = get_object_or_404(Member, nid=nid)
-            return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+            try:
+                member = Member.objects.get(nid=nid)
+                return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+            except Member.DoesNotExist:
+                return render(request, 'search.html', {})
         elif name:
-            member = get_object_or_404(Member, name=name)
-            return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+            try:
+                member = Member.objects.get(name=name)
+                return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+            except Member.DoesNotExist:
+                return render(request, 'search.html', {})
     return render(request, 'search.html', {})
 
 @login_required
