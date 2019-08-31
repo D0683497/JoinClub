@@ -66,7 +66,7 @@
         </div>
         <div class="form-group">
             {{ form.phone.label_tag }}
-            <input type="text" name="phone" class="form-control" value="{{ member.phone }}" aria-describedby="phoneHelp" placeholder="請輸入電話號碼" maxlength="15" required id="id_phone">
+            <input type="text" name="phone" class="form-control" value="{{ member.phone }}" aria-describedby="phoneHelp" placeholder="請輸入電話號碼" maxlength="15" id="id_phone">
             <small id="phoneHelp" class="form-text text-muted">{{ form.phone.help_text }}</small>
             {% comment %} 錯誤訊息 {% endcomment %}
             {% if form.phone.errors %}
