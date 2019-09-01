@@ -113,3 +113,6 @@ def export_NP(request):
         writer.writerow([member.name, member.nid, member.dept, member.level, member.phone, member.email, member.get_status_display()])
     return response
 
+def commingsoon(request):
+    return render(request, 'commingsoon.html', {})
+
