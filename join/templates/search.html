@@ -8,8 +8,16 @@
         <div class="col-auto">
             <h3>查詢</h3>
         </div>
-        <div class="col-auto">
-            <a class="btn btn-info" href="{% url 'join:export' %}" role="button">匯出 CSV</a>
+        <div class="btn-group col-auto">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                匯出 CSV
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'join:export_all' %}">全部</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'join:export_M' %}">已繳費</a>
+                <a class="dropdown-item" href="{% url 'join:export_NP' %}">未繳費</a>
+            </div>
         </div>
     </div>
     

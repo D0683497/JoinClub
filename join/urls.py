@@ -12,5 +12,7 @@ urlpatterns = [
     path('edit/<int:id>', views.edit, name="edit"),
     path('view', views.view, name="view"),
     path('chart', views.chart, name="chart"),
-    path('export', views.export, name="export"),
+    path('export_all', views.export_all, name="export_all"),
+    path('export_NP', views.export_NP, name="export_NP"),
+    path('export_M', views.export_M, name="export_M"),
 ]
