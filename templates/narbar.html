@@ -17,11 +17,15 @@
                 </li>
             {% endif %}
             <li class="nav-item">
+                <a class="nav-link" href="https://bot.k139.me" target="_blank">Bot</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'join:chart' %}">統計圖表</a>
             </li>
         </ul>
         {% if user.is_authenticated %}
-            <span class="text-white mr-2">Hi {{ user.username }}!</span>
+            <span class="text-white my-2 mr-2 my-sm-0">Hi {{ user.username }}!</span>
+            <a class="btn btn-outline-primary my-2 mr-2 my-sm-0" href="{% url 'admin:index' %}">Admin</a>
             <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="{% url 'logout' %}">登出</a>
         {% else %}
             <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="{% url 'login' %}">登入</a>
