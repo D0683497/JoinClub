@@ -127,3 +127,4 @@ CSRF_FAILURE_VIEW = views.csrf_failure
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
+STATIC_ROOT = 'static'
