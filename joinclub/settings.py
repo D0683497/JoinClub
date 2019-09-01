@@ -25,7 +25,7 @@ SECRET_KEY = 'ae7!w)=)nzb4hvd#s7u1&u#=2w71rm-zt3%=zy2^wa8*zrpu11'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -126,5 +126,5 @@ CSRF_FAILURE_VIEW = views.csrf_failure
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
-STATIC_ROOT = 'static'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') # python manage.py collectstatic
