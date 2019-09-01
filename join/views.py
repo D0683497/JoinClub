@@ -14,8 +14,7 @@ def join(request):
     if request.method == 'POST':
         form = JoinForm(request.POST)
         if form.is_valid():
-            Member(name=form['name'].value(), nid=form['nid'].value(), dept=form['dept'].value(), level=form['level'].value(), phone=form['phone'].value(), email=form['email'].value()).save()
-            form = JoinForm()
+            form.save()
             return HttpResponseRedirect(reverse('join:index'))
     else:
         form = JoinForm()
@@ -56,17 +55,12 @@ def review(request, id):
 def edit(request, id):
     member = get_object_or_404(Member, id=id)
     if request.method == 'POST':
-        form = JoinForm(request.POST)
+        form = JoinForm(request.POST, instance=member)
         if form.is_valid():
-            member.name = form['name'].value()
-            member.nid = form['nid'].value()
-            member.dept = form['dept'].value()
-            member.level = form['level'].value()
-            member.phone = form['phone'].value()
-            member.email = form['email'].value()
-            member.save()
-            form = JoinForm()
-        return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+            form.save()
+            return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+        else:
+            return render(request, 'edit.html', {'form': form, 'member': member})
     else:
         form = JoinForm()
     return render(request, 'edit.html', {'form': form, 'member': member})
@@ -79,14 +73,6 @@ def view(request):
     return render(request, 'view.html', {'M_members': M_members, 'NP_members': NP_members, 'UR_members': UR_members})
 
 def chart(request):
-    return render(request, 'chart.html', {})
-
-def export(request):
-    members = Member.objects.all()
-    for i in members:
-        print(i.name)
-        print(i.nid)
-        print(i.get_status_display())
     return render(request, 'chart.html', {})
 
 @login_required
