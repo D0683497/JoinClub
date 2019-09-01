@@ -20,7 +20,7 @@ class Member(models.Model):
     nid = models.CharField(max_length=15, unique=True)
     dept = models.CharField(max_length=20)
     level = models.CharField(max_length=2, choices=LEVEL_CHOICES)
-    phone = models.CharField(max_length=15, null=True, blank=True) # 不能用 unique=True，因為空字串也會被判斷成一樣
+    phone = models.CharField(max_length=15, null=True, blank=True, unique=True) # 不能用 unique=True，因為空字串也會被判斷成一樣
     email = models.EmailField(unique=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default="UR")
 
