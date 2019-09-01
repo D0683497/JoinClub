@@ -5,39 +5,29 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-sm-4 my-2">
-            <div class="card text-center border-warning">
+        <div class="col-sm-6 my-2">
+            <div class="card text-center border-info">
                 <div class="card-header">
                     <h4 class="my-0">填表人數</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title">200</h1>
+                    <h1 class="card-title">{{ All_count }}</h1>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 my-2">
-            <div class="card text-center border-info">
-                <div class="card-header">
-                    <h4 class="my-0">已審核</h4>
-                </div>
-                <div class="card-body">
-                    <h1 class="card-title">180</h1>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 my-2">
+        <div class="col-sm-6 my-2">
             <div class="card text-center border-success">
                 <div class="card-header">
                     <h4 class="my-0">已入社</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title">150</h1>
+                    <h1 class="card-title">{{ M_count }}</h1>
                 </div>
             </div>
         </div>
     </div>
     <hr>
-    <div id="chart1"></div>
+    <div id="chart"></div>
 </div>
 {% endblock %}
 
@@ -47,16 +37,16 @@
 
 <script type="text/javascript">
     var data = [{
-        y: [200, 180, 150],
-        x: ['填表人數', '已審核', '已入社'],
+        y: [{{ All_count }}, {{ M_count }}],
+        x: ['填表人數', '已入社'],
         marker:{
-            color: ['rgba(255,187,51,1)', 'rgba(51,181,229,1)', 'rgba(0,200,81,1)']
+            color: ['rgba(51,181,229,1)', 'rgba(0,200,81,1)']
         },
         type: 'bar'
     }];
     var layout = {
         title: '入社情況',
     };
-    Plotly.newPlot('chart1', data, layout, {responsive: true});
+    Plotly.newPlot('chart', data, layout, {responsive: true});
 </script>
 {% endblock %}

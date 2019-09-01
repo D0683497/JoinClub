@@ -73,7 +73,9 @@ def view(request):
     return render(request, 'view.html', {'M_members': M_members, 'NP_members': NP_members, 'UR_members': UR_members})
 
 def chart(request):
-    return render(request, 'chart.html', {})
+    All_count = Member.objects.all().count()
+    M_count = Member.objects.filter(status='M').count()
+    return render(request, 'chart.html', {'All_count': All_count, 'M_count': M_count})
 
 @login_required
 def export(request):
