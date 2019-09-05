@@ -54,6 +54,24 @@
             margin: auto;
             width: 40%;
         }
+
+        /* Style the <button> element */
+        .btn {
+            border:0;
+            background-color:#4CAF50;
+            color:#fff;
+            border-radius:12px;
+            cursor:pointer;
+            font-size: 16px;
+            width:150px;
+            height:50px;
+        }
+
+        .btn:hover {
+            color:#4CAF50;
+            background-color:#fff;
+            border:2px #4CAF50 solid;
+        }
         </style>
 
         <title>黑客社 - Comming Soon</title>
@@ -66,7 +84,7 @@
                 <p>新生茶會</p>
                 <p>2019/09/17 19:00~21:00</p>
                 <p>科航 8 樓</p>
-                <hr>
+                <button type="button" class="btn" onclick="location.href='{% url 'join:attend' %}'">茶會出席調查</button>
                 <p id="demo" style="font-size:30px"></p>
             </div>
             <div class="bottomleft">

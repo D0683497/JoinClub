@@ -16,4 +16,5 @@ urlpatterns = [
     path('export_NP', views.export_NP, name="export_NP"),
     path('export_M', views.export_M, name="export_M"),
     path('commingsoon', views.commingsoon, name="commingsoon"),
+    path('attend', views.attend, name="attend"),
 ]

@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import JoinForm
-from .models import Member
+from .forms import JoinForm, AttendForm
+from .models import Member, Attend
 import csv, codecs
 from django.utils.http import urlquote
 
@@ -116,3 +116,12 @@ def export_NP(request):
 def commingsoon(request):
     return render(request, 'commingsoon.html', {})
 
+def attend(request):
+    if request.method == 'POST':
+        form = AttendForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('join:commingsoon'))
+    else:
+        form = AttendForm()
+    return render(request, 'attend.html', {'form': form})
