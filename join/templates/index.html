@@ -66,3 +66,37 @@
     </div>
 </div>
 {% endblock %}
+
+{% block message %}
+{% if messages %}
+    {% for message in messages %}
+        {% ifequal message.tags "joinform success" %}
+            <!-- 入社表單提交成功訊息 -->
+            <div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="joinModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="joinModalTitle">{{ message }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ol>
+                            　<li>請準備社費 200 元及學生證，至櫃台交給事務確認</li>
+                            　<li>若您不小心填寫錯誤資訊，請至櫃檯找事務更正，您無法自己更改資訊</li>
+                            </ol>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">確認</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $('#joinModal').modal();
+            </script>
+        {% endifequal %}
+    {% endfor %}
+{% endif %}
+{% endblock %}

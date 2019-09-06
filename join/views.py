@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import JoinForm, AttendForm
 from .models import Member, Attend
 
@@ -13,6 +14,7 @@ def join(request):
         form = JoinForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS, '提交成功', extra_tags='joinform')
             return HttpResponseRedirect(reverse('join:index'))
     else:
         form = JoinForm()
@@ -78,6 +80,7 @@ def attend(request):
         form = AttendForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS, '提交成功', extra_tags='attendform')
             return HttpResponseRedirect(reverse('join:commingsoon'))
     else:
         form = AttendForm()

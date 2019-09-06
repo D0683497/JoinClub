@@ -129,3 +129,5 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static') # python manage.py collectstatic
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
