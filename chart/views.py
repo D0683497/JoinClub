@@ -10,9 +10,7 @@ from django.http import JsonResponse
 
 
 def joinclub(request):
-    All_count = Member.objects.all().count()
-    M_count = Member.objects.filter(status='M').count()
-    return render(request, 'joinclub.html', {'All_count': All_count, 'M_count': M_count})
+    return render(request, 'joinclub.html', {})
 
 class  JoinclubData(View):
     def  get(self, request):
