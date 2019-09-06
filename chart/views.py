@@ -5,10 +5,21 @@ from django.utils.http import urlquote
 import csv, codecs
 from join.models import Member
 
-def chart(request):
+from django.views.generic import View
+from django.http import JsonResponse
+
+
+def joinclub(request):
     All_count = Member.objects.all().count()
     M_count = Member.objects.filter(status='M').count()
-    return render(request, 'chart.html', {'All_count': All_count, 'M_count': M_count})
+    return render(request, 'joinclub.html', {'All_count': All_count, 'M_count': M_count})
+
+class  JoinclubData(View):
+    def  get(self, request):
+        All_count = Member.objects.all().count()
+        M_count = Member.objects.filter(status='M').count()
+        data =  {'All_count': All_count, 'M_count': M_count}
+        return JsonResponse(data)
 
 @login_required
 def export_all(request):
