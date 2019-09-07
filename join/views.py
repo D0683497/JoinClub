@@ -70,7 +70,8 @@ def view(request):
     M_members = Member.objects.filter(status='M')
     NP_members = Member.objects.filter(status='NP')
     UR_members = Member.objects.filter(status='UR')
-    return render(request, 'view.html', {'M_members': M_members, 'NP_members': NP_members, 'UR_members': UR_members})
+    attends = Attend.objects.all()
+    return render(request, 'view.html', {'M_members': M_members, 'NP_members': NP_members, 'UR_members': UR_members, 'attends': attends})
 
 def commingsoon(request):
     return render(request, 'commingsoon.html', {})
