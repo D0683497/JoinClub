@@ -24,21 +24,8 @@
 
     <body>
         
-        {% block commingsoon %}
-            {% if user.is_authenticated %}
-                {% include "narbar.html" %}
-                {% block content %}{% endblock %}
-            {% else %}
-                <!-- Comming Soon JavaScript -->
-                <script type="text/javascript">
-                    var starttime = new Date("2019/09/17 19:00:00");
-                    var currDate = new Date();
-                    if (starttime > currDate) {
-                        window.location.href = "{% url 'join:commingsoon' %}";
-                    }
-                </script>
-            {% endif %}
-        {% endblock %}
+        {% include "narbar.html" %}
+        {% block content %}{% endblock %}
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -47,6 +34,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         {% block js %}{% endblock %}
-        {% block message %}{% endblock %}
+        {% include "message.html" %}
     </body>
 </html>
