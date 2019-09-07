@@ -69,7 +69,8 @@
                 <p>新生茶會</p>
                 <p>2019/09/17 19:00~21:00</p>
                 <p>科航 8 樓</p>
-                <button type="button" class="btn btn-success btn-lg my-2" onclick="location.href='{% url 'join:attend' %}'">茶會出席調查</button>
+                <button type="button" id="surveyBtn" class="btn btn-success btn-lg my-2" onclick="location.href='{% url 'join:attend' %}'">茶會出席調查</button>
+                <br><br>
                 <p id="demo" style="font-size:30px"></p>
             </div>
             <div class="bottomleft">
@@ -80,6 +81,7 @@
         <script type="text/javascript">
             // Set the date we're counting down to
             var countDownDate = new Date("September 17, 2019 19:00:00").getTime(); //茶會開始時間(結束倒數)
+            var survey = new Date("September 2, 2019 19:00:00").getTime(); //茶會調查結束時間
 
             // Update the count down every 1 second
             var x = setInterval(function() {
@@ -94,6 +96,11 @@
                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (survey - now < 0) {
+                    document.getElementById("surveyBtn").disabled = true;
+                    document.getElementById("surveyBtn").innerHTML = "表單已結束提交";
+                }
 
                 // If the count down is finished, write some text 
                 if (distance < 0) {
