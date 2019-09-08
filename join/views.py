@@ -58,10 +58,10 @@ def edit(request, id):
             form.save()
             return HttpResponseRedirect(reverse('join:review', args=[member.id]))
         else:
-            return render(request, 'edit.html', {'form': form, 'member': member})
+            return render(request, 'join_edit.html', {'form': form, 'member': member})
     else:
         form = JoinForm()
-    return render(request, 'edit.html', {'form': form, 'member': member})
+    return render(request, 'join_edit.html', {'form': form, 'member': member})
 
 @login_required
 def view(request):

@@ -72,14 +72,12 @@
             <p class="card-text">姓名：{{ attend.name }}</p>
             <p class="card-text">學號：{{ attend.nid }}</p>
         </div>
-        {% comment %} <div class="card-footer">
-            <form class="form-inline" action="{% url 'join:review' id=attend.id %}" method="POST">
-                <a href="{% url 'join:edit' id=attend.id %}" class="btn btn-primary" role="button">
-                    <i class="far fa-edit"></i>
-                    修改資料
-                </a>
-            </form>
-        </div> {% endcomment %}
+        <div class="card-footer">
+            <a href="{% url 'enter:edit' id=attend.id %}" class="btn btn-primary" role="button">
+                <i class="far fa-edit"></i>
+                修改資料
+            </a>
+        </div>
     </div>
     {% endif %}
 </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
@@ -36,4 +36,18 @@ def search(request):
             except Attend.DoesNotExist:
                 return render(request, 'enter_search.html', {})
     return render(request, 'enter_search.html', {})
+
+@login_required
+def edit(request, id):
+    attend = get_object_or_404(Attend, id=id)
+    if request.method == 'POST':
+        form = AttendForm(request.POST, instance=attend)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            return render(request, 'enter_edit.html', {'form': form, 'attend': attend})
+    else:
+        form = AttendForm()
+    return render(request, 'enter_edit.html', {'form': form, 'attend': attend})
 
