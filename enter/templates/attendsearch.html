@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
-{% block title %}黑客社 - 查詢(入社表單){% endblock %}
+{% block title %}黑客社 - 查詢(茶會調查){% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row d-flex justify-content-between">
         <div class="col-auto">
-            <h3>入社表單 - 查詢</h3>
+            <h3>茶會調查 - 查詢</h3>
         </div>
         <div class="btn-group col-auto">
             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -22,7 +22,7 @@
     </div>
     
     <hr>
-    <form action="{% url 'join:search' %}" method="POST">
+    <form action="{% url 'enter:attendsearch' %}" method="POST">
         {% csrf_token %}
         <div class="form-row align-items-center">
             <div class="col-auto mr-4">
@@ -56,6 +56,31 @@
                 </div>
             </div>
         </div>
-    </form> 
+    </form>
+
+    {% if attend %}
+    <hr>
+    <div class="card">
+        <h5 class="card-header">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    {{ attend.nid }} - 茶會出席資料
+                </div>
+            </div>
+        </h5>
+        <div class="card-body">
+            <p class="card-text">姓名：{{ attend.name }}</p>
+            <p class="card-text">學號：{{ attend.nid }}</p>
+        </div>
+        {% comment %} <div class="card-footer">
+            <form class="form-inline" action="{% url 'join:review' id=attend.id %}" method="POST">
+                <a href="{% url 'join:edit' id=attend.id %}" class="btn btn-primary" role="button">
+                    <i class="far fa-edit"></i>
+                    修改資料
+                </a>
+            </form>
+        </div> {% endcomment %}
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
