@@ -71,7 +71,4 @@ def view(request):
     attends = Attend.objects.all()
     return render(request, 'view.html', {'M_members': M_members, 'NP_members': NP_members, 'UR_members': UR_members, 'attends': attends})
 
-def commingsoon(request):
-    return render(request, 'commingsoon.html', {})
-
 

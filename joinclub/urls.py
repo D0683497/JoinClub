@@ -19,6 +19,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
+    path('commingsoon/', views.commingsoon, name="commingsoon"),
     path('admin/', admin.site.urls),
     path('join/', include('join.urls')),
     path('chart/', include('chart.urls')),
