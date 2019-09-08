@@ -28,14 +28,14 @@ def search(request):
                 member = Member.objects.get(nid=nid)
                 return HttpResponseRedirect(reverse('join:review', args=[member.id]))
             except Member.DoesNotExist:
-                return render(request, 'search.html', {})
+                return render(request, 'join_search.html', {})
         elif name:
             try:
                 member = Member.objects.get(name=name)
                 return HttpResponseRedirect(reverse('join:review', args=[member.id]))
             except Member.DoesNotExist:
-                return render(request, 'search.html', {})
-    return render(request, 'search.html', {})
+                return render(request, 'join_search.html', {})
+    return render(request, 'join_search.html', {})
 
 @login_required
 def review(request, id):

@@ -19,21 +19,21 @@ def attend(request):
     return render(request, 'attend.html', {'form': form})
 
 @login_required
-def attendsearch(request):
+def search(request):
     if request.method == 'POST':
         nid = request.POST.get('nid')
         name = request.POST.get('name')
         if nid:
             try:
                 attend = Attend.objects.get(nid=nid)
-                return render(request, 'attendsearch.html', {'attend': attend})
+                return render(request, 'enter_search.html', {'attend': attend})
             except Attend.DoesNotExist:
-                return render(request, 'attendsearch.html', {})
+                return render(request, 'enter_search.html', {})
         elif name:
             try:
                 attend = Attend.objects.get(name=name)
-                return render(request, 'attendsearch.html', {'attend': attend})
+                return render(request, 'enter_search.html', {'attend': attend})
             except Attend.DoesNotExist:
-                return render(request, 'attendsearch.html', {})
-    return render(request, 'attendsearch.html', {})
+                return render(request, 'enter_search.html', {})
+    return render(request, 'enter_search.html', {})
 

@@ -6,5 +6,5 @@ app_name = 'enter'
 
 urlpatterns = [
     path('attend', views.attend, name="attend"),
-    path('attendsearch', views.attendsearch, name="attendsearch"),
+    path('search', views.search, name="search"),
 ]
