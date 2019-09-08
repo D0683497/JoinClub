@@ -7,16 +7,13 @@ from .forms import JoinForm
 from .models import Member
 from enter.models import Attend
 
-def index(request):
-    return render(request, 'index.html', {})
-
 def join(request):
     if request.method == 'POST':
         form = JoinForm(request.POST)
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, '提交成功', extra_tags='joinform')
-            return HttpResponseRedirect(reverse('join:index'))
+            return HttpResponseRedirect(reverse('index'))
     else:
         form = JoinForm()
     return render(request, 'join.html', {'form': form})

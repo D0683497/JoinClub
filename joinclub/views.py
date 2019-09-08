@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
+def index(request):
+    return render(request, 'index.html', {})
+
 def error_400(request, exception):
     return render(request,'errors/400.html', {})
 

@@ -106,7 +106,7 @@
                 // If the count down is finished, write some text 
                 if (distance < 0) {
                     clearInterval(x);
-                    document.getElementById("demo").innerHTML = '<a style="color:white" href="{% url 'join:index' %}">好戲登場</a>';
+                    document.getElementById("demo").innerHTML = '<a style="color:white" href="{% url 'index' %}">好戲登場</a>';
                 } else {
                     // Display the result in an element with id="demo"
                     document.getElementById("demo").innerHTML = days + "天 " + hours + "時 " + minutes + "分 " + seconds + "秒 ";
