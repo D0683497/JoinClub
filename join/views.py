@@ -3,8 +3,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import JoinForm, AttendForm
-from .models import Member, Attend
+from .forms import JoinForm
+from .models import Member
+from enter.models import Attend
 
 def index(request):
     return render(request, 'index.html', {})
@@ -76,13 +77,4 @@ def view(request):
 def commingsoon(request):
     return render(request, 'commingsoon.html', {})
 
-def attend(request):
-    if request.method == 'POST':
-        form = AttendForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS, '提交成功', extra_tags='attendform')
-            return HttpResponseRedirect(reverse('join:commingsoon'))
-    else:
-        form = AttendForm()
-    return render(request, 'attend.html', {'form': form})
+

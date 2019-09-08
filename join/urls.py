@@ -12,5 +12,4 @@ urlpatterns = [
     path('edit/<int:id>', views.edit, name="edit"),
     path('view', views.view, name="view"),
     path('commingsoon', views.commingsoon, name="commingsoon"),
-    path('attend', views.attend, name="attend"),
 ]

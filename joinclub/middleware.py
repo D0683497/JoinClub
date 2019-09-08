@@ -20,7 +20,7 @@ class DeadlineMiddleware:
             teatime = datetime(2019, 9, 11, 22, 45, 0, 0) #茶會開始時間
             if survey - datetime.now() <= timedelta(milliseconds=0): #調查結束
                 if teatime - datetime.now() <= timedelta(milliseconds=0): #調查結束+茶會開始
-                    if view_func.__module__ == 'join.views' and view_func.__name__ == 'attend':
+                    if view_func.__module__ == 'enter.views' and view_func.__name__ == 'attend':
                         messages.add_message(request, messages.INFO, '表單已結束提交', extra_tags='teatimeform')
                         return HttpResponseRedirect(reverse('join:index'))
                     elif view_func.__module__ == 'join.views' and view_func.__name__ == 'commingsoon':
@@ -31,11 +31,11 @@ class DeadlineMiddleware:
                     if view_func.__module__ == 'join.views' and view_func.__name__ == 'commingsoon':
                         return None
                     else:
-                        if view_func.__module__ == 'join.views' and view_func.__name__ == 'attend':
+                        if view_func.__module__ == 'enter.views' and view_func.__name__ == 'attend':
                             messages.add_message(request, messages.INFO, '表單已結束提交', extra_tags='teatimeform')
                         return HttpResponseRedirect(reverse('join:commingsoon'))
             else: #調查未結束
-                if (view_func.__module__ == 'join.views' and view_func.__name__ == 'commingsoon') or (view_func.__module__ == 'join.views' and view_func.__name__ == 'attend'):
+                if (view_func.__module__ == 'join.views' and view_func.__name__ == 'commingsoon') or (view_func.__module__ == 'enter.views' and view_func.__name__ == 'attend'):
                     return None
                 return HttpResponseRedirect(reverse('join:commingsoon'))
 

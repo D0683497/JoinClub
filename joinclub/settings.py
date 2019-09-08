@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'join',
     'chart',
+    'enter',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +134,5 @@ LOGOUT_REDIRECT_URL = '/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static') # python manage.py collectstatic
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True

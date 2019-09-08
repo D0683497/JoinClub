@@ -1,11 +1,10 @@
 from django.contrib import admin
-from .models import Member, Attend
+from import_export.admin import ImportExportModelAdmin
+from import_export import resources
+from .models import Member
 
-class MemberAdmin(admin.ModelAdmin):
+class MemberAdmin(ImportExportModelAdmin):
     search_fields = ('nid',)
 
-class AttendAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'nid',)
-
 admin.site.register(Member, MemberAdmin)
-admin.site.register(Attend, AttendAdmin)
+
