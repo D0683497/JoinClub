@@ -13,9 +13,6 @@ class DeadlineMiddleware:
         return response
     
     def process_view(self, request, view_func, view_args, view_kwargs):
-        print(view_func.__module__)
-        print(view_func.__name__)
-        print(request.user.is_superuser)
         if view_func.__module__ == 'django.contrib.admin.sites' or request.user.is_superuser:
                 return None
         else:
