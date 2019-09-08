@@ -13,7 +13,7 @@ def attend(request):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, '提交成功', extra_tags='attendform')
-            return HttpResponseRedirect(reverse('join:commingsoon'))
+            return HttpResponseRedirect(reverse('commingsoon'))
     else:
         form = AttendForm()
     return render(request, 'attend.html', {'form': form})
