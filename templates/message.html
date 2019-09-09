@@ -98,5 +98,41 @@
                 $('#teatimeformModal').modal();
             </script>
         {% endifequal %}
+
+        {% comment %} 茶會尚未開始 {% endcomment %}
+        {% ifequal message.tags "yetstart info" %}
+            <!-- 茶會尚未開始 -->
+            <div class="modal fade text-left text-dark" id="yetstartModal" tabindex="-1" role="dialog" aria-labelledby="yetstartModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="yetstartModalTitle">{{ message }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ol>
+                            　  <li>茶會時間為 2019/09/17</li>
+                                <li>18:30 開始入場，19:00 準時開始</li>
+                                <li>當天要入社者請攜帶 200 元社費及學生證</li>
+                                <li>無聊的話玩個<a class="text-primary" href="https://bot.k139.me/" target="_blank">Bot</a>吧</li>
+                                <li>有任何問題請洽<a class="text-primary" href="https://www.facebook.com/HackerSir.tw/" target="_blank">逢甲大學黑課社粉專</a></li>
+                            </ol>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">
+                                <i class="far fa-kiss-wink-heart"></i>
+                                確認
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $('#yetstartModal').modal();
+            </script>
+        {% endifequal %}
+
     {% endfor %}
 {% endif %}
