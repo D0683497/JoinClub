@@ -110,7 +110,7 @@
                     <nav class="nav nav-masthead justify-content-center">
                         <a class="nav-link active" data-toggle="modal" data-target="#outlineModal">議程</a>
                         <a class="nav-link active" data-toggle="modal" data-target="#qrcodeModal">QRcode</a>
-                        <a class="nav-link active">Contact</a>
+                        <a class="nav-link active" data-toggle="modal" data-target="#ruleModal">服務條款</a>
                     </nav>
                 </div>
             </header>
@@ -241,12 +241,39 @@
             </div>
         </div>
 
+        <!-- Rule Modal -->
+        <div class="modal fade text-left text-dark" id="ruleModal" tabindex="-1" role="dialog" aria-labelledby="ruleModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ruleModalTitle">服務條款</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ol>
+                            <li>您不得「干擾」或「影響」本站的運行，若經發現，本站有權終止您的使用</li>
+                            <li>本站會儲存使用者的資料，所有資料僅供本社入社申請核對使用，您可以要求刪除您的資料，但此舉將會影響您的社員權益</li>
+                            <li>本站圖表之資料由使用者在本站所填之資料及<a class="text-primary" href="https://checkin.hackersir.org/" target="_blank">逢甲社博集點</a>之資料，所有資料皆不會對外提供，僅用於統計圖表展示</li>
+                        </ol> 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">
+                            <i class="far fa-thumbs-up"></i>
+                            確認
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- QRcode Modal -->
         <div class="modal fade text-left text-dark" id="qrcodeModal" tabindex="-1" role="dialog" aria-labelledby="qrcodeModalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="outlineModalTitle">QRcode</h5>
+                        <h5 class="modal-title" id="qrcodeModalTitle">QRcode</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
