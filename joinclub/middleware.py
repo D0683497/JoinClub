@@ -32,17 +32,23 @@ class DeadlineMiddleware:
                 else: #調查結束+茶會未開始
                     if view_func.__module__ == 'joinclub.views' and view_func.__name__ == 'commingsoon':
                         return None
-                    else:
+                    else: #從調查表單轉址->表單已結束提交，其他->茶會尚未開始
                         if view_func.__module__ == 'enter.views' and view_func.__name__ == 'attend':
                             messages.add_message(request, messages.INFO, '表單已結束提交', extra_tags='teatimeform')
-                            return HttpResponseRedirect(reverse('commingsoon'))
+                        else:
+                            messages.add_message(request, messages.INFO, '茶會尚未開始', extra_tags='yetstart')
+                        return HttpResponseRedirect(reverse('commingsoon'))
             else: #調查未結束
                 if view_func.__module__ == 'joinclub.views' and view_func.__name__ == 'commingsoon':
                     return None
                 elif view_func.__module__ == 'enter.views' and view_func.__name__ == 'attend':
                     return None
                 else:
-                    return HttpResponseRedirect(reverse('commingsoon'))
+                    if view_func.__module__ == 'joinclub.views' and view_func.__name__ == 'index':
+                        return HttpResponseRedirect(reverse('commingsoon'))
+                    else:
+                        messages.add_message(request, messages.INFO, '茶會尚未開始', extra_tags='yetstart')
+                        return HttpResponseRedirect(reverse('commingsoon'))
 
 
 
