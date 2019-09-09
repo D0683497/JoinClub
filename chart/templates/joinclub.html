@@ -1,24 +1,34 @@
 {% extends "layout.html" %}
 
-{% block title %}黑客社 - 統計圖表{% endblock %}
+{% block title %}黑客社 - 入社情形{% endblock %}
 
 {% block content %}
 <div class="container" id="content">
     <div class="row">
-        <div class="col-sm-6 my-2">
+        <div class="col-sm-4 my-2">
             <div class="card text-center border-info">
                 <div class="card-header">
-                    <h4 class="my-0">填表人數</h4>
+                    <h4 class="my-0">與會人數</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title" id="All_count"></h1>
+                    <h1 class="card-title" id="Checkin_count"></h1>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 my-2">
+        <div class="col-sm-4 my-2">
+            <div class="card text-center border-primary">
+                <div class="card-header">
+                    <h4 class="my-0">填表總人數</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title" id="Member_count"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 my-2">
             <div class="card text-center border-success">
                 <div class="card-header">
-                    <h4 class="my-0">已入社</h4>
+                    <h4 class="my-0">已入社人數</h4>
                 </div>
                 <div class="card-body">
                     <h1 class="card-title" id="M_count"></h1>
@@ -40,7 +50,7 @@
 
     $(document).ready(function ($) {
         refresh();
-        interval = setInterval("refresh()", 5000);
+        interval = setInterval("refresh()", 10000);
     });
 
     function refresh() {
@@ -49,15 +59,15 @@
             type: "get",
             dataType:  "json",
             success: function(data) {
-                document.getElementById("All_count").innerHTML = data["All_count"];;
+                document.getElementById("Checkin_count").innerHTML = data["Checkin_count"];
+                document.getElementById("Member_count").innerHTML = data["Member_count"];
                 document.getElementById("M_count").innerHTML = data["M_count"];
+                var one = data["Checkin_count"] - data["Member_count"]
+                var two = data["Member_count"] - data["M_count"]
                 var data = [{
-                    y: [data["All_count"], data["M_count"]],
-                    x: ['填表人數', '已入社'],
-                    marker:{
-                        color: ['rgba(51,181,229,1)', 'rgba(0,200,81,1)']
-                    },
-                    type: 'bar'
+                    values: [one, two, data["M_count"]],
+                    labels: ['未填表人數', '已填表未入社人數', '已入社人數'],
+                    type: 'pie'
                 }];
                 var layout = {
                     title: '入社情況',
