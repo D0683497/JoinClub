@@ -23,9 +23,7 @@ class DeadlineMiddleware:
             if survey - datetime.now() <= timedelta(milliseconds=0): #調查結束
                 if teatime - datetime.now() <= timedelta(milliseconds=0): #調查結束+茶會開始
                     if view_func.__module__ == 'enter.views' and view_func.__name__ == 'attend':
-                        messages.add_message(request, messages.INFO, '表單已結束提交', extra_tags='teatimeform')
-                        return HttpResponseRedirect(reverse('index'))
-                    elif view_func.__module__ == 'joinclub.views' and view_func.__name__ == 'commingsoon':
+                        messages.add_message(request, messages.INFO, '表單已結束提交', extra_tags='teatimestart')
                         return HttpResponseRedirect(reverse('index'))
                     else:
                         return None
