@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+{% endblock %}
+
 {% block title %}黑客社 - 入社表單{% endblock %}
 
 {% block content %}
@@ -92,6 +96,7 @@
             提交
         </button>
         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#joinModal">
+            <i class="fab fa-readme"></i>
             點我再次閱讀注意事項
         </button>
     </form>
@@ -114,7 +119,10 @@
                     </ol>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">我已閱讀完注意事項</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
+                        <i class="fas fa-book"></i>
+                        我已閱讀完注意事項
+                    </button>
                 </div>
             </div>
         </div>

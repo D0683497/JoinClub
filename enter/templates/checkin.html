@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+{% endblock %}
+
 {% block title %}黑客社 - 茶會簽到{% endblock %}
 
 {% block content %}
@@ -35,7 +39,7 @@
                     {{ form.nid }}
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-outline-secondary">
-                            <i class="fas fa-search"></i>
+                            <i class="fas fa-user-edit"></i>
                             簽到
                         </button>
                     </div>
