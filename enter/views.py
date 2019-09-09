@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from .forms import AttendForm, CheckinForm
 from .models import Attend, Checkin
 
-@login_required
 def attend(request):
     if request.method == 'POST':
         form = AttendForm(request.POST)
