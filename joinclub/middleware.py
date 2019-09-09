@@ -13,6 +13,10 @@ class DeadlineMiddleware:
         return response
     
     def process_view(self, request, view_func, view_args, view_kwargs):
+        print(view_func.__module__)
+        print(view_func.__name__)
+        if view_func.__module__ == 'chart.views' and view_func.__name__ == 'CommingsoonData':
+            return None
         if view_func.__module__ == 'django.contrib.admin.sites' or request.user.is_superuser:
                 return None
         else:

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.utils.http import urlquote
 import csv, codecs
 from join.models import Member
+from enter.models import Attend
 
 from django.views.generic import View
 from django.http import JsonResponse
@@ -12,11 +13,17 @@ from django.http import JsonResponse
 def joinclub(request):
     return render(request, 'joinclub.html', {})
 
-class  JoinclubData(View):
-    def  get(self, request):
+class JoinclubData(View):
+    def get(self, request):
         All_count = Member.objects.all().count()
         M_count = Member.objects.filter(status='M').count()
         data =  {'All_count': All_count, 'M_count': M_count}
+        return JsonResponse(data)
+
+class CommingsoonData(View):
+    def get(self, request):
+        Attend_count = Attend.objects.all().count()
+        data =  {'Attend_count': Attend_count, }
         return JsonResponse(data)
 
 @login_required
