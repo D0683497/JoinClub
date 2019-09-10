@@ -109,6 +109,7 @@
                     <h3 class="masthead-brand">HackerSir</h3>
                     <nav class="nav nav-masthead justify-content-center">
                         <a class="nav-link active" onclick="javascript:outline()" data-toggle="modal" data-target="#outlineModal">議程</a>
+                        <a class="nav-link active" onclick="javascript:location()" data-toggle="modal" data-target="#locationModal">地點</a>
                         <a class="nav-link active" onclick="javascript:qrcode()" data-toggle="modal" data-target="#qrcodeModal">QRcode</a>
                         <a class="nav-link active" onclick="javascript:rele()" data-toggle="modal" data-target="#ruleModal">服務條款</a>
                     </nav>
@@ -290,10 +291,36 @@
                 </div>
             </div>
         </div>
+        
+        <!-- 地點 Modal -->
+        <div class="modal fade text-left text-dark" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="locationModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="locationModalTitle">茶會地點</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% include "location.html" %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">
+                            <i class="far fa-thumbs-up"></i>
+                            確認
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script type="text/javascript">
             function outline() {
-                $('#toutlineModal').modal();
+                $('#outlineModal').modal();
+            } 
+            function location() {
+                $('#locationModal').modal();
             } 
             function qrcode() {
                 $('#qrcodeModal').modal();
