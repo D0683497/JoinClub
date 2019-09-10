@@ -108,9 +108,9 @@
                 <div class="inner">
                     <h3 class="masthead-brand">HackerSir</h3>
                     <nav class="nav nav-masthead justify-content-center">
-                        <a class="nav-link active" data-toggle="modal" data-target="#outlineModal">議程</a>
-                        <a class="nav-link active" data-toggle="modal" data-target="#qrcodeModal">QRcode</a>
-                        <a class="nav-link active" data-toggle="modal" data-target="#ruleModal">服務條款</a>
+                        <a class="nav-link active" onclick="javascript:outline()" data-toggle="modal" data-target="#outlineModal">議程</a>
+                        <a class="nav-link active" onclick="javascript:qrcode()" data-toggle="modal" data-target="#qrcodeModal">QRcode</a>
+                        <a class="nav-link active" onclick="javascript:rele()" data-toggle="modal" data-target="#ruleModal">服務條款</a>
                     </nav>
                 </div>
             </header>
@@ -290,6 +290,18 @@
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            function outline() {
+                $('#toutlineModal').modal();
+            } 
+            function qrcode() {
+                $('#qrcodeModal').modal();
+            }
+            function rule() {
+                $('#ruleModal').modal();
+            }
+        </script>
 
         {% include "message.html" %}
     </body>
