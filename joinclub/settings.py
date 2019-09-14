@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'join',
     'chart',
     'enter',
+    'api',
 ]
 
 MIDDLEWARE = [

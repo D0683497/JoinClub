@@ -196,7 +196,7 @@
             });
             function refresh() {
                 $.ajax({
-                    url: "{% url 'chart:commingsoondata' %}",
+                    url: "{% url 'api:comingsoondata' %}",
                     type: "get",
                     dataType:  "json",
                     success: function(data) {

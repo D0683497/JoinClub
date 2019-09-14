@@ -13,7 +13,7 @@ class DeadlineMiddleware:
         return response
     
     def process_view(self, request, view_func, view_args, view_kwargs):
-        if view_func.__module__ == 'chart.views' and view_func.__name__ == 'CommingsoonData':
+        if view_func.__module__ == 'api.views' and view_func.__name__ == 'ComingsoonData':
             return None
         if view_func.__module__ == 'django.contrib.admin.sites' or request.user.is_superuser:
             return None
@@ -28,25 +28,25 @@ class DeadlineMiddleware:
                     else:
                         return None
                 else: #調查結束+茶會未開始
-                    if view_func.__module__ == 'joinclub.views' and view_func.__name__ == 'commingsoon':
+                    if view_func.__module__ == 'joinclub.views' and view_func.__name__ == 'comingsoon':
                         return None
                     else: #從調查表單轉址->表單已結束提交，其他->茶會尚未開始
                         if view_func.__module__ == 'enter.views' and view_func.__name__ == 'attend':
                             messages.add_message(request, messages.INFO, '表單已結束提交', extra_tags='teatimeform')
                         else:
                             messages.add_message(request, messages.INFO, '茶會尚未開始', extra_tags='yetstart')
-                        return HttpResponseRedirect(reverse('commingsoon'))
+                        return HttpResponseRedirect(reverse('comingsoon'))
             else: #調查未結束
-                if view_func.__module__ == 'joinclub.views' and view_func.__name__ == 'commingsoon':
+                if view_func.__module__ == 'joinclub.views' and view_func.__name__ == 'comingsoon':
                     return None
                 elif view_func.__module__ == 'enter.views' and view_func.__name__ == 'attend':
                     return None
                 else:
                     if view_func.__module__ == 'joinclub.views' and view_func.__name__ == 'index':
-                        return HttpResponseRedirect(reverse('commingsoon'))
+                        return HttpResponseRedirect(reverse('comingsoon'))
                     else:
                         messages.add_message(request, messages.INFO, '茶會尚未開始', extra_tags='yetstart')
-                        return HttpResponseRedirect(reverse('commingsoon'))
+                        return HttpResponseRedirect(reverse('comingsoon'))
 
 
 

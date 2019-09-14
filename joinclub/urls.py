@@ -19,11 +19,12 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('commingsoon/', views.commingsoon, name="commingsoon"),
+    path('comingsoon/', views.comingsoon, name="comingsoon"),
     path('admin/', admin.site.urls),
     path('join/', include('join.urls')),
     path('chart/', include('chart.urls')),
     path('enter/', include('enter.urls')),
+    path('api/', include('api.urls')),
     path('accounts/', include('django.contrib.auth.urls'))
 ]
 
