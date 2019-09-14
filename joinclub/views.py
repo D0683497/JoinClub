@@ -6,6 +6,9 @@ def index(request):
 def comingsoon(request):
     return render(request, 'comingsoon.html', {})
 
+def course(request):
+    return render(request, 'course.html', {})
+
 def error_400(request, exception):
     return render(request,'errors/400.html', {})
 

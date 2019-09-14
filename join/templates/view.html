@@ -11,11 +11,11 @@
         <li class="nav-item">
             <a class="nav-link" id="NP-tab" data-toggle="tab" href="#NP" role="tab" aria-controls="NP" aria-selected="false">未付款</a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" id="UR-tab" data-toggle="tab" href="#UR" role="tab" aria-controls="UR" aria-selected="true">審核中</a>
+        <li class="nav-item">
+            <a class="nav-link active" id="UR-tab" data-toggle="tab" href="#UR" role="tab" aria-controls="UR" aria-selected="true">審核中</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="attends-tab" data-toggle="tab" href="#attends" role="tab" aria-controls="attends" aria-selected="true">茶會出席</a>
+            <a class="nav-link" id="attends-tab" data-toggle="tab" href="#attends" role="tab" aria-controls="attends" aria-selected="false">茶會出席</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -138,7 +138,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="tab-pane fade show" id="attends" role="tabpanel" aria-labelledby="attends-tab">
+        <div class="tab-pane fade" id="attends" role="tabpanel" aria-labelledby="attends-tab">
             <table class="table table-bordered table-striped table-hover my-2">
                 <thead>
                     <tr>
@@ -167,10 +167,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block js %}
-<script type="text/javascript">
-    $('#UR-tab').tab('show');
-</script>
 {% endblock %}
