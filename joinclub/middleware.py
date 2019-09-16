@@ -18,7 +18,7 @@ class DeadlineMiddleware:
         if view_func.__module__ == 'django.contrib.admin.sites' or request.user.is_superuser:
             return None
         else:
-            survey = datetime(2019, 9, 16, 12, 0, 0, 0) #茶會調查結束時間
+            survey = datetime(2019, 9, 16, 23, 50, 0, 0) #茶會調查結束時間
             teatime = datetime(2019, 9, 17, 18, 30, 0, 0) #茶會開始時間
             if survey - datetime.now() <= timedelta(milliseconds=0): #調查結束
                 if teatime - datetime.now() <= timedelta(milliseconds=0): #調查結束+茶會開始
