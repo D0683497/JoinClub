@@ -7,7 +7,7 @@ from .forms import JoinForm
 from .models import Member
 from enter.models import Attend
 
-def join(request):
+def form(request):
     if request.method == 'POST':
         form = JoinForm(request.POST)
         if form.is_valid():
@@ -16,7 +16,7 @@ def join(request):
             return HttpResponseRedirect(reverse('index'))
     else:
         form = JoinForm()
-    return render(request, 'join.html', {'form': form})
+    return render(request, 'form.html', {'form': form})
 
 @login_required
 def search(request):
@@ -26,13 +26,13 @@ def search(request):
         if nid:
             try:
                 member = Member.objects.get(nid=nid)
-                return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+                return HttpResponseRedirect(reverse('join:join-review', args=[member.id]))
             except Member.DoesNotExist:
                 return render(request, 'join_search.html', {})
         elif name:
             try:
                 member = Member.objects.get(name=name)
-                return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+                return HttpResponseRedirect(reverse('join:join-review', args=[member.id]))
             except Member.DoesNotExist:
                 return render(request, 'join_search.html', {})
     return render(request, 'join_search.html', {})
@@ -56,7 +56,7 @@ def edit(request, id):
         form = JoinForm(request.POST, instance=member)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('join:review', args=[member.id]))
+            return HttpResponseRedirect(reverse('join:join-review', args=[member.id]))
         else:
             return render(request, 'join_edit.html', {'form': form, 'member': member})
     else:

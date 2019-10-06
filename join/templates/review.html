@@ -43,7 +43,7 @@
             <p class="card-text">E-mail：{{ member.email }}</p>
         </div>
         <div class="card-footer">
-            <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
+            <form class="form-inline" action="{% url 'join:join-review' id=member.id %}" method="POST">
                 {% csrf_token %}
                 {% comment %} 審核中 {% endcomment %}
                 {% ifequal member.status "UR" %}
@@ -59,7 +59,7 @@
                         確認付款
                     </button>
                 {% endifequal %}
-                <a href="{% url 'join:edit' id=member.id %}" class="btn btn-primary" role="button">
+                <a href="{% url 'join:join-edit' id=member.id %}" class="btn btn-primary" role="button">
                     <i class="far fa-edit"></i>
                     修改資料
                 </a>

@@ -55,7 +55,7 @@
 
     function refresh() {
         $.ajax({
-            url: "{% url 'api:joinclubdata' %}",
+            url: "{% url 'api:api-joinclub' %}",
             type: "get",
             dataType:  "json",
             success: function(data) {

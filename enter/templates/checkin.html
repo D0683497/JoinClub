@@ -19,7 +19,7 @@
     {% if form.nid.errors %}
         {% for error in form.nid.errors %}
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ error }} <a href="{% url 'enter:prize' nid=form.nid.value %}" class="alert-link">點此前往領獎頁面</a>
+                {{ error }} <a href="{% url 'enter:enter-prize' nid=form.nid.value %}" class="alert-link">點此前往領獎頁面</a>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -27,7 +27,7 @@
         {% endfor %}
     {% endif %}
 
-    <form action="{% url 'enter:checkin' %}" onkeydown="if(event.keyCode==13)return false;" method="POST">
+    <form action="{% url 'enter:enter-checkin' %}" onkeydown="if(event.keyCode==13)return false;" method="POST">
         {% csrf_token %}
         <div class="form-row align-items-center">
             <div class="col-auto mr-4">

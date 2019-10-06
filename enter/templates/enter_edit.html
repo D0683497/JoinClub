@@ -6,7 +6,7 @@
 <div class="container">
     <h3>修改茶會調查表單</h3>
     <hr>
-    <form action="{% url 'enter:edit' id=attend.id %}" method="POST">
+    <form action="{% url 'enter:enter-edit' id=attend.id %}" method="POST">
         {% csrf_token %}
         <div class="form-group">
             {{ form.name.label_tag }}

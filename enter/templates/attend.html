@@ -10,7 +10,7 @@
 <div class="container">
     <h3>茶會出席調查</h3>
     <hr>
-    <form action="{% url 'enter:attend' %}" method="POST">
+    <form action="{% url 'enter:enter-attend' %}" method="POST">
         {% csrf_token %}
         <div class="form-group">
             {{ form.name.label_tag }}

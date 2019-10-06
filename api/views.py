@@ -3,6 +3,10 @@ from django.http import JsonResponse
 from join.models import Member
 from enter.models import Attend, Checkin
 
+"""
+圖表資料
+"""
+
 class ComingsoonData(View):
     def get(self, request):
         Attend_count = Attend.objects.all().count()

@@ -26,7 +26,7 @@
     </div>
     
     <hr>
-    <form action="{% url 'join:search' %}" onkeydown="if(event.keyCode==13)return false;" method="POST">
+    <form action="{% url 'join:join-search' %}" onkeydown="if(event.keyCode==13)return false;" method="POST">
         {% csrf_token %}
         <div class="form-row align-items-center">
             <div class="col-auto mr-4">

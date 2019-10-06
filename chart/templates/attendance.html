@@ -45,7 +45,7 @@
 
     function refresh() {
         $.ajax({
-            url: "{% url 'api:attendancedata' %}",
+            url: "{% url 'api:api-attendance' %}",
             type: "get",
             dataType:  "json",
             success: function(data) {

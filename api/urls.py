@@ -5,8 +5,8 @@ from . import views
 app_name = 'api'
 
 urlpatterns = [
-    path('comingsoondata', views.ComingsoonData.as_view(), name="comingsoondata"),
-    path('joinclubdata', views.JoinclubData.as_view(), name="joinclubdata"),
-    path('receiveprizedata', views.ReceiveprizeData.as_view(), name="receiveprizedata"),
-    path('attendancedata', views.AttendanceData.as_view(), name="attendancedata"),
+    path('comingsoon', views.ComingsoonData.as_view(), name="api-comingsoon"),
+    path('joinclub', views.JoinclubData.as_view(), name="api-joinclub"),
+    path('receiveprize', views.ReceiveprizeData.as_view(), name="api-receiveprize"),
+    path('attendance', views.AttendanceData.as_view(), name="api-attendance"),
 ]
