@@ -1,20 +1,40 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
     <head>
-        {% include "favicon.html" %}
-        {% include "ga.html" %}
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <!-- Icon -->
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'icon/favicon.ico' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icon/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icon/favicon-16x16.png' %}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icon/apple-touch-icon.png' %}">
+        <link rel="manifest" href="{% static 'icon/site.webmanifest' %}">
+        <link rel="mask-icon" href="{% static 'icon/safari-pinned-tab.svg' %}" color="#373737">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static "bootstrap-4.3.1/css/bootstrap.min.css" %}">
+
+        <link rel="stylesheet" href="{% static "fontawesome-5.11.2/css/all.css" %}">
         
         <style>
         /* Show it is fixed to the top */
         body {
             min-height: 75rem;
             padding-top: 4.5rem;
+        }
+
+        .back-to-top {
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display:none;
         }
         </style>
 
@@ -24,17 +44,41 @@
     </head>
 
     <body>
-        
+
         {% include "narbar.html" %}
+        
         {% block content %}{% endblock %}
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="{% static "bootstrap-4.3.1/js/bootstrap.min.js" %}"></script>
 
         {% block js %}{% endblock %}
-        {% include "message.html" %}
+
+        <a id="back-to-top" href="javascript:void(0)" class="btn btn-primary btn-lg back-to-top" role="button">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 50) {
+                        $('#back-to-top').fadeIn();
+                    } else {
+                        $('#back-to-top').fadeOut();
+                    }
+                });
+                // scroll body to 0px on click
+                $('#back-to-top').click(function () {
+                    $('body,html').animate({
+                        scrollTop: 0
+                    }, 800);
+                    return false;
+                });
+            });
+        </script>
+	    
     </body>
 </html>

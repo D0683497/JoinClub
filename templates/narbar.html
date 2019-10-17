@@ -7,53 +7,82 @@
         <ul class="navbar-nav mr-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        表單
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        茶會
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        <a class="dropdown-item" href="{% url 'enter:enter-attend' %}">茶會調查</a>
-                        <a class="dropdown-item" href="{% url 'join:join-form' %}">入社表單</a>
-                        <a class="dropdown-item" href="{% url 'enter:enter-checkin' %}">茶會簽到</a>
+                        <a class="dropdown-item" href="{% url 'tea-form' %}">出席調查</a>
+                        <a class="dropdown-item" href="{% url 'tea-checkin' %}">簽到</a>
+                        <a class="dropdown-item" href="{% url 'tea-show' %}">總覽</a>
+                        <a class="dropdown-item" href="{% url 'tea-search' %}">搜尋</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        查詢
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        入社
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                        <a class="dropdown-item" href="{% url 'enter:enter-search' %}">茶會調查</a>
-                        <a class="dropdown-item" href="{% url 'join:join-search' %}">入社表單</a>
+                        <a class="dropdown-item" href="{% url 'join-form' %}">表單</a>
+                        <a class="dropdown-item" href="{% url 'join-search' %}">搜尋(審核)</a>
+                        <a class="dropdown-item" href="{% url 'join-show' %}">總覽</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'join:join-view' %}">總覽</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        活動
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                        <a class="dropdown-item" href="{% url 'act-show' %}">總覽</a>
+                        <a class="dropdown-item" href="{% url 'act-add' %}">新增</a>
+                        <a class="dropdown-item" href="#">簽到</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        課程
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
+                        <a class="dropdown-item" href="{% url 'course-show' %}">總覽</a>
+                        <a class="dropdown-item" href="{% url 'course-add' %}">新增</a>
+                        <a class="dropdown-item" href="{% url 'course-checkinselect' %}">簽到</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        其他
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown5">
+                        <a class="dropdown-item" href="{% url 'add-teacher' %}">新增講師</a>
+                        <a class="dropdown-item" href="{% url 'add-location' %}">新增地點</a>
+                        <a class="dropdown-item" href="{% url 'add-category' %}">新增類別</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'add-lesson' %}">新增系級</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'add-attendee' %}">新增參與者</a>
+                    </div>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'join:join-form' %}">入社表單</a>
+                    <a class="nav-link" href="#">入社表單</a>
                 </li>
             {% endif %}
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     統計圖表
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                    <a class="dropdown-item" href="{% url 'chart:chart-joinclub' %}">入社情形</a>
-                    <a class="dropdown-item" href="{% url 'chart:chart-receiveprize' %}">領獎情形</a>
-                    <a class="dropdown-item" href="{% url 'chart:chart-attendance' %}">出席情形</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown6">
+                    <a class="dropdown-item" href="#">入社情形</a>
+                    <a class="dropdown-item" href="#">領獎情形</a>
+                    <a class="dropdown-item" href="#">出席情形</a>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'course:course-show' %}">課程及活動</a>
             </li>
         </ul>
         {% if user.is_authenticated %}
-            <span class="text-white my-2 mr-2 my-sm-0">Hi {{ user.username }}!</span>
+            <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="#">{{ user.username }}</a>
             <a class="btn btn-outline-primary my-2 mr-2 my-sm-0" href="{% url 'admin:index' %}">Admin</a>
-            <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="{% url 'logout' %}">登出</a>
+            <a class="btn btn-outline-info my-2 mr-2 my-sm-0" href="#">登出</a>
         {% else %}
-            <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="{% url 'login' %}">登入</a>
+            <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="#">登入</a>
         {% endif %}
-        {% comment %} <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="{% url 'register' %}">註冊</a> {% endcomment %}
     </div>
 </nav>

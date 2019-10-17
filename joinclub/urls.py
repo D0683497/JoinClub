@@ -15,21 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 from . import views
 
 urlpatterns = [
-    path('', views.index, name="index"),
-    path('comingsoon/', views.comingsoon, name="comingsoon"),
     path('admin/', admin.site.urls),
+    path('add/', include('add.urls')),
+    path('tea/', include('tea.urls')),
     path('join/', include('join.urls')),
-    path('chart/', include('chart.urls')),
-    path('enter/', include('enter.urls')),
-    path('api/', include('api.urls')),
     path('course/', include('course.urls')),
-    path('accounts/', include('django.contrib.auth.urls'))
+    path('act/', include('act.urls')),
+    path('', views.index, name="index"),
 ]
 
 handler400 = views.error_400
 handler403 = views.error_403
 handler404 = views.error_404
 handler500 = views.error_500
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

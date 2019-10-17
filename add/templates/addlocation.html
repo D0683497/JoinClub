@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}新增地點{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>新增地點</h3>
+    <hr>
+    <form action="{% url 'add-location' %}" method="POST" class="mb-5">
+        {% csrf_token %}
+
+        <!-- 名稱 -->
+        <div class="form-group">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 路徑 -->
+        <div class="form-group">
+            {{ form.way.label_tag }}
+            {{ form.way }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.way.errors %}
+                {% for error in form.way.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            <i class="far fa-check-circle"></i>
+            提交
+        </button>
+        
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    {% if form.name.errors %}
+        document.getElementById("id_name").classList.add("is-invalid");
+    {% endif %}
+    {% if form.way.errors %}
+        document.getElementById("id_way").classList.add("is-invalid");
+    {% endif %}
+</script>
+{% endblock %}
+

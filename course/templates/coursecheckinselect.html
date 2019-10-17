@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "bootstrap-select-1.13.9/dist/css/bootstrap-select.min.css" %}">
+<link rel="stylesheet" href="{% static "tempusdominus-bootstrap-4-5.1.2/tempusdominus-bootstrap-4.min.css" %}">
+{% endblock %}
+
+{% block title %}選擇課程簽到{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>選擇課程簽到</h3>
+    <hr>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">編號</th>
+                <th scope="col">種類</th>
+                <th scope="col">課程名稱</th>
+                <th scope="col">簽到</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <th scope="row">{{ course.id }}</th>
+                <td>{{ course.categorys }}</td>
+                <td>{{ course.name }}</td>
+                <td>
+                     <a href="{% url 'course-checkin' course.id %}" class="btn btn-outline-info" role="button">
+                        <i class="fas fa-user-edit"></i>
+                        簽到
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static "bootstrap-select-1.13.9/dist/js/bootstrap-select.min.js" %}"></script>
+<script src="{% static "moment-2.22.2/moment-with-locales.min.js" %}"></script>
+<script src="{% static "tempusdominus-bootstrap-4-5.1.2/tempusdominus-bootstrap-4.min.js" %}"></script>
+<script type="text/javascript">
+
+</script>
+{% endblock %}
+

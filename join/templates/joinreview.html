@@ -1,0 +1,82 @@
+
+{% extends "layout.html" %}
+
+{% block title %}審核{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>審核</h3>
+    <hr>
+    <div class="card border-dark">
+        <h5 class="card-header border-dark bg-transparent">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    {{ member.nid }}
+                </div>
+                <div class="col-auto">
+                    {% comment %} 未入社 {% endcomment %}
+                    {% ifequal member.status "Y" %}
+                        <span class="badge badge-pill badge-secondary">未入社</span>
+                    {% endifequal %}
+                    {% comment %} 已入社 {% endcomment %}
+                    {% ifequal  member.status "M" %}
+                        <span class="badge badge-pill badge-success">已入社</span>
+                    {% endifequal %}
+                    {% comment %} 未付款 {% endcomment %}
+                    {% ifequal member.status "NP" %}
+                        <span class="badge badge-pill badge-danger">未付款</span>
+                    {% endifequal %}
+                </div>
+            </div>
+        </h5>
+        <div class="card-body">
+            <p class="card-text">帳號：{{ member.user.username }}</p>
+            <p class="card-text">電子信箱：{{ member.user.email }}</p>
+            <p class="card-text">姓氏：{{ member.user.last_name }}</p>
+            <p class="card-text">名字：{{ member.user.first_name }}</p>
+            <p class="card-text">學號：{{ member.nid }}</p>
+            <p class="card-text">系級：{{ member.lesson }}</p>
+            <p class="card-text">性別：{{ member.get_sex_display }}</p>
+            <p class="card-text">手機號碼：{{ member.phone }}</p>
+            <p class="card-text">生日：{{ member.birthday }}</p>
+            <p class="card-text">職位：{{ member.positions }}</p>
+            <p class="card-text">狀態：{{ member.get_status_display }}</p>
+        </div>
+        <div class="card-footer border-dark bg-transparent">
+            <div class="row justify-content-between">
+                <form class="form-inline col-auto" action="{% url 'join-review' nid=member.nid %}" method="POST">
+                    {% csrf_token %}
+
+                    {% comment %} 未入社 {% endcomment %}
+                    {% ifequal member.status "Y" %}
+                        <button type="submit" class="btn btn-success mr-1" name="confirm">
+                            <i class="fas fa-gift"></i>
+                            審核通過
+                        </button>
+                    {% endifequal %}
+                    {% comment %} 未付款 {% endcomment %}
+                    {% ifequal member.status "NP" %}
+                        <button type="submit" class="btn btn-success mr-1" name="pay">
+                            <i class="fas fa-gift"></i>
+                            確認付款
+                        </button>
+                    {% endifequal %}
+                </form>
+
+                {% comment %} 已入社 {% endcomment %}
+                {% ifequal  member.status "M" %}
+                    <a href="{% url 'join-search' %}" class="btn btn-primary col-auto" role="button">
+                        <i class="fas fa-reply"></i>
+                        返回搜尋
+                    </a>
+                {% else %}
+                    <a href="{% url 'join-edit' nid=member.nid %}" class="btn btn-primary col-auto" role="button">
+                        <i class="fas fa-reply"></i>
+                        編輯
+                    </a>
+                {% endifequal %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

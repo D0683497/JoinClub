@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "bootstrap-select-1.13.9/dist/css/bootstrap-select.min.css" %}">
+{% endblock %}
+
+{% block title %}入社資料搜尋{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>入社資料搜尋</h3>
+    <hr>
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-scan-tab" data-toggle="tab" href="#nav-scan" role="tab" aria-controls="nav-scan" aria-selected="true">掃描</a>
+            <a class="nav-item nav-link" id="nav-keyin-tab" data-toggle="tab" href="#nav-keyin" role="tab" aria-controls="nav-keyin" aria-selected="false">手動輸入</a>
+        </div>
+    </nav>
+    <div class="tab-content " id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-scan" role="tabpanel" aria-labelledby="nav-scan-tab">
+            
+            <form action="{% url 'join-search' %}" method="POST" class="my-4">
+                {% csrf_token %}
+
+                <!-- 學號 -->
+                <div class="form-group mr-2">
+                    {{ scanform.nid.label_tag }}
+                    {{ scanform.nid }}
+                </div>
+
+                <button type="submit" class="btn btn-outline-secondary mr-2" name="scan">
+                    <i class="fas fa-search"></i>
+                    搜尋
+                </button>
+            </form>
+
+        </div>
+        <div class="tab-pane fade" id="nav-keyin" role="tabpanel" aria-labelledby="nav-keyin-tab">
+            
+            <form action="{% url 'join-search' %}" method="POST" class="my-4">
+                {% csrf_token %}
+
+                <!-- 學號 -->
+                <div class="input-group my-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ keyinform.nid.label }}</span>
+                    </div>
+                    {{ keyinform.nid }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="keyin">
+                            <i class="fas fa-search"></i>
+                            搜尋
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 帳號 -->
+                <div class="input-group my-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ keyinform.username.label }}</span>
+                    </div>
+                    {{ keyinform.username }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="keyin">
+                            <i class="fas fa-search"></i>
+                            搜尋
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 帳號電子信箱 -->
+                <div class="input-group my-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ keyinform.email.label }}</span>
+                    </div>
+                    {{ keyinform.email }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="keyin">
+                            <i class="fas fa-search"></i>
+                            搜尋
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 姓氏 -->
+                <div class="input-group my-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ keyinform.last_name.label }}</span>
+                    </div>
+                    {{ keyinform.last_name }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="keyin">
+                            <i class="fas fa-search"></i>
+                            搜尋
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 名字 -->
+                <div class="input-group my-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ keyinform.first_name.label }}</span>
+                    </div>
+                    {{ keyinform.first_name }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="keyin">
+                            <i class="fas fa-search"></i>
+                            搜尋
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 手機號碼 -->
+                <div class="input-group my-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ keyinform.phone.label }}</span>
+                    </div>
+                    {{ keyinform.phone }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="keyin">
+                            <i class="fas fa-search"></i>
+                            搜尋
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 系級 -->
+                <div class="input-group my-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ keyinform.lesson.label }}</span>
+                    </div>
+                    {{ keyinform.lesson }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="keyin">
+                            <i class="fas fa-search"></i>
+                            搜尋
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <hr>
+
+    {% if memberresult %}
+    <div class="card border-dark" >
+        <div class="card-header border-dark bg-transparent">
+            搜尋結果
+        </div>
+        <div class="list-group">
+            {% for i in memberresult %}
+            <a href="{% url 'join-view' nid=i.nid %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                {{ i.nid }}
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if userresult %}
+    <div class="card border-dark" >
+        <div class="card-header border-dark bg-transparent">
+            搜尋結果
+        </div>
+        <div class="list-group">
+            {% for i in userresult %}
+            <a href="{% url 'join-view' nid=i.memberuser.nid %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                {{ i.memberuser.nid }}
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static "bootstrap-select-1.13.9/dist/js/bootstrap-select.min.js" %}"></script>
+<script type="text/javascript">
+</script>
+{% endblock %}

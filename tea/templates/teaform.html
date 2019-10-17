@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+
+{% block title %}茶會出席調查{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>茶會出席調查</h3>
+    <hr>
+    <form action="{% url 'tea-form' %}" method="POST">
+        {% csrf_token %}
+
+        <!-- 學號 -->
+        <div class="form-group">
+            {{ form.nid.label_tag }}
+            {{ form.nid }}
+            <small id="nidHelp" class="form-text text-muted">{{ form.nid.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.nid.errors %}
+                {% for error in form.nid.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 姓氏 -->
+        <div class="form-group">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name }}
+            <small id="last_nameHelp" class="form-text text-muted">{{ form.last_name.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.last_name.errors %}
+                {% for error in form.last_name.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 名字 -->
+        <div class="form-group">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name }}
+            <small id="first_nameHelp" class="form-text text-muted">{{ form.first_name.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.first_name.errors %}
+                {% for error in form.first_name.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="custom-control custom-checkbox my-3">
+            <input type="checkbox" class="custom-control-input" id="privacy" name="privacy" required>
+            <label class="custom-control-label" for="privacy" style="color:red">本人已閱讀完注意事項並同意將個人資料提供逢甲大學黑客社使用，本社依個人資料保護法、相關法規及學校相關法規進行處理以及利用。</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            <i class="far fa-check-circle"></i>
+            提交
+        </button>
+        
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#teaformModal">
+            <i class="fab fa-readme"></i>
+            點我再次閱讀注意事項
+        </button>
+    </form>
+</div>
+
+<!-- 茶會出席調查注意事項 -->
+<div class="modal fade" id="teaformModal" tabindex="-1" role="dialog" aria-labelledby="teaformModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="teaformModalTitle">茶會出席調查注意事項</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ol>
+                    <li>為了提供您更舒適的場地，請填寫此表單以利本社調查茶會總出席人數</li>
+                    <li>茶會時間: 2019/09/17，<span style="color:red">18:30 開始入場</span>，地點在科航八樓</li>
+                    <li>若茶會當天要入社，請攜帶 200 元社費及學生證</li>
+                    <li>請確認所填資料皆為真實資料，否則將會影響到您的權益</li>
+                    <li>若您不小心填寫錯誤資訊或有任何問題，請洽<a href="https://www.facebook.com/HackerSir.tw/">逢甲大學黑客社粉專</a>，您無法自己更改資訊</li>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">
+                    <i class="fas fa-book"></i>
+                    我已閱讀完注意事項
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    $('#teaformModal').modal();
+
+    {% if form.nid.errors %}
+        document.getElementById("id_nid").classList.add("is-invalid");
+    {% endif %}
+    {% if form.last_name.errors %}
+        document.getElementById("id_last_name").classList.add("is-invalid");
+    {% endif %}
+    {% if form.first_name.errors %}
+        document.getElementById("id_first_name").classList.add("is-invalid");
+    {% endif %}
+</script>
+{% endblock %}

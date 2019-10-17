@@ -1,0 +1,250 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "bootstrap-select-1.13.9/dist/css/bootstrap-select.min.css" %}">
+<link rel="stylesheet" href="{% static "tempusdominus-bootstrap-4-5.1.2/tempusdominus-bootstrap-4.min.css" %}">
+{% endblock %}
+
+{% block title %}入社表單{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>入社表單</h3>
+    <hr>
+    <form action="{% url 'join-form' %}" method="POST" class="mb-5">
+        {% csrf_token %}
+
+        <!-- 帳號 -->
+        <div class="form-group">
+            {{ userform.username.label_tag }}
+            {{ userform.username }}
+            <small id="usernameHelp" class="form-text text-muted">{{ userform.username.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if userform.username.errors %}
+                {% for error in userform.username.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 密碼 -->
+        <div class="form-group">
+            {{ userform.password.label_tag }}
+            {{ userform.password }}
+            <small id="passwordHelp" class="form-text text-muted">{{ userform.password.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if userform.password.errors %}
+                {% for error in userform.password.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 電子信箱 -->
+        <div class="form-group">
+            {{ userform.email.label_tag }}
+            {{ userform.email }}
+            <small id="emailHelp" class="form-text text-muted">{{ userform.email.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if userform.email.errors %}
+                {% for error in userform.email.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 姓氏 -->
+        <div class="form-group">
+            {{ userform.last_name.label_tag }}
+            {{ userform.last_name }}
+            <small id="last_nameHelp" class="form-text text-muted">{{ userform.last_name.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if userform.last_name.errors %}
+                {% for error in userform.last_name.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 名字 -->
+        <div class="form-group">
+            {{ userform.first_name.label_tag }}
+            {{ userform.first_name }}
+            <small id="first_nameHelp" class="form-text text-muted">{{ userform.first_name.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if userform.first_name.errors %}
+                {% for error in userform.first_name.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 學號 -->
+        <div class="form-group">
+            {{ memberform.nid.label_tag }}
+            {{ memberform.nid }}
+            <small id="nidHelp" class="form-text text-muted">{{ memberform.nid.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if memberform.nid.errors %}
+                {% for error in memberform.nid.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 系級 -->
+        <div class="form-group">
+            {{ memberform.lesson.label_tag }}
+            {{ memberform.lesson }}
+            <small id="lessonHelp" class="form-text text-muted">{{ memberform.lesson.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if memberform.lesson.errors %}
+                {% for error in memberform.lesson.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 性別 -->
+        <div class="form-group">
+            {{ memberform.sex.label_tag }}
+            {{ memberform.sex }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if memberform.sex.errors %}
+                {% for error in memberform.sex.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 手機號碼 -->
+        <div class="form-group">
+            {{ memberform.phone.label_tag }}
+            {{ memberform.phone }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if memberform.phone.errors %}
+                {% for error in memberform.phone.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- 生日 -->
+        <div class="form-group">
+            {{ memberform.birthday.label_tag }}
+            {{ memberform.birthday }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if memberform.birthday.errors %}
+                {% for error in memberform.birthday.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="custom-control custom-checkbox my-3">
+            <input type="checkbox" class="custom-control-input" id="privacy" name="privacy" required>
+            <label class="custom-control-label" for="privacy" style="color:red">本人已閱讀完注意事項並同意將個人資料提供逢甲大學黑客社使用，本社依個人資料保護法、相關法規及學校相關法規進行處理以及利用。</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            <i class="far fa-check-circle"></i>
+            提交
+        </button>
+        
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#joinformModal">
+            <i class="fab fa-readme"></i>
+            點我再次閱讀注意事項
+        </button>
+    </form>
+</div>
+
+<!-- 入社表單填寫注意事項 -->
+<div class="modal fade" id="joinformModal" tabindex="-1" role="dialog" aria-labelledby="joinformModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="joinformModalTitle">入社表單填寫注意事項</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ol>
+                    <li>除了性別、手機號碼、生日外其他欄位都是必填</li>
+                    <li>請填寫完正確資料，送出表單後，至櫃台將您的學生證交給事務，確認完您的個人資料後，繳交社費 200 元後，即可入社</li>
+                    <li>請確認所填資料皆為真實資料，否則將會影響到您的權益</li>
+                    <li>若您不小心填寫錯誤資訊或有任何問題，請洽<a href="https://www.facebook.com/HackerSir.tw/">逢甲大學黑客社粉專</a>，您無法自己更改資訊</li>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">
+                    <i class="fas fa-book"></i>
+                    我已閱讀完注意事項
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static "bootstrap-select-1.13.9/dist/js/bootstrap-select.min.js" %}"></script>
+<script src="{% static "moment-2.22.2/moment-with-locales.min.js" %}"></script>
+<script src="{% static "tempusdominus-bootstrap-4-5.1.2/tempusdominus-bootstrap-4.min.js" %}"></script>
+<script type="text/javascript">
+    $('#joinformModal').modal();
+
+    {% if userform.username.errors %}
+        document.getElementById("id_user-username").classList.add("is-invalid");
+    {% endif %}
+    {% if userform.password.errors %}
+        document.getElementById("id_user-password").classList.add("is-invalid");
+    {% endif %}
+    {% if userform.email.errors %}
+        document.getElementById("id_user-email").classList.add("is-invalid");
+    {% endif %}
+    {% if userform.last_name.errors %}
+        document.getElementById("id_user-last_name").classList.add("is-invalid");
+    {% endif %}
+    {% if userform.first_name.errors %}
+        document.getElementById("id_user-first_name").classList.add("is-invalid");
+    {% endif %}
+    {% if memberform.nid.errors %}
+        document.getElementById("id_member-nid").classList.add("is-invalid");
+    {% endif %}
+    {% if memberform.lesson.errors %}
+        document.getElementById("id_member-lesson").classList.add("is-invalid");
+    {% endif %}
+    {% if memberform.sex.errors %}
+        document.getElementById("id_member-sex").classList.add("is-invalid");
+    {% endif %}
+    {% if memberform.phone.errors %}
+        document.getElementById("id_member-phone").classList.add("is-invalid");
+    {% endif %}
+    {% if memberform.birthday.errors %}
+        document.getElementById("id_member-birthday").classList.add("is-invalid");
+    {% endif %}
+</script>
+{% endblock %}
+

@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}茶會簽到{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>茶會資料搜尋</h3>
+    <hr>
+
+    <form action="{% url 'tea-search' %}" method="POST" class="">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">學號</span>
+            </div>
+            <input type="text" class="form-control" name="nid" placeholder="請輸入 NID" aria-label="Search nid" aria-describedby="Search nid">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fas fa-search"></i>
+                    搜尋
+                </button>
+            </div>
+        </div>
+
+        <div class="input-group my-4">
+            <div class="input-group-prepend">
+                <span class="input-group-text">姓氏</span>
+            </div>
+            <input type="text" class="form-control" name="last_name" placeholder="請輸入姓氏" aria-label="Search last_name" aria-describedby="Search last_name">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fas fa-search"></i>
+                    搜尋
+                </button>
+            </div>
+        </div>
+
+        <div class="input-group my-4">
+            <div class="input-group-prepend">
+                <span class="input-group-text">名字</span>
+            </div>
+            <input type="text" class="form-control" name="first_name" placeholder="請輸入名字" aria-label="Search first_name" aria-describedby="Search first_name">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fas fa-search"></i>
+                    搜尋
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+    <hr>
+
+    {% if result %}
+    <div class="card border-dark" >
+        <div class="card-header border-dark bg-transparent">
+            搜尋結果
+        </div>
+        <div class="list-group">
+            {% for i in result %}
+            <a href="{% url 'tea-view' nid=i.nid %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                {{ i.nid }}
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    {% if scanform.nid.errors %}
+        document.getElementById("id_scan-nid").classList.add("is-invalid");
+    {% endif %}
+    {% if keyinform.nid.errors %}
+        document.getElementById("id_keyin-nid").classList.add("is-invalid");
+    {% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}入社資料{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card border-dark">
+        <h5 class="card-header border-dark bg-transparent">
+            <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-auto">
+                    {{ member.nid }}
+                </div>
+                <div class="col-auto">
+                    <a href="#" class="btn btn-danger" role="button">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </div>
+            </div>
+            
+        </h5>
+        <div class="card-body">
+            <p class="card-text">帳號：{{ member.user.username }}</p>
+            <p class="card-text">電子信箱：{{ member.user.email }}</p>
+            <p class="card-text">姓氏：{{ member.user.last_name }}</p>
+            <p class="card-text">名字：{{ member.user.first_name }}</p>
+            <p class="card-text">學號：{{ member.nid }}</p>
+            <p class="card-text">系級：{{ member.lesson }}</p>
+            <p class="card-text">性別：{{ member.get_sex_display }}</p>
+            <p class="card-text">手機號碼：{{ member.phone }}</p>
+            <p class="card-text">生日：{{ member.birthday }}</p>
+            <p class="card-text">職位：{{ member.positions }}</p>
+            <p class="card-text">狀態：{{ member.get_status_display }}</p>
+        </div>
+        <div class="card-footer border-dark bg-transparent">
+            <div class="row justify-content-between">
+                <a href="{% url 'join-review' nid=member.nid %}" class="btn btn-info col-auto" role="button">
+                    <i class="fas fa-gift"></i>
+                    審核頁面
+                </a>
+                <a href="{% url 'join-edit' nid=member.nid %}" class="btn btn-primary col-auto" role="button">
+                    <i class="fas fa-edit"></i>
+                    編輯資料
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

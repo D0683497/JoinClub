@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static "fontawesome-5.11.2/css/all.css" %}">
 {% endblock %}
 
 {% block title %}黑客社{% endblock %}
@@ -67,7 +68,7 @@
         <div class="col-sm-4 my-2">
             <div class="card bg-primary text-white">
                 <span class="fas fa-graduation-cap" style="font-size: 15rem;"></span>
-                <a href="{% url 'course:course-show' %}" class="card-img-overlay" title="課程"></a>
+                <a href="#" class="card-img-overlay" title="課程"></a>
             </div>
         </div>
     </div>
