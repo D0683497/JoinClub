@@ -90,7 +90,11 @@ def prize(request, nid):
     tea = get_object_or_404(Tea, nid=nid)
 
     singin_obj = Status.objects.get(name="已簽到")
-    form_obj = Status.objects.get(name="已填表單")
+    if Status.objects.filter(name="已填表單").exists(): #檢查資料庫是否有已填表單狀態
+        form_obj = Status.objects.get(name="已填表單")
+    else:
+        form_obj = Status.objects.create(name="已填表單")
+
     if Status.objects.filter(name="已領獎").exists(): #檢查資料庫是否有已領獎狀態
         get_obj = Status.objects.get(name="已領獎")
     else:
