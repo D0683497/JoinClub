@@ -1,3 +1,4 @@
+using AspNet.Security.OpenIdConnect.Primitives;
 using JoinClub.Data;
 using JoinClub.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -22,23 +23,42 @@ namespace JoinClub
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(option =>
+            services.AddDbContext<ApplicationDbContext>(options =>
             {
-                option.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseOpenIddict();
             });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(option => {
-                option.Password.RequireDigit = false;
-                option.Password.RequireLowercase = false;
-                option.Password.RequireUppercase = false;
-                option.Password.RequireNonAlphanumeric = false;
-                option.Password.RequiredLength = 4;
-                option.User.RequireUniqueEmail = true;
+            services.Configure<IdentityOptions>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 4;
+                options.User.RequireUniqueEmail = true;
+
+                options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
+                options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
+                options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
+
+            services.AddOpenIddict()
+                .AddCore(options =>
+                {
+                    options.UseEntityFrameworkCore().UseDbContext<ApplicationDbContext>();
+                })
+                .AddServer(options =>
+                {
+                    options.EnableTokenEndpoint("/connect/token");
+                    options.AllowPasswordFlow().AllowRefreshTokenFlow();
+                    options.AcceptAnonymousClients();
+                    options.DisableHttpsRequirement();
+                })
+                .AddValidation();
 
             services.AddControllers();
         }
