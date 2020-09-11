@@ -4,6 +4,7 @@ using JoinClub.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace JoinClub.Controllers
 {
@@ -11,45 +12,35 @@ namespace JoinClub.Controllers
     [Route("api/[controller]/[action]")]
     public class AccountController : ControllerBase
     {
+        private readonly ILogger<AccountController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(ILogger<AccountController> logger, UserManager<ApplicationUser> userManager)
         {
+            _logger = logger;
             _userManager = userManager;
         }
 
-        [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
+        [HttpPost(Name = nameof(Register))]
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            return Ok();
+        }
+        
+        [Authorize]
+        [HttpPost("change-password", Name = nameof(ChangePassword))]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+
+            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
             {
-                var user = new ApplicationUser
-                {
-                    Email = model.Email,
-                    UserName = model.UserName
-                };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    return Ok();
-                }
-                AddErrors(result);
+                return Ok();
             }
 
-            return BadRequest(ModelState);
+            return BadRequest();
         }
-
-        #region Helpers
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-        }
-
-        #endregion
     }
 }

@@ -4,23 +4,44 @@ namespace JoinClub.Models.Account
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "{0} 是必填的")]
-        [EmailAddress(ErrorMessage = "{0} 格式錯誤")]
+        [Required(ErrorMessage = "{0}是必填的")]
+        [EmailAddress(ErrorMessage = "{0}格式錯誤")]
         [Display(Name = "電子郵件")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "{0} 是必填的")]
+        [Required(ErrorMessage = "{0}是必填的")]
+        [RegularExpression(@"^.[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+$",
+            ErrorMessage = "{0}只能是字母或數字或 - . _ @ + # $ % \\ / ( ) [ ] * & : > < ^ ! {{ }} =")]
         [Display(Name = "使用者名稱")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "{0} 是必填的")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "{0}是必填的")]
+        [StringLength(64, ErrorMessage = "{0}長度需介於{2}到{1}之間", MinimumLength = 8)]
         [Display(Name = "密碼")]
         public string Password { get; set; }
+        
+        [Phone(ErrorMessage = "{0}格式錯誤")]
+        [Display(Name = "手機號碼")]
+        public string PhoneNumber { get; set; }
+        
+        [Required(ErrorMessage = "{0}是必填的")]
+        [Display(Name = "學號")]
+        public string NID { get; set; }
+        
+        [Required(ErrorMessage = "{0}是必填的")]
+        [Display(Name = "真實姓名")]
+        public string Name { get; set; }
 
-        [Required(ErrorMessage = "{0} 是必填的")]
-        [Compare("確認密碼", ErrorMessage = "Password and Confirm Password must match")]
-        public string ConfirmPassword { get; set; }
+        [Required(ErrorMessage = "{0}是必填的")]
+        [Display(Name = "學院")]
+        public string College { get; set; }
+
+        [Required(ErrorMessage = "{0}是必填的")]
+        [Display(Name = "系所")]
+        public string Department { get; set; }
+
+        [Required(ErrorMessage = "{0}是必填的")]
+        [Display(Name = "班級")]
+        public string Class { get; set; }
     }
 }
