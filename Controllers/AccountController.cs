@@ -39,7 +39,7 @@ namespace JoinClub.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             var entity = _mapper.Map<ApplicationUser>(model);
-
+            
             using (var scope = await _applicationDbContext.Database.BeginTransactionAsync())
             {
                 try
@@ -84,8 +84,6 @@ namespace JoinClub.Controllers
                     throw;
                 }
             }
-            
-            return Ok();
         }
         
         [Authorize]
