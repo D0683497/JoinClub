@@ -1,16 +1,22 @@
+import { MaterialSharedModule } from './material-shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
+import { AppComponent } from './app.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { MenuComponent } from './menu/menu.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ToolbarComponent,
+    MenuComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +34,8 @@ import { environment } from '../environments/environment';
         ]
       }
     }),
-    HttpClientModule
+    HttpClientModule,
+    MaterialSharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
