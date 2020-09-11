@@ -1,4 +1,3 @@
-using AspNet.Security.OpenIdConnect.Primitives;
 using JoinClub.Data;
 using JoinClub.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -26,7 +25,6 @@ namespace JoinClub
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-                options.UseOpenIddict();
             });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
@@ -40,25 +38,7 @@ namespace JoinClub
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 4;
                 options.User.RequireUniqueEmail = true;
-
-                options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
-                options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
-                options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
-
-            services.AddOpenIddict()
-                .AddCore(options =>
-                {
-                    options.UseEntityFrameworkCore().UseDbContext<ApplicationDbContext>();
-                })
-                .AddServer(options =>
-                {
-                    options.EnableTokenEndpoint("/connect/token");
-                    options.AllowPasswordFlow().AllowRefreshTokenFlow();
-                    options.AcceptAnonymousClients();
-                    options.DisableHttpsRequirement();
-                })
-                .AddValidation();
 
             services.AddControllers();
         }
