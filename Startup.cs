@@ -1,5 +1,5 @@
 using JoinClub.Data;
-using JoinClub.Entities;
+using JoinClub.Entities.Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

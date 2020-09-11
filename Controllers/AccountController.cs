@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using JoinClub.Entities;
+using JoinClub.Entities.Application;
 using JoinClub.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
