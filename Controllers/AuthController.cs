@@ -47,7 +47,7 @@ namespace JoinClub.Controllers
             if (user == null)
             {
                 _logger.LogInformation($"{model.UserName}不存在，登入失敗");
-                return BadRequest();
+                return BadRequest("登入失敗");
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
@@ -59,7 +59,7 @@ namespace JoinClub.Controllers
             }
 
             _logger.LogError($"{model.UserName}登入發生未知錯誤");
-            return BadRequest();
+            return BadRequest("登入失敗");
         }
         
         private async Task<string> GenerateJwtToken(ApplicationUser user)

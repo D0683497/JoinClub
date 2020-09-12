@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         error => {
           Swal.fire({
             icon: 'error',
-            title: '登入失敗',
+            title: error.error,
             confirmButtonText: '確認',
             showCloseButton: true
           });

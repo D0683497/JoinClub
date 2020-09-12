@@ -20,6 +20,12 @@ namespace JoinClub.Models.Account
         [Display(Name = "密碼")]
         public string Password { get; set; }
         
+        [Required(ErrorMessage = "{0}是必填的")]
+        [StringLength(64, ErrorMessage = "{0}長度需介於{2}到{1}之間", MinimumLength = 8)]
+        [Compare("Password", ErrorMessage = "確認密碼與密碼不相同")]
+        [Display(Name = "確認密碼")]
+        public string PasswordConfirm { get; set; }
+        
         [Phone(ErrorMessage = "{0}格式錯誤")]
         [Display(Name = "手機號碼")]
         public string PhoneNumber { get; set; }

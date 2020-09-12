@@ -75,7 +75,7 @@ namespace JoinClub.Controllers
                     
                     _logger.LogWarning($"建立{entity.UserName}失敗");
                     await scope.RollbackAsync();
-                    return BadRequest();
+                    return BadRequest("註冊失敗");
                 }
                 catch (Exception e)
                 {

@@ -2,6 +2,7 @@ export class Register {
   email: string;
   userName: string;
   password: string;
+  passwordConfirm: string;
   phoneNumber: string;
   nid: string;
   name: string;

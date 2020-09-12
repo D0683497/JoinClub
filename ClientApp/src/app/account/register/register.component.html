@@ -1,1 +1,162 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" #formDirective="ngForm" novalidate (ngSubmit)="onSubmit(registerForm.value, formDirective)">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>註冊</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- email -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>電子郵件</mat-label>
+            <input type="email" matInput formControlName="email" required>
+            <mat-error *ngIf="registerForm.controls['email'].hasError('required')">
+              電子郵件是<strong>必填的</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['email'].hasError('email')">
+              電子郵件<strong>格式錯誤</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- userName -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>使用者名稱</mat-label>
+            <input type="text" matInput formControlName="userName" required>
+            <mat-hint>使用者名稱為登入時的帳號</mat-hint>
+            <mat-error *ngIf="registerForm.controls['userName'].hasError('required')">
+              使用者名稱是<strong>必填的</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['userName'].hasError('pattern')">
+              使用者名稱只能是<strong>字母或數字或<code>{{ ' - . @ + # $ % \\ / ( ) [ ] * & : >  ^ ! { } =' }}</code></strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- password -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>密碼</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" matInput formControlName="password" required>
+            <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
+              密碼是<strong>必填的</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['password'].hasError('minlength')">
+              密碼<strong>最少須要八位</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['password'].hasError('maxlength')">
+              密碼<strong>最多六十四位</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- passwordConfirm -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>確認密碼</mat-label>
+            <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput formControlName="passwordConfirm" required>
+            <button type="button" mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
+              <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="registerForm.controls['passwordConfirm'].hasError('required')">
+              確認密碼是<strong>必填的</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['passwordConfirm'].hasError('minlength')">
+              確認密碼<strong>最少須要八位</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['passwordConfirm'].hasError('maxlength')">
+              確認密碼<strong>最多六十四位</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['passwordConfirm'].hasError('mustMatch')">
+              確認密碼與新密碼<strong>不相同</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- phoneNumber -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>手機號碼</mat-label>
+            <input matInput type="tel" formControlName="phoneNumber">
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- NID -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>學號</mat-label>
+            <input matInput type="text" formControlName="nid" required>
+            <mat-error *ngIf="registerForm.controls['nid'].hasError('required')">
+              學號是<strong>必填的</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- Name -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>真實姓名</mat-label>
+            <input matInput type="text" formControlName="name" required>
+            <mat-error *ngIf="registerForm.controls['name'].hasError('required')">
+              真實姓名是<strong>必填的</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- College -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>學院</mat-label>
+            <input matInput type="text" formControlName="college" required>
+            <mat-error *ngIf="registerForm.controls['college'].hasError('required')">
+              學院是<strong>必填的</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- Department -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>系所</mat-label>
+            <input matInput type="text" formControlName="department" required>
+            <mat-error *ngIf="registerForm.controls['department'].hasError('required')">
+              系所是<strong>必填的</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- Class -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>班級</mat-label>
+            <input matInput type="text" formControlName="class" required>
+            <mat-error *ngIf="registerForm.controls['class'].hasError('required')">
+              班級是<strong>必填的</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!registerForm.valid || loading">
+        <mat-icon *ngIf="loading">
+          <mat-spinner color="accent" diameter="20"></mat-spinner>
+        </mat-icon>
+        註冊
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
