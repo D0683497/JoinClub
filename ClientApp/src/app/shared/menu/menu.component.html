@@ -1,0 +1,18 @@
+<mat-nav-list>
+  <!-- Dashboard -->
+  <h3 mat-subheader>Dashboard</h3>
+  <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon mat-list-icon>home</mat-icon>
+    <p mat-line>Home</p>
+  </a>
+  <!-- Account -->
+  <h3 mat-subheader>Account</h3>
+  <a mat-list-item routerLink="/account/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon mat-list-icon>login</mat-icon>
+    <p mat-line>Login</p>
+  </a>
+  <a mat-list-item routerLink="/account/register" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon mat-list-icon>person_add</mat-icon>
+    <p mat-line>Register</p>
+  </a>
+</mat-nav-list>

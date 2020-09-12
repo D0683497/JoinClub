@@ -88,6 +88,21 @@ namespace JoinClub
             
             #endregion
             
+            #region Cors
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("api", policy =>
+                {
+                    policy.WithOrigins(Configuration["FrontendUrl"])
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+
+            #endregion
+            
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
@@ -100,6 +115,7 @@ namespace JoinClub
             }
 
             app.UseRouting();
+            app.UseCors("api");
 
             app.UseAuthentication();
             app.UseAuthorization();

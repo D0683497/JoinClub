@@ -1,0 +1,41 @@
+<form [formGroup]="loginForm" novalidate #formDirective="ngForm" (ngSubmit)="onSubmit(loginForm.value, formDirective)">
+  <mat-card>
+    <mat-card-content>
+      <h2>登入</h2>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>使用者名稱</mat-label>
+        <input type="text" matInput formControlName="userName" required>
+        <mat-error *ngIf="loginForm.controls['userName'].hasError('required')">
+          使用者名稱是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['userName'].hasError('pattern')">
+          使用者名稱只能是<strong>字母或數字或<code>{{ ' - . @ + # $ % \\ / ( ) [ ] * & : >  ^ ! { } =' }}</code></strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>密碼</mat-label>
+        <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" required>
+        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+          密碼是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['password'].hasError('minlength')">
+          密碼<strong>最少須要八位</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['password'].hasError('maxlength')">
+          密碼<strong>最多六十四位</strong>
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid || loading">
+        <mat-icon *ngIf="loading">
+          <mat-spinner color="accent" diameter="20"></mat-spinner>
+        </mat-icon>
+        登入
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
