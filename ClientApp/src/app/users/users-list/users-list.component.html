@@ -1,1 +1,97 @@
-<p>users-list works!</p>
+<mat-card>
+  <!-- Content -->
+  <ng-container *ngIf="!fetchDataError && !loading">
+    <mat-card-header>
+      <mat-card-title>使用者名單</mat-card-title>
+    </mat-card-header>
+    <mat-divider [inset]="true"></mat-divider>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>識別碼</th>
+          <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>電子郵件</th>
+          <td mat-cell *matCellDef="let element">{{element.email}}</td>
+        </ng-container>
+        <!-- UserName Column -->
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef>使用者名稱</th>
+          <td mat-cell *matCellDef="let element">{{element.userName}}</td>
+        </ng-container>
+        <!-- PhoneNumber Column -->
+        <ng-container matColumnDef="phoneNumber">
+          <th mat-header-cell *matHeaderCellDef>手機號碼</th>
+          <td mat-cell *matCellDef="let element">{{element.phoneNumber}}</td>
+        </ng-container>
+        <!-- NID Column -->
+        <ng-container matColumnDef="nid">
+          <th mat-header-cell *matHeaderCellDef>學號</th>
+          <td mat-cell *matCellDef="let element">{{element.nid}}</td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>真實姓名</th>
+          <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
+        <!-- College Column -->
+        <ng-container matColumnDef="college">
+          <th mat-header-cell *matHeaderCellDef>學院</th>
+          <td mat-cell *matCellDef="let element">{{element.college}}</td>
+        </ng-container>
+        <!-- Department Column -->
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef>系所</th>
+          <td mat-cell *matCellDef="let element">{{element.department}}</td>
+        </ng-container>
+        <!-- Class Column -->
+        <ng-container matColumnDef="class">
+          <th mat-header-cell *matHeaderCellDef>班級</th>
+          <td mat-cell *matCellDef="let element">{{element.class}}</td>
+        </ng-container>
+        <!-- Action Button Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-stroked-button [routerLink]="['/raffle/detail', element.id]">詳情</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+    <mat-card-actions>
+      <mat-paginator
+        [pageIndex]="pageIndex"
+        [pageSize]="pageSize"
+        [length]="pageLength"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+        showFirstLastButtons>
+      </mat-paginator>
+    </mat-card-actions>
+  </ng-container>
+  <!-- Loading -->
+  <ng-container *ngIf="loading">
+    <mat-card-header>
+      <mat-card-title>載入中</mat-card-title>
+    </mat-card-header>
+    <mat-divider [inset]="true"></mat-divider>
+    <mat-card-content >
+      <mat-spinner></mat-spinner>
+    </mat-card-content>
+  </ng-container>
+  <!-- Error -->
+  <ng-container *ngIf="fetchDataError">
+    <mat-card-header>
+      <mat-card-title>發生錯誤</mat-card-title>
+    </mat-card-header>
+    <mat-divider [inset]="true"></mat-divider>
+    <mat-card-content >
+      <button mat-stroked-button (click)="reload()" type="button">重新載入</button>
+    </mat-card-content>
+  </ng-container>
+</mat-card>

@@ -3,6 +3,8 @@ using System.Text;
 using AutoMapper;
 using JoinClub.Data;
 using JoinClub.Entities.Application;
+using JoinClub.Repositories;
+using JoinClub.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -104,6 +106,7 @@ namespace JoinClub
             #endregion
             
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
