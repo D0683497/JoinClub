@@ -15,4 +15,10 @@
     <mat-icon mat-list-icon>person_add</mat-icon>
     <p mat-line>Register</p>
   </a>
+  <!-- Users -->
+  <h3 mat-subheader>Users</h3>
+  <a mat-list-item routerLink="/users/list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon mat-list-icon>group</mat-icon>
+    <p mat-line>List</p>
+  </a>
 </mat-nav-list>
