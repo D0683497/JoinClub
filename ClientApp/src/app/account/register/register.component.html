@@ -16,6 +16,9 @@
             <mat-error *ngIf="registerForm.controls['email'].hasError('email')">
               電子郵件<strong>格式錯誤</strong>
             </mat-error>
+            <mat-error *ngIf="registerForm.controls['email'].hasError('server')">
+              {{ registerForm.controls['email'].getError('server') }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -32,6 +35,9 @@
             <mat-error *ngIf="registerForm.controls['userName'].hasError('pattern')">
               使用者名稱只能是<strong>字母或數字或<code>{{ ' - . @ + # $ % \\ / ( ) [ ] * & : >  ^ ! { } =' }}</code></strong>
             </mat-error>
+            <mat-error *ngIf="registerForm.controls['userName'].hasError('server')">
+              {{ registerForm.controls['userName'].getError('server') }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -44,6 +50,7 @@
             <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
               <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
+            <mat-hint>密碼需要數字及小寫字母</mat-hint>
             <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
               密碼是<strong>必填的</strong>
             </mat-error>
@@ -97,6 +104,9 @@
             <input matInput type="text" formControlName="nid" required>
             <mat-error *ngIf="registerForm.controls['nid'].hasError('required')">
               學號是<strong>必填的</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['nid'].hasError('server')">
+              {{ registerForm.controls['nid'].getError('server') }}
             </mat-error>
           </mat-form-field>
         </div>

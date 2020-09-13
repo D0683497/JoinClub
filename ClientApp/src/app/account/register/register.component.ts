@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { Register } from 'src/app/models/register/register.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -40,33 +41,47 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(registerForm: Register, formDirective: FormGroupDirective): void {
     this.loading = true;
-    this.authService.register(registerForm)
-      .subscribe(
-        data => {
-          Swal.fire({
-            icon: 'success',
-            title: '註冊成功',
-            toast: true,
-            position: 'bottom',
-            showConfirmButton: false,
-            timer: 5000,
-            timerProgressBar: true,
-          });
-          this.router.navigate(['/account/login']);
-          formDirective.resetForm();
-          this.registerForm.reset();
-          this.loading = false;
-        },
-        error => {
-          Swal.fire({
-            icon: 'error',
-            title: '註冊失敗',
-            confirmButtonText: '確認',
-            showCloseButton: true
-          });
-          this.loading = false;
+    this.authService.register(registerForm).subscribe(
+      data => {
+        Swal.fire({
+          icon: 'success',
+          title: '註冊成功',
+          toast: true,
+          position: 'bottom',
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: true,
+        });
+        this.router.navigate(['/account/login']);
+        this.loading = false;
+      },
+      (e: HttpErrorResponse) => {
+        if (e.status === 400) {
+          if (e.error.errors.NID) {
+            for (const field of e.error.errors.NID) {
+              this.registerForm.controls.nid.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.Email) {
+            for (const field of e.error.errors.Email) {
+              this.registerForm.controls.email.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.UserName) {
+            for (const field of e.error.errors.UserName) {
+              this.registerForm.controls.userName.setErrors({ server: field });
+            }
+          }
         }
-      );
+        Swal.fire({
+          icon: 'error',
+          title: '註冊失敗',
+          confirmButtonText: '確認',
+          showCloseButton: true
+        });
+        this.loading = false;
+      }
+    );
   }
 
 }
