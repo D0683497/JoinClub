@@ -30,6 +30,7 @@ namespace JoinClub.Models.Account
         public string PasswordConfirm { get; set; }
         
         [Phone(ErrorMessage = "{0}格式錯誤")]
+        [PhoneNumberUnique]
         [Display(Name = "手機號碼")]
         public string PhoneNumber { get; set; }
         

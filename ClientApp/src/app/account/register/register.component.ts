@@ -72,6 +72,11 @@ export class RegisterComponent implements OnInit {
               this.registerForm.controls.userName.setErrors({ server: field });
             }
           }
+          if (e.error.errors.PhoneNumber) {
+            for (const field of e.error.errors.PhoneNumber) {
+              this.registerForm.controls.phoneNumber.setErrors({ server: field });
+            }
+          }
         }
         Swal.fire({
           icon: 'error',

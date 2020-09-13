@@ -93,6 +93,9 @@
           <mat-form-field class="full-width">
             <mat-label>手機號碼</mat-label>
             <input matInput type="tel" formControlName="phoneNumber">
+            <mat-error *ngIf="registerForm.controls['phoneNumber'].hasError('server')">
+              {{ registerForm.controls['phoneNumber'].getError('server') }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
