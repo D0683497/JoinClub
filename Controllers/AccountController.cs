@@ -40,50 +40,14 @@ namespace JoinClub.Controllers
         {
             var entity = _mapper.Map<ApplicationUser>(model);
             
-            using (var scope = await _applicationDbContext.Database.BeginTransactionAsync())
+            var createUserResult = await _userManager.CreateAsync(entity, model.Password);
+            if (createUserResult.Succeeded)
             {
-                try
-                {
-                    var createUserResult = await _userManager.CreateAsync(entity, model.Password);
-                    if (createUserResult.Succeeded)
-                    {
-                        var currentUser = await _userManager.FindByNameAsync(entity.UserName);
-                        _logger.LogInformation($"建立{currentUser.Id}成功");
-                        var addRoleResult = await _userManager.AddToRoleAsync(currentUser, "Member");
-                        if (addRoleResult.Succeeded)
-                        {
-                            _logger.LogInformation($"添加{currentUser.Id}角色成功");
-                            var claims = new List<Claim>
-                            {
-                                new Claim(ClaimTypes.NameIdentifier, string.IsNullOrEmpty(currentUser.Id) ? "" : currentUser.Id),
-                                new Claim(ClaimTypes.Name, string.IsNullOrEmpty(currentUser.UserName) ? "" : currentUser.UserName),
-                                new Claim(ClaimTypes.Email, string.IsNullOrEmpty(currentUser.Email) ? "" : currentUser.Email),
-                                new Claim(ClaimTypes.MobilePhone, string.IsNullOrEmpty(currentUser.PhoneNumber) ? "" : currentUser.PhoneNumber)
-                            };
-                            var addClaimResult = await _userManager.AddClaimsAsync(currentUser, claims);
-                            if (addClaimResult.Succeeded)
-                            {
-                                _logger.LogInformation($"添加{currentUser.Id}聲明成功");
-                                await scope.CommitAsync();
-                                _logger.LogInformation($"註冊{currentUser.Id}成功");
-                                return Ok();
-                            }
-                            _logger.LogError($"添加{currentUser.Id}聲明失敗");
-                        }
-                        _logger.LogError($"添加{currentUser.Id}角色失敗");
-                    }
-                    
-                    _logger.LogWarning($"建立{entity.UserName}失敗");
-                    await scope.RollbackAsync();
-                    return BadRequest("註冊失敗");
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError($"註冊{entity.UserName}失敗");
-                    _logger.LogError($"{e.ToString()}");
-                    throw;
-                }
+                _logger.LogInformation($"註冊{model.UserName}成功");
+                return Ok();
             }
+            
+            return BadRequest("註冊失敗");
         }
         
         [Authorize]

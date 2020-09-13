@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,7 +51,19 @@ namespace JoinClub.Controllers
                 return BadRequest("登入失敗");
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            var role = await _userManager.GetRolesAsync(user);
+            if (!role.Any())
+            {
+                _logger.LogError($"{model.UserName}尚未入社");
+                return BadRequest("尚未入社");
+            }
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, true);
+            if (result.IsLockedOut)
+            {    
+                _logger.LogError($"{model.UserName}帳號被鎖定");
+                return BadRequest("帳號被鎖定");
+            }
             if (result.Succeeded)
             {
                 var token = await GenerateJwtToken(user);

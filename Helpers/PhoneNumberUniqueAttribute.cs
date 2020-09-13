@@ -9,8 +9,13 @@ namespace JoinClub.Helpers
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (value == null)
+            {
+                return ValidationResult.Success;
+            }
+            
             var userManager = (UserManager<ApplicationUser>)validationContext.GetService(typeof(UserManager<ApplicationUser>));
-            var result = userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == value.ToString());
+            var result = userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == value.ToString()).Result;
 
             if (result != null)
             {

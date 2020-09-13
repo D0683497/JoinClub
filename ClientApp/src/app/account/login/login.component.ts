@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/models/login/login.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -31,33 +32,48 @@ export class LoginComponent implements OnInit {
 
   onSubmit(loginForm: Login, formDirective: FormGroupDirective): void {
     this.loading = true;
-    this.authService.login(loginForm)
-      .subscribe(
-        data => {
-          Swal.fire({
-            icon: 'success',
-            title: '登入成功',
-            toast: true,
-            position: 'bottom',
-            showConfirmButton: false,
-            timer: 5000,
-            timerProgressBar: true,
-          });
-          this.router.navigate(['/']);
-          formDirective.resetForm();
-          this.loginForm.reset();
-          this.loading = false;
-        },
-        error => {
+    this.authService.login(loginForm).subscribe(
+      data => {
+        Swal.fire({
+          icon: 'success',
+          title: '登入成功',
+          toast: true,
+          position: 'bottom',
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: true,
+        });
+        this.router.navigate(['/']);
+        this.loading = false;
+      },
+      (error: HttpErrorResponse) => {
+        if (error.error === '帳號被鎖定') {
           Swal.fire({
             icon: 'error',
-            title: error.error,
+            title: '帳號被鎖定',
+            confirmButtonText: '確認',
+            showCloseButton: true
+          });
+          this.loading = false;
+        } else if (error.error === '尚未入社') {
+          Swal.fire({
+            icon: 'error',
+            title: '尚未入社',
+            confirmButtonText: '確認',
+            showCloseButton: true
+          });
+          this.loading = false;
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: '登入失敗',
             confirmButtonText: '確認',
             showCloseButton: true
           });
           this.loading = false;
         }
-      );
+      }
+    );
   }
 
 }
