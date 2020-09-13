@@ -27,6 +27,7 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+    this.initPaginator();
   }
 
   onPageChange(event: PageEvent): void {
@@ -57,7 +58,7 @@ export class UsersListComponent implements OnInit {
   reload(): void {
     this.fetchDataError = false;
     this.loading = true;
-    this.getData();
+    this.ngOnInit();
   }
 
   initPaginator(): void {

@@ -3,12 +3,37 @@ mat-card {
   margin: 20px;
 }
 
-mat-card-content {
+.center-card {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
-table {
-  width: 100%;
+@media screen and (max-width: 768px) {
+  .mat-table .mat-header-cell {
+    display: none;
+  }
+
+  .mat-table .mat-row {
+    border-bottom: 5px solid #ddd;
+    display: block;
+  }
+
+  .mat-table .mat-cell {
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3%;
+    padding-right: 10px;
+  }
+
+  .mat-table .mat-cell:before {
+    content: attr(data-label);
+    margin-left: 10px;
+  }
+
+  .mat-table .mat-cell:first-child {
+    margin-top: 3%;
+  }
 }
