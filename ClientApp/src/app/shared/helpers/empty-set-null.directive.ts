@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Output, Self } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
@@ -6,18 +6,13 @@ import { NgControl } from '@angular/forms';
 })
 export class EmptySetNullDirective {
 
-  constructor(private el: ElementRef, private control: NgControl) { }
+  @Output() EmptyToNull = new EventEmitter<string>();
 
-  @HostListener('input', ['$event.target'])
-  onEvent(target: HTMLInputElement): void {
-    console.log(target.value);
-    // this.control.viewToModelUpdate((target.value === '') ? null : target.value);
-    if (this.control.valueChanges != null) {
-      this.control.valueChanges.subscribe((value: string) => {
-        if (value === '') {
-          this.control.viewToModelUpdate(null);
-        }
-      });
+  constructor(@Self() private ngControl: NgControl) { }
+
+  @HostListener('keyup', ['$event']) onKeyDowns(event: KeyboardEvent): void {
+    if (this.ngControl.value?.trim() === '') {
+        this.ngControl.reset(null);
     }
   }
 

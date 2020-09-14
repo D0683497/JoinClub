@@ -17,9 +17,5 @@ namespace JoinClub.Repositories.Interfaces
         Task<bool> CanUpdateUserPhoneNumberAsync(string userId, string updatePhoneNumber);
 
         Task<bool> CanUpdateUserNIDAsync(string userId, string updateNID);
-
-        void UpdateUser(ApplicationUser user);
-
-        Task<bool> SaveAsync();
     }
 }

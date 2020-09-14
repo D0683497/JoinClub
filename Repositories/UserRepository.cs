@@ -60,7 +60,7 @@ namespace JoinClub.Repositories
         
         public async Task<bool> CanUpdateUserPhoneNumberAsync(string userId, string updatePhoneNumber)
         {
-            if (updatePhoneNumber == String.Empty) { return true; }
+            if (string.IsNullOrEmpty(updatePhoneNumber)) { return true; }
             
             var user = await _applicationDbContext.Users
                 .Where(x => x.PhoneNumber == updatePhoneNumber)
@@ -84,23 +84,6 @@ namespace JoinClub.Repositories
             if (user.Id == userId) { return true; }
 
             return false;
-        }
-
-        public void UpdateUser(ApplicationUser user)
-        {
-            _applicationDbContext.Entry(user).Property("Email").IsModified = true;
-            _applicationDbContext.Entry(user).Property("UserName").IsModified = true;
-            _applicationDbContext.Entry(user).Property("PhoneNumber").IsModified = true;
-            _applicationDbContext.Entry(user).Property("NID").IsModified = true;
-            _applicationDbContext.Entry(user).Property("Name").IsModified = true;
-            _applicationDbContext.Entry(user).Property("College").IsModified = true;
-            _applicationDbContext.Entry(user).Property("Department").IsModified = true;
-            _applicationDbContext.Entry(user).Property("Class").IsModified = true;
-        }
-        
-        public async Task<bool> SaveAsync()
-        {
-            return await _applicationDbContext.SaveChangesAsync() >= 0;
         }
     }
 }
