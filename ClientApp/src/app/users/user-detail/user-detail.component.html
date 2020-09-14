@@ -84,6 +84,9 @@
           <mat-error *ngIf="userDetailForm.controls['name'].hasError('required')">
             真實姓名是<strong>必填的</strong>
           </mat-error>
+          <mat-error *ngIf="userDetailForm.controls['name'].hasError('server')">
+            {{ userDetailForm.controls['name'].getError('server') }}
+          </mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -95,6 +98,9 @@
           <input matInput type="text" formControlName="college" required>
           <mat-error *ngIf="userDetailForm.controls['college'].hasError('required')">
             學院是<strong>必填的</strong>
+          </mat-error>
+          <mat-error *ngIf="userDetailForm.controls['college'].hasError('server')">
+            {{ userDetailForm.controls['college'].getError('server') }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -108,6 +114,9 @@
           <mat-error *ngIf="userDetailForm.controls['department'].hasError('required')">
             系所是<strong>必填的</strong>
           </mat-error>
+          <mat-error *ngIf="userDetailForm.controls['department'].hasError('server')">
+            {{ userDetailForm.controls['department'].getError('server') }}
+          </mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -119,6 +128,9 @@
           <input matInput type="text" formControlName="class" required>
           <mat-error *ngIf="userDetailForm.controls['class'].hasError('required')">
             班級是<strong>必填的</strong>
+          </mat-error>
+          <mat-error *ngIf="userDetailForm.controls['class'].hasError('server')">
+            {{ userDetailForm.controls['class'].getError('server') }}
           </mat-error>
         </mat-form-field>
       </div>

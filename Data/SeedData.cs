@@ -170,7 +170,7 @@ namespace JoinClub.Data
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.LogError($"發生未知錯誤\n{e.ToString()}");
                 throw;
             }
         }

@@ -52,11 +52,6 @@ export class UserDetailComponent implements OnInit {
               this.userDetailForm.controls.email.setErrors({ server: field });
             }
           }
-          if (e.error.errors.NID) {
-            for (const field of e.error.errors.NID) {
-              this.userDetailForm.controls.nid.setErrors({ server: field });
-            }
-          }
           if (e.error.errors.UserName) {
             for (const field of e.error.errors.UserName) {
               this.userDetailForm.controls.userName.setErrors({ server: field });
@@ -65,6 +60,31 @@ export class UserDetailComponent implements OnInit {
           if (e.error.errors.PhoneNumber) {
             for (const field of e.error.errors.PhoneNumber) {
               this.userDetailForm.controls.phoneNumber.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.NID) {
+            for (const field of e.error.errors.NID) {
+              this.userDetailForm.controls.nid.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.Name) {
+            for (const field of e.error.errors.Name) {
+              this.userDetailForm.controls.name.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.College) {
+            for (const field of e.error.errors.College) {
+              this.userDetailForm.controls.college.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.Department) {
+            for (const field of e.error.errors.Department) {
+              this.userDetailForm.controls.department.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.Class) {
+            for (const field of e.error.errors.Class) {
+              this.userDetailForm.controls.class.setErrors({ server: field });
             }
           }
         }

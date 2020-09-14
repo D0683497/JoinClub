@@ -60,6 +60,9 @@
             <mat-error *ngIf="registerForm.controls['password'].hasError('maxlength')">
               密碼<strong>最多六十四位</strong>
             </mat-error>
+            <mat-error *ngIf="registerForm.controls['password'].hasError('server')">
+              {{ registerForm.controls['password'].getError('server') }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -84,6 +87,9 @@
             <mat-error *ngIf="registerForm.controls['passwordConfirm'].hasError('mustMatch')">
               確認密碼與新密碼<strong>不相同</strong>
             </mat-error>
+            <mat-error *ngIf="registerForm.controls['passwordConfirm'].hasError('server')">
+              {{ registerForm.controls['passwordConfirm'].getError('server') }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -92,7 +98,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>手機號碼</mat-label>
-            <input matInput type="tel" formControlName="phoneNumber">
+            <input matInput type="tel" formControlName="phoneNumber" appEmptySetNull>
             <mat-error *ngIf="registerForm.controls['phoneNumber'].hasError('server')">
               {{ registerForm.controls['phoneNumber'].getError('server') }}
             </mat-error>
@@ -123,6 +129,9 @@
             <mat-error *ngIf="registerForm.controls['name'].hasError('required')">
               真實姓名是<strong>必填的</strong>
             </mat-error>
+            <mat-error *ngIf="registerForm.controls['name'].hasError('server')">
+              {{ registerForm.controls['name'].getError('server') }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -134,6 +143,9 @@
             <input matInput type="text" formControlName="college" required>
             <mat-error *ngIf="registerForm.controls['college'].hasError('required')">
               學院是<strong>必填的</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['college'].hasError('server')">
+              {{ registerForm.controls['college'].getError('server') }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -147,6 +159,9 @@
             <mat-error *ngIf="registerForm.controls['department'].hasError('required')">
               系所是<strong>必填的</strong>
             </mat-error>
+            <mat-error *ngIf="registerForm.controls['department'].hasError('server')">
+              {{ registerForm.controls['department'].getError('server') }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -158,6 +173,9 @@
             <input matInput type="text" formControlName="class" required>
             <mat-error *ngIf="registerForm.controls['class'].hasError('required')">
               班級是<strong>必填的</strong>
+            </mat-error>
+            <mat-error *ngIf="registerForm.controls['class'].hasError('server')">
+              {{ registerForm.controls['class'].getError('server') }}
             </mat-error>
           </mat-form-field>
         </div>

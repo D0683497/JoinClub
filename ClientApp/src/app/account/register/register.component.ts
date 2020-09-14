@@ -57,11 +57,6 @@ export class RegisterComponent implements OnInit {
       },
       (e: HttpErrorResponse) => {
         if (e.status === 400) {
-          if (e.error.errors.NID) {
-            for (const field of e.error.errors.NID) {
-              this.registerForm.controls.nid.setErrors({ server: field });
-            }
-          }
           if (e.error.errors.Email) {
             for (const field of e.error.errors.Email) {
               this.registerForm.controls.email.setErrors({ server: field });
@@ -72,9 +67,44 @@ export class RegisterComponent implements OnInit {
               this.registerForm.controls.userName.setErrors({ server: field });
             }
           }
+          if (e.error.errors.Password) {
+            for (const field of e.error.errors.Password) {
+              this.registerForm.controls.password.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.PasswordConfirm) {
+            for (const field of e.error.errors.PasswordConfirm) {
+              this.registerForm.controls.passwordConfirm.setErrors({ server: field });
+            }
+          }
           if (e.error.errors.PhoneNumber) {
             for (const field of e.error.errors.PhoneNumber) {
               this.registerForm.controls.phoneNumber.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.NID) {
+            for (const field of e.error.errors.NID) {
+              this.registerForm.controls.nid.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.Name) {
+            for (const field of e.error.errors.Name) {
+              this.registerForm.controls.name.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.College) {
+            for (const field of e.error.errors.College) {
+              this.registerForm.controls.college.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.Department) {
+            for (const field of e.error.errors.Department) {
+              this.registerForm.controls.department.setErrors({ server: field });
+            }
+          }
+          if (e.error.errors.Class) {
+            for (const field of e.error.errors.Class) {
+              this.registerForm.controls.class.setErrors({ server: field });
             }
           }
         }
