@@ -5,62 +5,97 @@
       <mat-card-title>使用者列表</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-table mat-table [dataSource]="dataSource">
-        <!-- Id Column -->
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef>識別碼</mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="識別碼">{{element.id}}</mat-cell>
-        </ng-container>
-        <!-- Email Column -->
-        <ng-container matColumnDef="email">
-          <mat-header-cell *matHeaderCellDef>電子郵件</mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="電子郵件">{{element.email}}</mat-cell>
-        </ng-container>
-        <!-- UserName Column -->
-        <ng-container matColumnDef="userName">
-          <mat-header-cell *matHeaderCellDef>使用者名稱</mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="使用者名稱">{{element.userName}}</mat-cell>
-        </ng-container>
-        <!-- PhoneNumber Column -->
-        <ng-container matColumnDef="phoneNumber">
-          <mat-header-cell *matHeaderCellDef>手機號碼</mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="手機號碼">{{element.phoneNumber}}</mat-cell>
-        </ng-container>
-        <!-- NID Column -->
-        <ng-container matColumnDef="nid">
-          <mat-header-cell *matHeaderCellDef>學號</mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="學號">{{element.nid}}</mat-cell>
-        </ng-container>
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef>真實姓名</mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="真實姓名">{{element.name}}</mat-cell>
-        </ng-container>
-        <!-- College Column -->
-        <ng-container matColumnDef="college">
-          <mat-header-cell *matHeaderCellDef>學院</mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="學院">{{element.college}}</mat-cell>
-        </ng-container>
-        <!-- Department Column -->
-        <ng-container matColumnDef="department">
-          <mat-header-cell *matHeaderCellDef>系所</mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="系所">{{element.department}}</mat-cell>
-        </ng-container>
-        <!-- Class Column -->
-        <ng-container matColumnDef="class">
-          <mat-header-cell *matHeaderCellDef>班級</mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="班級">{{element.class}}</mat-cell>
-        </ng-container>
-        <!-- Action Button Column -->
-        <ng-container matColumnDef="action">
-          <mat-header-cell *matHeaderCellDef></mat-header-cell>
-          <mat-cell *matCellDef="let element" data-label="">
-            <button type="button" mat-button (click)="showDetailDialog(element)">詳情</button>
-          </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
+      <ng-container *ngIf="!(isHandset$ | async); else showCard">
+        <mat-table mat-table [dataSource]="dataSource">
+          <!-- Id Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>識別碼</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="識別碼">{{element.id}}</mat-cell>
+          </ng-container>
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef>電子郵件</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="電子郵件">{{element.email}}</mat-cell>
+          </ng-container>
+          <!-- UserName Column -->
+          <ng-container matColumnDef="userName">
+            <mat-header-cell *matHeaderCellDef>使用者名稱</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="使用者名稱">{{element.userName}}</mat-cell>
+          </ng-container>
+          <!-- PhoneNumber Column -->
+          <ng-container matColumnDef="phoneNumber">
+            <mat-header-cell *matHeaderCellDef>手機號碼</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="手機號碼">{{element.phoneNumber}}</mat-cell>
+          </ng-container>
+          <!-- NID Column -->
+          <ng-container matColumnDef="nid">
+            <mat-header-cell *matHeaderCellDef>學號</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="學號">{{element.nid}}</mat-cell>
+          </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>真實姓名</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="真實姓名">{{element.name}}</mat-cell>
+          </ng-container>
+          <!-- College Column -->
+          <ng-container matColumnDef="college">
+            <mat-header-cell *matHeaderCellDef>學院</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="學院">{{element.college}}</mat-cell>
+          </ng-container>
+          <!-- Department Column -->
+          <ng-container matColumnDef="department">
+            <mat-header-cell *matHeaderCellDef>系所</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="系所">{{element.department}}</mat-cell>
+          </ng-container>
+          <!-- Class Column -->
+          <ng-container matColumnDef="class">
+            <mat-header-cell *matHeaderCellDef>班級</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="班級">{{element.class}}</mat-cell>
+          </ng-container>
+          <!-- Action Button Column -->
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="">
+              <button type="button" mat-button (click)="showDetailDialog(element)">詳情</button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </ng-container>
+      <ng-template #showCard>
+        <article *ngFor="let user of dataSource.data">
+          <section>
+            <p class="mat-title">學號</p>
+            <p class="mat-title">{{user.nid}}</p>
+          </section>
+          <mat-divider [inset]="true"></mat-divider>
+          <section>
+            <p>真實姓名</p>
+            <p>{{user.name}}</p>
+          </section>
+          <mat-divider [inset]="true"></mat-divider>
+          <section>
+            <p>學院</p>
+            <p>{{user.college}}</p>
+          </section>
+          <mat-divider [inset]="true"></mat-divider>
+          <section>
+            <p>系所</p>
+            <p>{{user.department}}</p>
+          </section>
+          <mat-divider [inset]="true"></mat-divider>
+          <section>
+            <p>班級</p>
+            <p>{{user.class}}</p>
+          </section>
+          <mat-divider [inset]="true"></mat-divider>
+          <section>
+            <p>其他操作</p>
+            <button type="button" mat-button (click)="showDetailDialog(user)">詳情</button>
+          </section>
+        </article>
+      </ng-template>
     </mat-card-content>
     <mat-card-actions>
       <mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [length]="pageLength" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>

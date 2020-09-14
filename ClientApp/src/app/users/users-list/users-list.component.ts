@@ -6,6 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users-list',
@@ -16,12 +19,18 @@ export class UsersListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+
   dataSource = new MatTableDataSource<User>();
   pageIndex = 0;
   pageSize = 10;
   pageLength: number;
   pageSizeOptions: number[] = [10, 20, 30, 40, 50];
-  displayedColumns: string[] = ['id', 'email', 'userName', 'phoneNumber', 'nid', 'name', 'college', 'department', 'class', 'action'];
+  displayedColumns: string[] = ['nid', 'name', 'college', 'department', 'class', 'action'];
   fetchDataError = false;
   loading = true;
 
@@ -29,7 +38,8 @@ export class UsersListComponent implements OnInit {
     private userService: UserService,
     private snackBar: MatSnackBar,
     private matPaginatorIntl: MatPaginatorIntl,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
     this.getData();
