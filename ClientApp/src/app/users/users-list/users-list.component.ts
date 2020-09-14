@@ -1,9 +1,11 @@
+import { UserDetailComponent } from '../user-detail/user-detail.component';
 import { User } from '../../models/user/user.model';
 import { UserService } from '../../services/user/user.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-users-list',
@@ -23,7 +25,11 @@ export class UsersListComponent implements OnInit {
   fetchDataError = false;
   loading = true;
 
-  constructor(private userService: UserService, private snackBar: MatSnackBar, private matPaginatorIntl: MatPaginatorIntl) { }
+  constructor(
+    private userService: UserService,
+    private snackBar: MatSnackBar,
+    private matPaginatorIntl: MatPaginatorIntl,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getData();
@@ -40,7 +46,6 @@ export class UsersListComponent implements OnInit {
     this.userService.getAllItemsLength().subscribe(
       data => { this.pageLength = data; }
     );
-
     this.userService.getAllUsers(this.pageIndex + 1, this.pageSize).subscribe(
       data => {
         this.dataSource.data = data;
@@ -59,6 +64,13 @@ export class UsersListComponent implements OnInit {
     this.fetchDataError = false;
     this.loading = true;
     this.ngOnInit();
+  }
+
+  showDetailDialog(user: User): void {
+    const dialogRef = this.dialog.open(UserDetailComponent, {data: user});
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   initPaginator(): void {

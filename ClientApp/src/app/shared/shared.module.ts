@@ -7,9 +7,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialSharedModule } from './material-shared/material-shared.module';
 import { HomeComponent } from './home/home.component';
+import { EmptySetNullDirective } from './helpers/empty-set-null.directive';
 
 @NgModule({
-  declarations: [LayoutComponent, ToolbarComponent, MenuComponent, HomeComponent],
+  declarations: [LayoutComponent, ToolbarComponent, MenuComponent, HomeComponent, EmptySetNullDirective],
   imports: [
     CommonModule,
     RouterModule,
@@ -22,7 +23,8 @@ import { HomeComponent } from './home/home.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialSharedModule
+    MaterialSharedModule,
+    EmptySetNullDirective
   ]
 })
 export class SharedModule { }

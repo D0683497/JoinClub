@@ -3,19 +3,14 @@ using JoinClub.Entities.Application;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace JoinClub.Helpers
+namespace JoinClub.Helpers.Account
 {
-    public class PhoneNumberUniqueAttribute : ValidationAttribute
+    public class NIDUniqueAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value == null)
-            {
-                return ValidationResult.Success;
-            }
-            
             var userManager = (UserManager<ApplicationUser>)validationContext.GetService(typeof(UserManager<ApplicationUser>));
-            var result = userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == value.ToString()).Result;
+            var result = userManager.Users.FirstOrDefaultAsync(x => x.NID == value.ToString()).Result;
 
             if (result != null)
             {
@@ -25,9 +20,9 @@ namespace JoinClub.Helpers
             return ValidationResult.Success;
         }
         
-        private string GetErrorMessage(string phoneNumber)
-        {
-            return $"{phoneNumber} 已經被使用";
+        private string GetErrorMessage(string NID)
+        {    
+            return $"{NID}已經被使用";
         }
     }
 }

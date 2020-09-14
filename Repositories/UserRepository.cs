@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JoinClub.Data;
@@ -29,6 +30,77 @@ namespace JoinClub.Repositories
         {
             return await _applicationDbContext.Users
                 .CountAsync();
+        }
+
+        public async Task<bool> CanUpdateUserEmailAsync(string userId, string updateEmail)
+        {
+            var user = await _applicationDbContext.Users
+                .Where(x => x.Email == updateEmail)
+                .FirstOrDefaultAsync();
+            
+            if (user == null) { return true; }
+
+            if (user.Id == userId) { return true; }
+
+            return false;
+        }
+        
+        public async Task<bool> CanUpdateUserUserNameAsync(string userId, string updateUserName)
+        {
+            var user = await _applicationDbContext.Users
+                .Where(x => x.UserName == updateUserName)
+                .FirstOrDefaultAsync();
+            
+            if (user == null) { return true; }
+
+            if (user.Id == userId) { return true; }
+
+            return false;
+        }
+        
+        public async Task<bool> CanUpdateUserPhoneNumberAsync(string userId, string updatePhoneNumber)
+        {
+            if (updatePhoneNumber == String.Empty) { return true; }
+            
+            var user = await _applicationDbContext.Users
+                .Where(x => x.PhoneNumber == updatePhoneNumber)
+                .FirstOrDefaultAsync();
+            
+            if (user == null) { return true; }
+
+            if (user.Id == userId) { return true; }
+
+            return false;
+        }
+        
+        public async Task<bool> CanUpdateUserNIDAsync(string userId, string updateNID)
+        {
+            var user = await _applicationDbContext.Users
+                .Where(x => x.NID == updateNID)
+                .FirstOrDefaultAsync();
+            
+            if (user == null) { return true; }
+
+            if (user.Id == userId) { return true; }
+
+            return false;
+        }
+
+        public void UpdateUser(ApplicationUser user)
+        {
+            _applicationDbContext.Entry(user).Property("Email").IsModified = true;
+            _applicationDbContext.Entry(user).Property("UserName").IsModified = true;
+            _applicationDbContext.Entry(user).Property("PhoneNumber").IsModified = true;
+            _applicationDbContext.Entry(user).Property("NID").IsModified = true;
+            _applicationDbContext.Entry(user).Property("Name").IsModified = true;
+            _applicationDbContext.Entry(user).Property("College").IsModified = true;
+            _applicationDbContext.Entry(user).Property("Department").IsModified = true;
+            _applicationDbContext.Entry(user).Property("Class").IsModified = true;
+        }
+        
+        public async Task<bool> SaveAsync()
+        {
+            return await _applicationDbContext.SaveChangesAsync() >= 0;
         }
     }
 }

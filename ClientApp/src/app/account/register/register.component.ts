@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Register } from 'src/app/models/register/register.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  onSubmit(registerForm: Register, formDirective: FormGroupDirective): void {
+  onSubmit(registerForm: Register): void {
     this.loading = true;
     this.authService.register(registerForm).subscribe(
       data => {

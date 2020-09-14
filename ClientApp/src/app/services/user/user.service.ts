@@ -29,4 +29,10 @@ export class UserService {
     return this.http.get<number>(url, this.httpOptions);
   }
 
+  // 修改用戶資料
+  updateUser(userId: string, user: User): Observable<object> {
+    const url = `${this.urlRoot}/users/${userId}`;
+    return this.http.post(url, user, this.httpOptions);
+  }
+
 }

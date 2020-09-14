@@ -2,14 +2,14 @@
 using JoinClub.Entities.Application;
 using Microsoft.AspNetCore.Identity;
 
-namespace JoinClub.Helpers
+namespace JoinClub.Helpers.Account
 {
-    public class EmailUniqueAttribute : ValidationAttribute
+    public class UserNameUniqueAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var userManager = (UserManager<ApplicationUser>)validationContext.GetService(typeof(UserManager<ApplicationUser>));
-            var result = userManager.FindByEmailAsync(value.ToString()).Result;
+            var result = userManager.FindByNameAsync(value.ToString()).Result;
 
             if (result != null)
             {
@@ -19,9 +19,9 @@ namespace JoinClub.Helpers
             return ValidationResult.Success;
         }
         
-        private string GetErrorMessage(string email)
+        private string GetErrorMessage(string userName)
         {
-            return $"{email} 已經被使用";
+            return $"{userName}已經被使用";
         }
     }
 }

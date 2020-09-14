@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using JoinClub.Data;
+using JoinClub.Entities.Application;
 using JoinClub.Helpers;
 using JoinClub.Models.User;
 using JoinClub.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -16,12 +20,16 @@ namespace JoinClub.Controllers
         private readonly ILogger<UsersController> _logger;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _applicationDbContext;
 
-        public UsersController(ILogger<UsersController> logger, IUserRepository userRepository, IMapper mapper)
+        public UsersController(ILogger<UsersController> logger, IUserRepository userRepository, IMapper mapper, UserManager<ApplicationUser> userManager, ApplicationDbContext applicationDbContext)
         {
             _logger = logger;
             _userRepository = userRepository;
             _mapper = mapper;
+            _userManager = userManager;
+            _applicationDbContext = applicationDbContext;
         }
 
         [HttpGet(Name = nameof(GetAllUsers))]
@@ -41,6 +49,73 @@ namespace JoinClub.Controllers
         public async Task<ActionResult<int>> GetAllUsersLength()
         {
             return Ok(await _userRepository.GetAllUsersLengthAsync());
+        }
+
+        [HttpPost("{userId}", Name = nameof(UpdateUser))]
+        public async Task<IActionResult> UpdateUser(string userId, UserUpdateViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (user.Email != model.Email)
+            {
+                if (!await _userRepository.CanUpdateUserEmailAsync(userId, model.Email))
+                {
+                    ModelState.AddModelError("Email", $"{model.Email}已經被使用");
+                    return BadRequest(ModelState);
+                }
+
+                user.Email = model.Email;
+            }
+
+            if (user.UserName != model.UserName)
+            {
+                if (!await _userRepository.CanUpdateUserUserNameAsync(userId, model.UserName))
+                {
+                    ModelState.AddModelError("UserName", $"{model.UserName}已經被使用");
+                    return BadRequest(ModelState);
+                }
+
+                user.UserName = model.UserName;
+            }
+
+            if (user.PhoneNumber != model.PhoneNumber)
+            {
+                if (!await _userRepository.CanUpdateUserPhoneNumberAsync(userId, model.PhoneNumber))
+                {
+                    ModelState.AddModelError("PhoneNumber", $"{model.PhoneNumber}已經被使用");
+                    return BadRequest(ModelState);
+                }
+
+                user.PhoneNumber = model.PhoneNumber;
+            }
+
+            if (user.NID != model.NID)
+            {
+                if (!await _userRepository.CanUpdateUserNIDAsync(userId, model.NID))
+                {
+                    ModelState.AddModelError("NID", $"{model.NID}已經被使用");
+                    return BadRequest(ModelState);
+                }
+
+                user.NID = model.NID;
+            }
+
+            user.Name = model.Name;
+            user.College = model.College;
+            user.Department = model.Department;
+            user.Class = model.Class;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }
