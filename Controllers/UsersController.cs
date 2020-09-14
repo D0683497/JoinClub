@@ -7,6 +7,7 @@ using JoinClub.Entities.Application;
 using JoinClub.Helpers;
 using JoinClub.Models.User;
 using JoinClub.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -65,7 +66,11 @@ namespace JoinClub.Controllers
                 if (!await _userRepository.CanUpdateUserEmailAsync(userId, model.Email))
                 {
                     ModelState.AddModelError("Email", $"{model.Email}已經被使用");
-                    return BadRequest(ModelState);
+                    var problemDetails = new ValidationProblemDetails(ModelState)
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                    };
+                    return BadRequest(problemDetails);
                 }
 
                 user.Email = model.Email;
@@ -76,7 +81,11 @@ namespace JoinClub.Controllers
                 if (!await _userRepository.CanUpdateUserUserNameAsync(userId, model.UserName))
                 {
                     ModelState.AddModelError("UserName", $"{model.UserName}已經被使用");
-                    return BadRequest(ModelState);
+                    var problemDetails = new ValidationProblemDetails(ModelState)
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                    };
+                    return BadRequest(problemDetails);
                 }
 
                 user.UserName = model.UserName;
@@ -87,7 +96,11 @@ namespace JoinClub.Controllers
                 if (!await _userRepository.CanUpdateUserPhoneNumberAsync(userId, model.PhoneNumber))
                 {
                     ModelState.AddModelError("PhoneNumber", $"{model.PhoneNumber}已經被使用");
-                    return BadRequest(ModelState);
+                    var problemDetails = new ValidationProblemDetails(ModelState)
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                    };
+                    return BadRequest(problemDetails);
                 }
 
                 user.PhoneNumber = model.PhoneNumber;
@@ -98,7 +111,11 @@ namespace JoinClub.Controllers
                 if (!await _userRepository.CanUpdateUserNIDAsync(userId, model.NID))
                 {
                     ModelState.AddModelError("NID", $"{model.NID}已經被使用");
-                    return BadRequest(ModelState);
+                    var problemDetails = new ValidationProblemDetails(ModelState)
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                    };
+                    return BadRequest(problemDetails);
                 }
 
                 user.NID = model.NID;

@@ -40,7 +40,6 @@ export class UserDetailComponent implements OnInit {
 
   onSubmit(userDetailForm: User): void {
     this.loading = true;
-    console.log(userDetailForm);
     this.userService.updateUser(this.data.id, userDetailForm).subscribe(
       data => {
         this.snackBar.open('修改成功', '關閉', { duration: 5000 });
@@ -48,23 +47,23 @@ export class UserDetailComponent implements OnInit {
       },
       (e: HttpErrorResponse) => {
         if (e.status === 400) {
-          if (e.error.Email) {
-            for (const field of e.error.Email) {
+          if (e.error.errors.Email) {
+            for (const field of e.error.errors.Email) {
               this.userDetailForm.controls.email.setErrors({ server: field });
             }
           }
-          if (e.error.NID) {
-            for (const field of e.error.NID) {
+          if (e.error.errors.NID) {
+            for (const field of e.error.errors.NID) {
               this.userDetailForm.controls.nid.setErrors({ server: field });
             }
           }
-          if (e.error.UserName) {
-            for (const field of e.error.UserName) {
+          if (e.error.errors.UserName) {
+            for (const field of e.error.errors.UserName) {
               this.userDetailForm.controls.userName.setErrors({ server: field });
             }
           }
-          if (e.error.PhoneNumber) {
-            for (const field of e.error.PhoneNumber) {
+          if (e.error.errors.PhoneNumber) {
+            for (const field of e.error.errors.PhoneNumber) {
               this.userDetailForm.controls.phoneNumber.setErrors({ server: field });
             }
           }
