@@ -1,6 +1,14 @@
 
 <form [formGroup]="userDetailForm" #formDirective="ngForm" novalidate (ngSubmit)="onSubmit(userDetailForm.value)">
-  <div mat-dialog-title>使用者詳情</div>
+  <header>
+    <div mat-dialog-title>使用者詳情</div>
+    <button type="button" (click)="deleteUser(userDetailForm.controls['id'].value)" mat-button color="accent">
+      <mat-icon *ngIf="(isDeleteLoading$ | async)">
+        <mat-spinner color="primary" diameter="20"></mat-spinner>
+      </mat-icon>
+      刪除
+    </button>
+  </header>
   <mat-dialog-content>
     <!-- Id -->
     <div class="row">
@@ -65,7 +73,8 @@
       <div class="col">
         <mat-form-field class="full-width">
           <mat-label>學號</mat-label>
-          <input matInput type="text" formControlName="nid" required>
+          <input matInput type="text" formControlName="nid" required appFirstLetterUpper>
+          <mat-hint>系統會自動將首字母轉為大寫</mat-hint>
           <mat-error *ngIf="userDetailForm.controls['nid'].hasError('required')">
             學號是<strong>必填的</strong>
           </mat-error>
@@ -137,8 +146,8 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-raised-button type="submit" color="primary" [disabled]="!userDetailForm.valid || (isLoading$ | async)">
-      <mat-icon *ngIf="(isLoading$ | async)">
+    <button mat-raised-button type="submit" color="primary" [disabled]="!userDetailForm.valid || (isUpdateLoading$ | async)">
+      <mat-icon *ngIf="(isUpdateLoading$ | async)">
         <mat-spinner color="accent" diameter="20"></mat-spinner>
       </mat-icon>
       修改

@@ -154,7 +154,7 @@ namespace JoinClub.Data
                     Email = configuration["UserSettings:Admin:Email"],
                     EmailConfirmed = true,
                     UserName = configuration["UserSettings:Admin:UserName"],
-                    PhoneNumber = configuration["UserSettings:Admin:UserName"],
+                    PhoneNumber = configuration["UserSettings:Admin:PhoneNumber"],
                     PhoneNumberConfirmed = true,
                     NID = configuration["UserSettings:Admin:NID"],
                     Name = configuration["UserSettings:Admin:Name"],

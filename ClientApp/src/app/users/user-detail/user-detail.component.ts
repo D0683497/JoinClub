@@ -15,7 +15,8 @@ import { BehaviorSubject } from 'rxjs';
 export class UserDetailComponent implements OnInit {
 
   pattern = new RegExp(/[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+/gm);
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isUpdateLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isDeleteLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   userDetailForm: FormGroup;
 
   constructor(
@@ -39,58 +40,43 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
+  deleteUser(userId: string): void {
+    this.isDeleteLoading$.next(true);
+    this.userService.deleteUser(userId).subscribe(
+      (res) => {
+        this.dialogRef.close();
+        this.snackBar.open('刪除成功', '關閉', { duration: 5000 });
+      },
+      (err) => {
+        this.isDeleteLoading$.next(false);
+        this.snackBar.open('刪除失敗', '關閉', { duration: 5000 });
+      }
+    );
+  }
+
+  updateFail(err: HttpErrorResponse): void {
+    if (err.status === 400) {
+      const validationErrors = err.error.errors;
+      Object.keys(validationErrors).forEach(prop => {
+        const controlName = prop.charAt(0).toLowerCase() + prop.slice(1); // 讓首字母變成小寫
+        validationErrors[prop].forEach(element => {
+          this.userDetailForm.controls[controlName].setErrors({server: element});
+        });
+      });
+    }
+    this.snackBar.open('修改失敗', '關閉', { duration: 5000 });
+  }
+
   onSubmit(userDetailForm: User): void {
-    this.isLoading$.next(true);
+    this.isUpdateLoading$.next(true);
     this.userService.updateUser(this.data.id, userDetailForm).subscribe(
-      data => {
+      (res) => {
         this.snackBar.open('修改成功', '關閉', { duration: 5000 });
         this.dialogRef.close();
       },
-      (e: HttpErrorResponse) => {
-        if (e.status === 400) {
-          if (e.error.errors.Email) {
-            for (const field of e.error.errors.Email) {
-              this.userDetailForm.controls.email.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.UserName) {
-            for (const field of e.error.errors.UserName) {
-              this.userDetailForm.controls.userName.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.PhoneNumber) {
-            for (const field of e.error.errors.PhoneNumber) {
-              this.userDetailForm.controls.phoneNumber.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.NID) {
-            for (const field of e.error.errors.NID) {
-              this.userDetailForm.controls.nid.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.Name) {
-            for (const field of e.error.errors.Name) {
-              this.userDetailForm.controls.name.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.College) {
-            for (const field of e.error.errors.College) {
-              this.userDetailForm.controls.college.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.Department) {
-            for (const field of e.error.errors.Department) {
-              this.userDetailForm.controls.department.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.Class) {
-            for (const field of e.error.errors.Class) {
-              this.userDetailForm.controls.class.setErrors({ server: field });
-            }
-          }
-        }
-        this.snackBar.open('修改失敗', '關閉', { duration: 5000 });
-        this.isLoading$.next(false);
+      (err: HttpErrorResponse) => {
+        this.updateFail(err);
+        this.isUpdateLoading$.next(false);
       }
     );
   }

@@ -87,6 +87,12 @@ namespace JoinClub.Repositories
             {
                 return true;
             }
+            
+            if (String.IsNullOrEmpty(phoneNumber))
+            {
+                await _userManager.SetPhoneNumberAsync(user, phoneNumber);
+                return true;
+            }
 
             var canUpdate = !await _userManager.Users.AnyAsync(x => x.PhoneNumber == phoneNumber);
             if (canUpdate)
