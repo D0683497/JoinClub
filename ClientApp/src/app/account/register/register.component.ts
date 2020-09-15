@@ -6,7 +6,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { MustMatch } from '../../helpers/must-match.validator';
+import { MustMatch } from '../../shared/helpers/must-match.validator';
 
 @Component({
   selector: 'app-register',
