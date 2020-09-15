@@ -23,15 +23,17 @@ namespace JoinClub.Controllers
         private readonly ILogger<UsersController> _logger;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public UsersController(ILogger<UsersController> logger, IUserRepository userRepository, IMapper mapper, UserManager<ApplicationUser> userManager, ApplicationDbContext applicationDbContext)
+        public UsersController(
+            ILogger<UsersController> logger, 
+            IUserRepository userRepository, 
+            IMapper mapper, 
+            ApplicationDbContext applicationDbContext)
         {
             _logger = logger;
             _userRepository = userRepository;
             _mapper = mapper;
-            _userManager = userManager;
             _applicationDbContext = applicationDbContext;
         }
 
@@ -57,141 +59,100 @@ namespace JoinClub.Controllers
         [HttpPost("{userId}", Name = nameof(UpdateUser))]
         public async Task<IActionResult> UpdateUser(string userId, UserUpdateViewModel model)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userRepository.GetUserByIdAsync(userId);
             if (user == null)
             {
                 return NotFound();
             }
 
-            var claim = await _userManager.GetClaimsAsync(user);
-
-            if (user.Email != model.Email)
+            using (var transaction = _applicationDbContext.Database.BeginTransaction())
             {
-                if (!await _userRepository.CanUpdateUserEmailAsync(userId, model.Email))
+                if (!await _userRepository.UpdateEmailByUserAsync(user, model.Email))
                 {
                     ModelState.AddModelError("Email", $"{model.Email}已經被使用");
                     var problemDetails = new ValidationProblemDetails(ModelState)
                     {
                         Status = StatusCodes.Status400BadRequest,
                     };
+                    await transaction.RollbackAsync();
                     return BadRequest(problemDetails);
                 }
 
-                user.Email = model.Email;
-            }
-
-            if (user.UserName != model.UserName)
-            {
-                if (!await _userRepository.CanUpdateUserUserNameAsync(userId, model.UserName))
+                if (!await _userRepository.UpdateNameByUserAsync(user, model.UserName))
                 {
                     ModelState.AddModelError("UserName", $"{model.UserName}已經被使用");
                     var problemDetails = new ValidationProblemDetails(ModelState)
                     {
                         Status = StatusCodes.Status400BadRequest,
                     };
-                    return BadRequest(problemDetails);
+                    await transaction.RollbackAsync();
+                    return BadRequest(problemDetails);   
                 }
 
-                user.UserName = model.UserName;
-                var userNameClaim = claim.FirstOrDefault(x => x.Type == ClaimTypes.Name);
-                if (userNameClaim == null) { return BadRequest(); }
-
-                if (await _userManager.RemoveClaimAsync(user, userNameClaim) != IdentityResult.Success)
-                {
-                    return BadRequest();
-                }
-                if (await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, model.UserName)) != IdentityResult.Success)
-                {
-                    return BadRequest();
-                }
-            }
-
-            if (user.PhoneNumber != model.PhoneNumber)
-            {
-                if (!await _userRepository.CanUpdateUserPhoneNumberAsync(userId, model.PhoneNumber))
+                if (!await _userRepository.UpdatePhoneNumberByUserAsync(user, model.PhoneNumber))
                 {
                     ModelState.AddModelError("PhoneNumber", $"{model.PhoneNumber}已經被使用");
                     var problemDetails = new ValidationProblemDetails(ModelState)
                     {
                         Status = StatusCodes.Status400BadRequest,
                     };
+                    await transaction.RollbackAsync();
                     return BadRequest(problemDetails);
                 }
 
-                user.PhoneNumber = model.PhoneNumber;
-            }
-
-            if (user.NID != model.NID)
-            {
-                if (!await _userRepository.CanUpdateUserNIDAsync(userId, model.NID))
+                if (!await _userRepository.UpdateNIDByUserAsync(user, model.NID))
                 {
                     ModelState.AddModelError("NID", $"{model.NID}已經被使用");
                     var problemDetails = new ValidationProblemDetails(ModelState)
                     {
                         Status = StatusCodes.Status400BadRequest,
                     };
+                    await transaction.RollbackAsync();
                     return BadRequest(problemDetails);
                 }
 
-                user.NID = model.NID;
-            }
-
-            user.Name = model.Name;
-            user.College = model.College;
-            user.Department = model.Department;
-            user.Class = model.Class;
-
-            var result = await _userManager.UpdateAsync(user);
-            if (result.Succeeded)
-            {
-                return Ok();
-            }
-
-            return BadRequest();
-        }
-
-        [HttpDelete("{userId}", Name = nameof(DeleteUser))]
-        public async Task<IActionResult> DeleteUser(string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            
-            var claims = await _userManager.GetClaimsAsync(user);
-            var roles = await _userManager.GetRolesAsync(user);
-            if (roles.Any(x => x.Contains("Admin")))
-            {
-                ModelState.AddModelError("", $"管理員不能被刪除");
-                var problemDetails = new ValidationProblemDetails(ModelState)
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                };
-                return BadRequest(problemDetails);
-            }
-
-            using (var transaction = _applicationDbContext.Database.BeginTransaction())
-            {
-                if (await _userManager.RemoveClaimsAsync(user, claims) != IdentityResult.Success)
+                if (!await _userRepository.UpdateNameByUserAsync(user, model.Name))
                 {
                     await transaction.RollbackAsync();
                     return BadRequest();
                 }
 
-                if (await _userManager.RemoveFromRolesAsync(user, roles) != IdentityResult.Success)
+                if (!await _userRepository.UpdateCollegeByUserAsync(user, model.College))
                 {
                     await transaction.RollbackAsync();
                     return BadRequest();
                 }
 
-                if (await _userManager.DeleteAsync(user) != IdentityResult.Success)
+                if (!await _userRepository.UpdateDepartmentByUserAsync(user, model.Department))
+                {
+                    await transaction.RollbackAsync();
+                    return BadRequest();
+                }
+
+                if (!await _userRepository.UpdateClassByUserAsync(user, model.Class))
                 {
                     await transaction.RollbackAsync();
                     return BadRequest();
                 }
 
                 await transaction.CommitAsync();
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete("{userId}", Name = nameof(DeleteUser))]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (!await _userRepository.DeleteUserByUser(user))
+            {
+                return BadRequest();
             }
 
             return Ok();

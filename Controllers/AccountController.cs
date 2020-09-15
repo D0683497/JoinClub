@@ -17,18 +17,15 @@ namespace JoinClub.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
-        private readonly ApplicationDbContext _applicationDbContext;
 
         public AccountController(
             ILogger<AccountController> logger, 
             UserManager<ApplicationUser> userManager, 
-            IMapper mapper, 
-            ApplicationDbContext applicationDbContext)
+            IMapper mapper)
         {
             _logger = logger;
             _userManager = userManager;
             _mapper = mapper;
-            _applicationDbContext = applicationDbContext;
         }
 
         [AllowAnonymous]

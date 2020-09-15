@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using JoinClub.Entities.Application;
 
@@ -10,12 +11,24 @@ namespace JoinClub.Repositories.Interfaces
 
         Task<int> GetAllUsersLengthAsync();
 
-        Task<bool> CanUpdateUserEmailAsync(string userId, string updateEmail);
+        Task<ApplicationUser> GetUserByIdAsync(string userId);
 
-        Task<bool> CanUpdateUserUserNameAsync(string userId, string updateUserName);
+        Task<bool> UpdateEmailByUserAsync(ApplicationUser user, string email);
 
-        Task<bool> CanUpdateUserPhoneNumberAsync(string userId, string updatePhoneNumber);
+        Task<bool> UpdateUserNameByUserAsync(ApplicationUser user, string userName);
 
-        Task<bool> CanUpdateUserNIDAsync(string userId, string updateNID);
+        Task<bool> UpdatePhoneNumberByUserAsync(ApplicationUser user, string phoneNumber);
+
+        Task<bool> UpdateNIDByUserAsync(ApplicationUser user, string nid);
+
+        Task<bool> UpdateNameByUserAsync(ApplicationUser user, string name);
+        
+        Task<bool> UpdateCollegeByUserAsync(ApplicationUser user, string college);
+        
+        Task<bool> UpdateDepartmentByUserAsync(ApplicationUser user, string department);
+        
+        Task<bool> UpdateClassByUserAsync(ApplicationUser user, string @class);
+
+        Task<bool> DeleteUserByUser(ApplicationUser user);
     }
 }
