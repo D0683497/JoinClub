@@ -5,6 +5,7 @@ import { Register } from 'src/app/models/register/register.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegisterComponent implements OnInit {
 
   pattern = new RegExp(/[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+/gm);
-  loading = false;
+  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   registerForm: FormGroup;
   hidePassword = true;
   hideConfirmPassword = true;
@@ -40,7 +41,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(registerForm: Register): void {
-    this.loading = true;
+    this.isLoading$.next(true);
     this.authService.register(registerForm).subscribe(
       data => {
         Swal.fire({
@@ -53,7 +54,7 @@ export class RegisterComponent implements OnInit {
           timerProgressBar: true,
         });
         this.router.navigate(['/account/login']);
-        this.loading = false;
+        this.isLoading$.next(false);
       },
       (e: HttpErrorResponse) => {
         if (e.status === 400) {
@@ -114,7 +115,7 @@ export class RegisterComponent implements OnInit {
           confirmButtonText: '確認',
           showCloseButton: true
         });
-        this.loading = false;
+        this.isLoading$.next(false);
       }
     );
   }

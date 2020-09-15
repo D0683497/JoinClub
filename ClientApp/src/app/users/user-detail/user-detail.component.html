@@ -137,8 +137,8 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-raised-button type="submit" color="primary" [disabled]="!userDetailForm.valid || loading">
-      <mat-icon *ngIf="loading">
+    <button mat-raised-button type="submit" color="primary" [disabled]="!userDetailForm.valid || (isLoading$ | async)">
+      <mat-icon *ngIf="(isLoading$ | async)">
         <mat-spinner color="accent" diameter="20"></mat-spinner>
       </mat-icon>
       修改

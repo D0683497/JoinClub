@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Login } from 'src/app/models/login/login.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   pattern = new RegExp(/[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+/gm);
-  loading = false;
+  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   loginForm: FormGroup;
   hide = true;
 
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(loginForm: Login, formDirective: FormGroupDirective): void {
-    this.loading = true;
+    this.isLoading$.next(true);
     this.authService.login(loginForm).subscribe(
       data => {
         Swal.fire({
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
           timerProgressBar: true,
         });
         this.router.navigate(['/']);
-        this.loading = false;
+        this.isLoading$.next(false);
       },
       (error: HttpErrorResponse) => {
         if (error.error === '帳號被鎖定') {
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit {
             confirmButtonText: '確認',
             showCloseButton: true
           });
-          this.loading = false;
+          this.isLoading$.next(false);
         } else if (error.error === '尚未入社') {
           Swal.fire({
             icon: 'error',
@@ -62,7 +63,7 @@ export class LoginComponent implements OnInit {
             confirmButtonText: '確認',
             showCloseButton: true
           });
-          this.loading = false;
+          this.isLoading$.next(false);
         } else {
           Swal.fire({
             icon: 'error',
@@ -70,7 +71,7 @@ export class LoginComponent implements OnInit {
             confirmButtonText: '確認',
             showCloseButton: true
           });
-          this.loading = false;
+          this.isLoading$.next(false);
         }
       }
     );

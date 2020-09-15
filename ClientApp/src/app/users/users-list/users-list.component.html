@@ -1,6 +1,6 @@
 <mat-card>
   <!-- Content -->
-  <ng-container *ngIf="!fetchDataError && !loading">
+  <ng-container *ngIf="!(isfetchDataError$ | async) && !(isLoading$ | async)">
     <mat-card-header>
       <mat-card-title>使用者列表</mat-card-title>
     </mat-card-header>
@@ -102,7 +102,7 @@
     </mat-card-actions>
   </ng-container>
    <!-- Loading -->
-   <ng-container *ngIf="loading">
+   <ng-container *ngIf="(isLoading$ | async)">
     <mat-card-header>
       <mat-card-title>載入中</mat-card-title>
     </mat-card-header>
@@ -112,7 +112,7 @@
     </mat-card-content>
   </ng-container>
   <!-- Error -->
-  <ng-container *ngIf="fetchDataError">
+  <ng-container *ngIf="(isfetchDataError$ | async)">
     <mat-card-header>
       <mat-card-title>發生錯誤</mat-card-title>
     </mat-card-header>

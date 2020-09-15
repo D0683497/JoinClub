@@ -30,8 +30,8 @@
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid || loading">
-        <mat-icon *ngIf="loading">
+      <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid || (isLoading$ | async)">
+        <mat-icon *ngIf="(isLoading$ | async)">
           <mat-spinner color="accent" diameter="20"></mat-spinner>
         </mat-icon>
         登入

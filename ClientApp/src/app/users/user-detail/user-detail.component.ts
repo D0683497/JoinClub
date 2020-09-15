@@ -5,6 +5,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-user-detail',
@@ -14,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserDetailComponent implements OnInit {
 
   pattern = new RegExp(/[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+/gm);
-  loading = false;
+  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   userDetailForm: FormGroup;
 
   constructor(
@@ -39,7 +40,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   onSubmit(userDetailForm: User): void {
-    this.loading = true;
+    this.isLoading$.next(true);
     this.userService.updateUser(this.data.id, userDetailForm).subscribe(
       data => {
         this.snackBar.open('修改成功', '關閉', { duration: 5000 });
@@ -89,7 +90,7 @@ export class UserDetailComponent implements OnInit {
           }
         }
         this.snackBar.open('修改失敗', '關閉', { duration: 5000 });
-        this.loading = false;
+        this.isLoading$.next(false);
       }
     );
   }

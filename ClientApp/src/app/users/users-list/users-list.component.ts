@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 
@@ -31,8 +31,8 @@ export class UsersListComponent implements OnInit {
   pageLength: number;
   pageSizeOptions: number[] = [10, 20, 30, 40, 50];
   displayedColumns: string[] = ['nid', 'name', 'college', 'department', 'class', 'action'];
-  fetchDataError = false;
-  loading = true;
+  isfetchDataError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   constructor(
     private userService: UserService,
@@ -59,20 +59,20 @@ export class UsersListComponent implements OnInit {
     this.userService.getAllUsers(this.pageIndex + 1, this.pageSize).subscribe(
       data => {
         this.dataSource.data = data;
-        this.fetchDataError = false;
-        this.loading = false;
+        this.isfetchDataError$.next(false);
+        this.isLoading$.next(false);
       },
       error => {
         this.snackBar.open('獲取資料失敗', '關閉', { duration: 5000 });
-        this.fetchDataError = true;
-        this.loading = false;
+        this.isfetchDataError$.next(true);
+        this.isLoading$.next(false);
       }
     );
   }
 
   reload(): void {
-    this.fetchDataError = false;
-    this.loading = true;
+    this.isfetchDataError$.next(false);
+    this.isLoading$.next(true);
     this.ngOnInit();
   }
 
