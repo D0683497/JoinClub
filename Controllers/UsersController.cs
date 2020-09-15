@@ -161,6 +161,15 @@ namespace JoinClub.Controllers
             
             var claims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
+            if (roles.Any(x => x.Contains("Admin")))
+            {
+                ModelState.AddModelError("", $"管理員不能被刪除");
+                var problemDetails = new ValidationProblemDetails(ModelState)
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                };
+                return BadRequest(problemDetails);
+            }
 
             using (var transaction = _applicationDbContext.Database.BeginTransaction())
             {
