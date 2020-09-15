@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using JoinClub.Data;
@@ -61,6 +63,8 @@ namespace JoinClub.Controllers
                 return NotFound();
             }
 
+            var claim = await _userManager.GetClaimsAsync(user);
+
             if (user.Email != model.Email)
             {
                 if (!await _userRepository.CanUpdateUserEmailAsync(userId, model.Email))
@@ -89,6 +93,17 @@ namespace JoinClub.Controllers
                 }
 
                 user.UserName = model.UserName;
+                var userNameClaim = claim.FirstOrDefault(x => x.Type == ClaimTypes.Name);
+                if (userNameClaim == null) { return BadRequest(); }
+
+                if (await _userManager.RemoveClaimAsync(user, userNameClaim) != IdentityResult.Success)
+                {
+                    return BadRequest();
+                }
+                if (await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, model.UserName)) != IdentityResult.Success)
+                {
+                    return BadRequest();
+                }
             }
 
             if (user.PhoneNumber != model.PhoneNumber)
