@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { Register } from 'src/app/models/register/register.model';
+import { AuthService } from '../../services/auth/auth.service';
+import { Register } from '../../models/register/register.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { MustMatch } from '../../helpers/must-match.validator';
 
 @Component({
   selector: 'app-register',
@@ -37,84 +38,48 @@ export class RegisterComponent implements OnInit {
       college: [null, Validators.required],
       department: [null, Validators.required],
       class: [null, Validators.required]
+    }, { validator: MustMatch('password', 'confirmPassword') });
+  }
+
+  registerSuccess(): void {
+    Swal.fire({
+      icon: 'success',
+      title: '註冊成功',
+      toast: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+    });
+    this.router.navigate(['/account/login']);
+  }
+
+  registerFail(err: HttpErrorResponse): void {
+    if (err.status === 400) {
+      const validationErrors = err.error.errors;
+      Object.keys(validationErrors).forEach(prop => {
+        const controlName = prop.charAt(0).toLowerCase() + prop.slice(1); // 讓首字母變成小寫
+
+        // 雖然可能有多個錯誤，但後面的會蓋掉前面的
+        validationErrors[prop].forEach(element => {
+          this.registerForm.controls[controlName].setErrors({server: element});
+        });
+      });
+    }
+    Swal.fire({
+      icon: 'error',
+      title: '註冊失敗',
+      confirmButtonText: '確認',
+      showCloseButton: true
     });
   }
 
   onSubmit(registerForm: Register): void {
     this.isLoading$.next(true);
     this.authService.register(registerForm).subscribe(
-      data => {
-        Swal.fire({
-          icon: 'success',
-          title: '註冊成功',
-          toast: true,
-          position: 'bottom',
-          showConfirmButton: false,
-          timer: 5000,
-          timerProgressBar: true,
-        });
-        this.router.navigate(['/account/login']);
-        this.isLoading$.next(false);
-      },
-      (e: HttpErrorResponse) => {
-        if (e.status === 400) {
-          if (e.error.errors.Email) {
-            for (const field of e.error.errors.Email) {
-              this.registerForm.controls.email.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.UserName) {
-            for (const field of e.error.errors.UserName) {
-              this.registerForm.controls.userName.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.Password) {
-            for (const field of e.error.errors.Password) {
-              this.registerForm.controls.password.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.PasswordConfirm) {
-            for (const field of e.error.errors.PasswordConfirm) {
-              this.registerForm.controls.passwordConfirm.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.PhoneNumber) {
-            for (const field of e.error.errors.PhoneNumber) {
-              this.registerForm.controls.phoneNumber.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.NID) {
-            for (const field of e.error.errors.NID) {
-              this.registerForm.controls.nid.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.Name) {
-            for (const field of e.error.errors.Name) {
-              this.registerForm.controls.name.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.College) {
-            for (const field of e.error.errors.College) {
-              this.registerForm.controls.college.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.Department) {
-            for (const field of e.error.errors.Department) {
-              this.registerForm.controls.department.setErrors({ server: field });
-            }
-          }
-          if (e.error.errors.Class) {
-            for (const field of e.error.errors.Class) {
-              this.registerForm.controls.class.setErrors({ server: field });
-            }
-          }
-        }
-        Swal.fire({
-          icon: 'error',
-          title: '註冊失敗',
-          confirmButtonText: '確認',
-          showCloseButton: true
-        });
+      (res) => { this.registerSuccess(); },
+      (err: HttpErrorResponse) => {
+        this.registerFail(err);
         this.isLoading$.next(false);
       }
     );

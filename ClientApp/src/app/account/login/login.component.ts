@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/models/login/login.model';
@@ -31,48 +31,58 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit(loginForm: Login, formDirective: FormGroupDirective): void {
+  loginSuccess(): void {
+    Swal.fire({
+      icon: 'success',
+      title: '登入成功',
+      toast: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+    });
+    this.router.navigate(['/']);
+  }
+
+  loginFail(err: HttpErrorResponse): void {
+    switch (err.error) {
+      case '帳號被鎖定': {
+        Swal.fire({
+          icon: 'question',
+          title: '帳號被鎖定',
+          confirmButtonText: '確認',
+          showCloseButton: true
+        });
+        break;
+      }
+      case '尚未入社': {
+        Swal.fire({
+          icon: 'warning',
+          title: '尚未入社',
+          confirmButtonText: '確認',
+          showCloseButton: true
+        });
+        break;
+      }
+      default: {
+        Swal.fire({
+          icon: 'error',
+          title: '登入失敗',
+          confirmButtonText: '確認',
+          showCloseButton: true
+        });
+        break;
+      }
+    }
+  }
+
+  onSubmit(loginForm: Login): void {
     this.isLoading$.next(true);
     this.authService.login(loginForm).subscribe(
-      data => {
-        Swal.fire({
-          icon: 'success',
-          title: '登入成功',
-          toast: true,
-          position: 'bottom',
-          showConfirmButton: false,
-          timer: 5000,
-          timerProgressBar: true,
-        });
-        this.router.navigate(['/']);
+      (res) => { this.loginSuccess(); },
+      (err: HttpErrorResponse) => {
+        this.loginFail(err);
         this.isLoading$.next(false);
-      },
-      (error: HttpErrorResponse) => {
-        if (error.error === '帳號被鎖定') {
-          Swal.fire({
-            icon: 'error',
-            title: '帳號被鎖定',
-            confirmButtonText: '確認',
-            showCloseButton: true
-          });
-          this.isLoading$.next(false);
-        } else if (error.error === '尚未入社') {
-          Swal.fire({
-            icon: 'error',
-            title: '尚未入社',
-            confirmButtonText: '確認',
-            showCloseButton: true
-          });
-          this.isLoading$.next(false);
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: '登入失敗',
-            confirmButtonText: '確認',
-            showCloseButton: true
-          });
-          this.isLoading$.next(false);
-        }
       }
     );
   }

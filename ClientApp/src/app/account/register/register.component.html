@@ -88,7 +88,7 @@
               確認密碼與新密碼<strong>不相同</strong>
             </mat-error>
             <mat-error *ngIf="registerForm.controls['passwordConfirm'].hasError('server')">
-              {{ registerForm.controls['passwordConfirm'].getError('server') }}
+              {{ registerForm.controls['passwordConfirm'].getError('server') | json }}
             </mat-error>
           </mat-form-field>
         </div>
