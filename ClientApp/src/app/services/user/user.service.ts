@@ -35,4 +35,10 @@ export class UserService {
     return this.http.post(url, user, this.httpOptions);
   }
 
+  // 刪除用戶
+  deleteUser(userId: string): Observable<object> {
+    const url = `${this.urlRoot}/users/${userId}`;
+    return this.http.delete(url, this.httpOptions);
+  }
+
 }
