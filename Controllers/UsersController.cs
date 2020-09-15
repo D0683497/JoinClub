@@ -149,5 +149,43 @@ namespace JoinClub.Controllers
 
             return BadRequest();
         }
+
+        [HttpDelete("{userId}", Name = nameof(DeleteUser))]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            
+            var claims = await _userManager.GetClaimsAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            using (var transaction = _applicationDbContext.Database.BeginTransaction())
+            {
+                if (await _userManager.RemoveClaimsAsync(user, claims) != IdentityResult.Success)
+                {
+                    await transaction.RollbackAsync();
+                    return BadRequest();
+                }
+
+                if (await _userManager.RemoveFromRolesAsync(user, roles) != IdentityResult.Success)
+                {
+                    await transaction.RollbackAsync();
+                    return BadRequest();
+                }
+
+                if (await _userManager.DeleteAsync(user) != IdentityResult.Success)
+                {
+                    await transaction.RollbackAsync();
+                    return BadRequest();
+                }
+
+                await transaction.CommitAsync();
+            }
+
+            return Ok();
+        }
     }
 }
