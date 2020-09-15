@@ -78,6 +78,33 @@ namespace JoinClub.Data
                 }
 
                 #endregion
+                
+                #region Staff
+
+                result = roleManager.CreateAsync(new ApplicationRole { Name = "Staff" }).Result;
+                if (result.Succeeded)
+                {
+                    logger.LogInformation("建立Staff角色成功");
+
+                    var staff = roleManager.FindByNameAsync("Staff").Result;
+                    var staffClaim = new Claim(ClaimTypes.Role, "Staff");
+
+                    result = roleManager.AddClaimAsync(staff, staffClaim).Result;
+                    if (result.Succeeded)
+                    {
+                        logger.LogInformation("建立Staff角色聲明成功");
+                    }
+                    else
+                    {
+                        logger.LogError("建立Staff角色聲明失敗");
+                    }
+                }
+                else
+                {
+                    logger.LogError("建立Staff角色失敗");
+                }
+
+                #endregion
 
                 #region Member
 
@@ -86,10 +113,10 @@ namespace JoinClub.Data
                 {
                     logger.LogInformation("建立Member角色成功");
 
-                    var host = roleManager.FindByNameAsync("Member").Result;
-                    var hostClaim = new Claim(ClaimTypes.Role, "Member");
+                    var member = roleManager.FindByNameAsync("Member").Result;
+                    var memberClaim = new Claim(ClaimTypes.Role, "Member");
 
-                    result = roleManager.AddClaimAsync(host, hostClaim).Result;
+                    result = roleManager.AddClaimAsync(member, memberClaim).Result;
                     if (result.Succeeded)
                     {
                         logger.LogInformation("建立Member角色聲明成功");
@@ -126,7 +153,15 @@ namespace JoinClub.Data
                 {
                     Email = configuration["UserSettings:Admin:Email"],
                     EmailConfirmed = true,
-                    UserName = configuration["UserSettings:Admin:UserName"]
+                    UserName = configuration["UserSettings:Admin:UserName"],
+                    PhoneNumber = configuration["UserSettings:Admin:UserName"],
+                    PhoneNumberConfirmed = true,
+                    NID = configuration["UserSettings:Admin:NID"],
+                    Name = configuration["UserSettings:Admin:Name"],
+                    College = configuration["UserSettings:Admin:College"],
+                    Department = configuration["UserSettings:Admin:Department"],
+                    Class = configuration["UserSettings:Admin:Class"],
+                    LockoutEnabled = false
                 };
 
                 var result = userManager.CreateAsync(admin, configuration["UserSettings:Admin:Password"]).Result;
@@ -148,8 +183,6 @@ namespace JoinClub.Data
                     {
                         new Claim(ClaimTypes.NameIdentifier, string.IsNullOrEmpty(currentUser.Id) ? "" : currentUser.Id),
                         new Claim(ClaimTypes.Name, string.IsNullOrEmpty(currentUser.UserName) ? "" : currentUser.UserName),
-                        new Claim(ClaimTypes.Email, string.IsNullOrEmpty(currentUser.Email) ? "" : currentUser.Email),
-                        new Claim(ClaimTypes.MobilePhone, string.IsNullOrEmpty(currentUser.PhoneNumber) ? "" : currentUser.PhoneNumber)
                     };
                     var addClaimResult = userManager.AddClaimsAsync(currentUser, claims).Result;
                     if (addClaimResult.Succeeded)
