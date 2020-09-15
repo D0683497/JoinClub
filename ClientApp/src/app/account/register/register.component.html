@@ -85,10 +85,10 @@
               確認密碼<strong>最多六十四位</strong>
             </mat-error>
             <mat-error *ngIf="registerForm.controls['passwordConfirm'].hasError('mustMatch')">
-              確認密碼與新密碼<strong>不相同</strong>
+              確認密碼與密碼<strong>不相同</strong>
             </mat-error>
             <mat-error *ngIf="registerForm.controls['passwordConfirm'].hasError('server')">
-              {{ registerForm.controls['passwordConfirm'].getError('server') | json }}
+              {{ registerForm.controls['passwordConfirm'].getError('server') }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -110,7 +110,8 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>學號</mat-label>
-            <input matInput type="text" formControlName="nid" required>
+            <input matInput type="text" formControlName="nid" required appFirstLetterUpper>
+            <mat-hint>系統會自動將首字母轉為大寫</mat-hint>
             <mat-error *ngIf="registerForm.controls['nid'].hasError('required')">
               學號是<strong>必填的</strong>
             </mat-error>

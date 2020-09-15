@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
       college: [null, Validators.required],
       department: [null, Validators.required],
       class: [null, Validators.required]
-    }, { validator: MustMatch('password', 'confirmPassword') });
+    }, { validator: MustMatch('password', 'passwordConfirm') });
   }
 
   registerSuccess(): void {

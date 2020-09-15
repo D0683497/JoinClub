@@ -12,7 +12,7 @@ export class EmptySetNullDirective {
 
   @HostListener('keyup', ['$event']) onKeyDowns(event: KeyboardEvent): void {
     if (this.ngControl.value?.trim() === '') {
-        this.ngControl.reset(null);
+      this.ngControl.reset(null);
     }
   }
 
