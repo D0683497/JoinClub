@@ -5,6 +5,10 @@
     <mat-icon mat-list-icon>home</mat-icon>
     <p mat-line>Home</p>
   </a>
+  <a mat-list-item routerLink="/license" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon mat-list-icon>copyright</mat-icon>
+    <p mat-line>License</p>
+  </a>
   <!-- Account -->
   <h3 mat-subheader>Account</h3>
   <a mat-list-item routerLink="/account/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">

@@ -1,3 +1,4 @@
+import { LicenseComponent } from './shared/license/license.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -9,6 +10,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', component: HomeComponent },
+      { path: 'license', component: LicenseComponent },
       {
         path: 'account',
         loadChildren: () => import('./account/account.module').then(m => m.AccountModule)

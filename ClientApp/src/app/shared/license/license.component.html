@@ -1,0 +1,141 @@
+<div class="container">
+  <div class="mat-headline">前端</div>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let item of frontendLisenses">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="mat-body-strong">{{item.title}}</mat-panel-title>
+        <!-- <mat-panel-description>{{item.description}}</mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <mat-list>
+        <ng-template [ngIf]="item.description">
+          <mat-list-item>
+            Description：{{item.description}}
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.officialWebsite">
+          <mat-list-item>
+            Official Website：<a [href]="item.officialWebsite" target="_blank" rel="Official Website">{{item.officialWebsite}}</a>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.gitHub">
+          <mat-list-item>
+            GitHub：<a [href]="item.gitHub" target="_blank" rel="GitHub">{{item.gitHub}}</a>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.license">
+          <mat-list-item>
+            License：<a [href]="item.license" target="_blank" rel="License">{{item.license}}</a>
+          </mat-list-item>
+        </ng-template>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br>
+  <div class="mat-headline">後端</div>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let item of backendLicenses">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="mat-body-strong">{{item.title}}</mat-panel-title>
+        <!-- <mat-panel-description>{{item.description}}</mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <mat-list>
+        <ng-template [ngIf]="item.description">
+          <mat-list-item>
+            Description：{{item.description}}
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.officialWebsite">
+          <mat-list-item>
+            Official Website：<a [href]="item.officialWebsite" target="_blank" rel="Official Website">{{item.officialWebsite}}</a>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.gitHub">
+          <mat-list-item>
+            GitHub：<a [href]="item.gitHub" target="_blank" rel="GitHub">{{item.gitHub}}</a>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.license">
+          <mat-list-item>
+            License：<a [href]="item.license" target="_blank" rel="License">{{item.license}}</a>
+          </mat-list-item>
+        </ng-template>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br>
+  <div class="mat-headline">IDE</div>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let item of ideLicenses">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="mat-body-strong">{{item.title}}</mat-panel-title>
+        <!-- <mat-panel-description>{{item.description}}</mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <mat-list>
+        <ng-template [ngIf]="item.description">
+          <mat-list-item>
+            Description：{{item.description}}
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.officialWebsite">
+          <mat-list-item>
+            Official Website：<a [href]="item.officialWebsite" target="_blank" rel="Official Website">{{item.officialWebsite}}</a>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.gitHub">
+          <mat-list-item>
+            GitHub：<a [href]="item.gitHub" target="_blank" rel="GitHub">{{item.gitHub}}</a>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.license">
+          <mat-list-item>
+            License：<a [href]="item.license" target="_blank" rel="License">{{item.license}}</a>
+          </mat-list-item>
+        </ng-template>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br>
+  <div class="mat-headline">其他</div>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let item of otherLicenses">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="mat-body-strong">{{item.title}}</mat-panel-title>
+        <!-- <mat-panel-description>{{item.description}}</mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <mat-list>
+        <ng-template [ngIf]="item.description">
+          <mat-list-item>
+            Description：{{item.description}}
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.officialWebsite">
+          <mat-list-item>
+            Official Website：<a [href]="item.officialWebsite" target="_blank" rel="Official Website">{{item.officialWebsite}}</a>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.gitHub">
+          <mat-list-item>
+            GitHub：<a [href]="item.gitHub" target="_blank" rel="GitHub">{{item.gitHub}}</a>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-template>
+        <ng-template [ngIf]="item.license">
+          <mat-list-item>
+            License：<a [href]="item.license" target="_blank" rel="License">{{item.license}}</a>
+          </mat-list-item>
+        </ng-template>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
