@@ -1,5 +1,5 @@
 <ng-container *ngIf="(isLoggedIn$ | async); else notLogin">
-  <a mat-flat-button (click)="authService.logout()" class="login-button">
+  <a mat-flat-button (click)="logout()" class="login-button">
     <mat-icon>exit_to_app</mat-icon>
     <span>登出</span>
   </a>

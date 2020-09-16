@@ -15,6 +15,10 @@
     <mat-icon mat-list-icon>person_add</mat-icon>
     <p mat-line>Register</p>
   </a>
+  <a mat-list-item routerLink="/account/change-password" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon mat-list-icon>lock</mat-icon>
+    <p mat-line>ChangePassword</p>
+  </a>
   <!-- Users -->
   <h3 mat-subheader>Users</h3>
   <a mat-list-item routerLink="/users/list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">

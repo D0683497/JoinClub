@@ -45,25 +45,24 @@ namespace JoinClub.Controllers
         }
         
         [Authorize]
-        [HttpPost("change-password", Name = nameof(ChangePassword))]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        [HttpPost("{userId}/change-password", Name = nameof(ChangePassword))]
+        public async Task<IActionResult> ChangePassword(string userId, ChangePasswordViewModel model)
         {
-            var user = await _userManager.FindByIdAsync(model.UserId);
-
+            var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                _logger.LogError($"{model.UserId}修改密碼，找不到使用者");
+                _logger.LogError($"{userId}修改密碼，找不到使用者");
                 return BadRequest();
             }
 
-            var checkPasswordResult = await _userManager.CheckPasswordAsync(user, model.OldPassword);
+            var checkPasswordResult = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
             if (!checkPasswordResult)
             {
-                _logger.LogWarning($"{user.Id}修改密碼，舊密碼錯誤");
+                _logger.LogWarning($"{user.Id}修改密碼，目前密碼錯誤");
                 return BadRequest();
             }
             
-            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
             if (changePasswordResult.Succeeded)
             {
                 _logger.LogInformation($"{user.Id}修改密碼成功");

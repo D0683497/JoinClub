@@ -1,14 +1,13 @@
+import { ChangePassword } from '../../models/change-password/change-password.model';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
 import { Login } from '../../models/login/login.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LoginResponse } from '../../models/login/login-response.model';
 import { map } from 'rxjs/operators';
 import { Register } from '../../models/register/register.model';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +23,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private jwtHelper: JwtHelperService,
-    private router: Router) { }
+    private jwtHelper: JwtHelperService) { }
 
   // 登入
   login(loginForm: Login): Observable<void> {
@@ -48,24 +46,12 @@ export class AuthService {
   logout(): void {
     localStorage.clear();
     this.isLoginSubject$.next(false);
-    Swal.fire({
-      icon: 'success',
-      title: '成功登出',
-      confirmButtonText: '確認',
-      showCloseButton: true
-    });
-    this.router.navigate(['/']);
   }
 
   // 更改密碼
-  changePassword(oldPassword: string, newPassword: string): Observable<object> {
-    const url = `${this.urlRoot}/account/change-password`;
-    const body = {
-      userId: this.getUserId(),
-      oldPassword,
-      newPassword
-    };
-    return this.http.post(url, body, this.httpOptions);
+  changePassword(data: ChangePassword): Observable<object> {
+    const url = `${this.urlRoot}/account/${this.getUserId()}/change-password`;
+    return this.http.post(url, data, this.httpOptions);
   }
 
   // 獲取角色
