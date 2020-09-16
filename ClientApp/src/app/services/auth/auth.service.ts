@@ -4,10 +4,11 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { Login } from '../../models/login/login.model';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { LoginResponse } from '../../models/login/login-response.model';
 import { map } from 'rxjs/operators';
 import { Register } from '../../models/register/register.model';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Injectable({
   providedIn: 'root'
@@ -15,18 +16,25 @@ import { Register } from '../../models/register/register.model';
 export class AuthService {
 
   urlRoot = environment.apiUrl;
+  isLoginSubject$ = new BehaviorSubject<boolean>(this.hasToken());
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService,
+    private router: Router) { }
 
   // 登入
   login(loginForm: Login): Observable<void> {
     const url = `${this.urlRoot}/auth/login`;
     return this.http.post(url, loginForm, this.httpOptions).pipe(
-      map((data: LoginResponse) => localStorage.setItem('access_token', data.access_token))
+      map((data: LoginResponse) => {
+        localStorage.setItem('access_token', data.access_token);
+        this.isLoginSubject$.next(true);
+      })
     );
   }
 
@@ -39,6 +47,13 @@ export class AuthService {
   // 登出
   logout(): void {
     localStorage.clear();
+    this.isLoginSubject$.next(false);
+    Swal.fire({
+      icon: 'success',
+      title: '成功登出',
+      confirmButtonText: '確認',
+      showCloseButton: true
+    });
     this.router.navigate(['/']);
   }
 
@@ -79,10 +94,14 @@ export class AuthService {
     return this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'));
   }
 
-  // 是否登入
-  isLoggedIn(): boolean {
+  // 是否有 token
+  private hasToken(): boolean {
     return localStorage.getItem('access_token') != null;
   }
 
+  // 是否登入
+  isLoggedIn(): Observable<boolean> {
+    return this.isLoginSubject$.asObservable();
+  }
 
 }

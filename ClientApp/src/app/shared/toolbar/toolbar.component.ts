@@ -1,4 +1,6 @@
+import { AuthService } from '../../services/auth/auth.service';
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,6 +9,10 @@ import { Component } from '@angular/core';
 })
 export class ToolbarComponent {
 
-  constructor() { }
+  isLoggedIn$: Observable<boolean>;
+
+  constructor(public authService: AuthService) {
+    this.isLoggedIn$ = authService.isLoggedIn();
+  }
 
 }

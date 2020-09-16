@@ -1,4 +1,14 @@
-<a [routerLink]="['/account/login']" mat-flat-button class="login-button">
-  <mat-icon>account_circle</mat-icon>
-  <span>登入</span>
-</a>
+<ng-container *ngIf="(isLoggedIn$ | async); else notLogin">
+  <a mat-flat-button (click)="authService.logout()" class="login-button">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>登出</span>
+  </a>
+</ng-container>
+<ng-template #notLogin>
+  <a [routerLink]="['/account/login']" mat-flat-button class="login-button">
+    <mat-icon>account_circle</mat-icon>
+    <span>登入</span>
+  </a>
+</ng-template>
+
+
