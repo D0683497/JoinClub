@@ -1,3 +1,4 @@
+import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -7,7 +8,8 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'change-password', component: ChangePasswordComponent }
+  { path: 'change-password', component: ChangePasswordComponent },
+  { path: 'profile', component: ProfileComponent }
 ];
 
 @NgModule({
