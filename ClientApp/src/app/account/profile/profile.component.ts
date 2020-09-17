@@ -1,10 +1,9 @@
+import { Profile } from '../../models/profile/profile';
 import { UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
-import { Profile } from '../../models/profile/profile';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { User } from 'src/app/models/user/user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -19,7 +18,6 @@ export class ProfileComponent implements OnInit {
   isfetchDataError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   profileForm: FormGroup;
   userId: string;
-  userData: User;
 
   constructor(
     private fb: FormBuilder,
@@ -27,28 +25,35 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private snackBar: MatSnackBar) {
       this.userId = this.authService.getUserId();
+      this.profileForm = this.fb.group({
+        email: [null, [Validators.required, Validators.email]],
+        userName: [null, [Validators.required, Validators.pattern(this.pattern)]],
+        phoneNumber: null,
+        nid: [null, Validators.required],
+        name: [null, Validators.required],
+        college: [null, Validators.required],
+        department: [null, Validators.required],
+        class: [null, Validators.required]
+      });
     }
 
   ngOnInit(): void {
     this.getData();
-    this.profileForm = this.fb.group({
-      email: [this.userData.email, [Validators.required, Validators.email]],
-      userName: [this.userData.userName, [Validators.required, Validators.pattern(this.pattern)]],
-      phoneNumber: this.userData.phoneNumber,
-      nid: [this.userData.nid, Validators.required],
-      name: [this.userData.name, Validators.required],
-      college: [this.userData.college, Validators.required],
-      department: [this.userData.department, Validators.required],
-      class: [this.userData.class, Validators.required]
-    });
-    this.isLoading$.next(false);
   }
 
   getData(): void {
     this.userService.getUserById(this.userId).subscribe(
       (res) => {
-        this.userData = res;
+        this.profileForm.controls.email.setValue(res.email);
+        this.profileForm.controls.userName.setValue(res.userName);
+        this.profileForm.controls.phoneNumber.setValue(res.phoneNumber);
+        this.profileForm.controls.nid.setValue(res.nid);
+        this.profileForm.controls.name.setValue(res.name);
+        this.profileForm.controls.college.setValue(res.college);
+        this.profileForm.controls.department.setValue(res.department);
+        this.profileForm.controls.class.setValue(res.class);
         this.isfetchDataError$.next(false);
+        this.isLoading$.next(false);
       },
       (err) => {
         this.snackBar.open('獲取資料失敗', '關閉', { duration: 5000 });

@@ -1,3 +1,4 @@
+import { Profile } from '../../models/profile/profile';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
@@ -42,9 +43,9 @@ export class UserService {
   }
 
   // 使用 Id 獲取使用者
-  getUserById(userId: string): Observable<User> {
+  getUserById(userId: string): Observable<Profile> {
     const url = `${this.urlRoot}/users/${userId}`;
-    return this.http.get<User>(url, this.httpOptions);
+    return this.http.get<Profile>(url, this.httpOptions);
   }
 
 }
