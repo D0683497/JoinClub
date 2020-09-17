@@ -1,1 +1,175 @@
-<p>profile works!</p>
+<!-- Content -->
+<ng-container *ngIf="!(isfetchDataError$ | async) && !(isLoading$ | async)">
+  <form [formGroup]="profileForm" #formDirective="ngForm" novalidate (ngSubmit)="onSubmit(profileForm.value)">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>個人資訊</mat-card-title>
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip color="primary" selected>申請入社</mat-chip>
+          <mat-chip>社員</mat-chip>
+          <mat-chip color="accent" selected>管理員</mat-chip>
+          <mat-chip color="warn" selected>幹部</mat-chip>
+        </mat-chip-list>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- email -->
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>電子郵件</mat-label>
+              <input type="email" matInput formControlName="email" required>
+              <mat-error *ngIf="profileForm.controls['email'].hasError('required')">
+                電子郵件是<strong>必填的</strong>
+              </mat-error>
+              <mat-error *ngIf="profileForm.controls['email'].hasError('email')">
+                電子郵件<strong>格式錯誤</strong>
+              </mat-error>
+              <mat-error *ngIf="profileForm.controls['email'].hasError('server')">
+                {{ profileForm.controls['email'].getError('server') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- userName -->
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>使用者名稱</mat-label>
+              <input type="text" matInput formControlName="userName" required>
+              <mat-hint>使用者名稱為登入時的帳號</mat-hint>
+              <mat-error *ngIf="profileForm.controls['userName'].hasError('required')">
+                使用者名稱是<strong>必填的</strong>
+              </mat-error>
+              <mat-error *ngIf="profileForm.controls['userName'].hasError('pattern')">
+                使用者名稱只能是<strong>字母或數字或<code>{{ ' - . @ + # $ % \\ / ( ) [ ] * & : >  ^ ! { } =' }}</code></strong>
+              </mat-error>
+              <mat-error *ngIf="profileForm.controls['userName'].hasError('server')">
+                {{ profileForm.controls['userName'].getError('server') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- phoneNumber -->
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>手機號碼</mat-label>
+              <input matInput type="tel" formControlName="phoneNumber" appEmptySetNull>
+              <mat-error *ngIf="profileForm.controls['phoneNumber'].hasError('server')">
+                {{ profileForm.controls['phoneNumber'].getError('server') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- NID -->
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>學號</mat-label>
+              <input matInput type="text" formControlName="nid" required appFirstLetterUpper>
+              <mat-hint>系統會自動將首字母轉為大寫</mat-hint>
+              <mat-error *ngIf="profileForm.controls['nid'].hasError('required')">
+                學號是<strong>必填的</strong>
+              </mat-error>
+              <mat-error *ngIf="profileForm.controls['nid'].hasError('server')">
+                {{ profileForm.controls['nid'].getError('server') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- Name -->
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>真實姓名</mat-label>
+              <input matInput type="text" formControlName="name" required>
+              <mat-error *ngIf="profileForm.controls['name'].hasError('required')">
+                真實姓名是<strong>必填的</strong>
+              </mat-error>
+              <mat-error *ngIf="profileForm.controls['name'].hasError('server')">
+                {{ profileForm.controls['name'].getError('server') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- College -->
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>學院</mat-label>
+              <input matInput type="text" formControlName="college" required>
+              <mat-error *ngIf="profileForm.controls['college'].hasError('required')">
+                學院是<strong>必填的</strong>
+              </mat-error>
+              <mat-error *ngIf="profileForm.controls['college'].hasError('server')">
+                {{ profileForm.controls['college'].getError('server') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- Department -->
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>系所</mat-label>
+              <input matInput type="text" formControlName="department" required>
+              <mat-error *ngIf="profileForm.controls['department'].hasError('required')">
+                系所是<strong>必填的</strong>
+              </mat-error>
+              <mat-error *ngIf="profileForm.controls['department'].hasError('server')">
+                {{ profileForm.controls['department'].getError('server') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- Class -->
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>班級</mat-label>
+              <input matInput type="text" formControlName="class" required>
+              <mat-error *ngIf="profileForm.controls['class'].hasError('required')">
+                班級是<strong>必填的</strong>
+              </mat-error>
+              <mat-error *ngIf="profileForm.controls['class'].hasError('server')">
+                {{ profileForm.controls['class'].getError('server') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!profileForm.valid || (isLoading$ | async)">
+          <mat-icon *ngIf="(isLoading$ | async)">
+            <mat-spinner color="accent" diameter="20"></mat-spinner>
+          </mat-icon>
+          確認
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</ng-container>
+<!-- Loading -->
+<ng-container *ngIf="(isLoading$ | async)">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>載入中</mat-card-title>
+    </mat-card-header>
+    <mat-divider [inset]="true"></mat-divider>
+    <mat-card-content class="center-card">
+      <mat-spinner></mat-spinner>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+<!-- Error -->
+<ng-container *ngIf="(isfetchDataError$ | async)">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>發生錯誤</mat-card-title>
+    </mat-card-header>
+    <mat-divider [inset]="true"></mat-divider>
+    <mat-card-content class="center-card">
+      <button mat-stroked-button (click)="reload()" type="button">重新載入</button>
+    </mat-card-content>
+  </mat-card>
+</ng-container>

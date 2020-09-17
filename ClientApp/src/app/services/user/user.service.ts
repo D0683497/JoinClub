@@ -41,4 +41,10 @@ export class UserService {
     return this.http.delete(url, this.httpOptions);
   }
 
+  // 使用 Id 獲取使用者
+  getUserById(userId: string): Observable<User> {
+    const url = `${this.urlRoot}/users/${userId}`;
+    return this.http.get<User>(url, this.httpOptions);
+  }
+
 }
