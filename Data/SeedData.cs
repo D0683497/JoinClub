@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using JoinClub.Entities.Application;
+using JoinClub.Entities.Student;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,10 +22,15 @@ namespace JoinClub.Data
                 
                 #region Database
 
-                logger.LogInformation("開始創建資料庫");
-                var dbContext = services.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.EnsureCreated();
-                logger.LogInformation("創資料庫完成");
+                logger.LogInformation("開始創建Club資料庫");
+                var applicationDbContext = services.GetRequiredService<ApplicationDbContext>();
+                applicationDbContext.Database.EnsureCreated();
+                logger.LogInformation("Club創資料庫完成");
+                
+                logger.LogInformation("開始創建Student資料庫");
+                var studentDbContext = services.GetRequiredService<StudentDbContext>();
+                studentDbContext.Database.EnsureCreated();
+                logger.LogInformation("Student創資料庫完成");
 
                 #endregion
                 
@@ -41,6 +47,14 @@ namespace JoinClub.Data
                 logger.LogInformation("開始創建使用者");
                 CreateUser(services, logger);
                 logger.LogInformation("創建使用者完成");
+
+                #endregion
+
+                #region Student
+
+                logger.LogInformation("開始創建學生資料");
+                CreateStudentData(services, logger);
+                logger.LogInformation("創建學生資料完成");
 
                 #endregion
             }
@@ -200,6 +214,19 @@ namespace JoinClub.Data
                 }
 
                 #endregion
+            }
+            catch (Exception e)
+            {
+                logger.LogError($"發生未知錯誤\n{e.ToString()}");
+                throw;
+            }
+        }
+
+        private static void CreateStudentData(IServiceProvider services, ILogger<SeedData> logger)
+        {
+            try
+            {
+                var dbContext = services.GetRequiredService<StudentDbContext>();
             }
             catch (Exception e)
             {

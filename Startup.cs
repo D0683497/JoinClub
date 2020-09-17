@@ -37,6 +37,11 @@ namespace JoinClub
             {
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
+            
+            services.AddDbContext<StudentDbContext>(option =>
+            {
+                option.UseSqlite(Configuration.GetConnectionString("SecondaryConnection"));
+            });
 
             #endregion
 
