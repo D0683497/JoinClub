@@ -10,9 +10,10 @@ import { HomeComponent } from './home/home.component';
 import { EmptySetNullDirective } from './helpers/empty-set-null/empty-set-null.directive';
 import { FirstLetterUpperDirective } from './helpers/first-letter-upper/first-letter-upper.directive';
 import { LicenseComponent } from './license/license.component';
+import { LoadingPageComponent } from './loading-page/loading-page.component';
 
 @NgModule({
-  declarations: [LayoutComponent, ToolbarComponent, MenuComponent, HomeComponent, EmptySetNullDirective, FirstLetterUpperDirective, LicenseComponent],
+  declarations: [LayoutComponent, ToolbarComponent, MenuComponent, HomeComponent, EmptySetNullDirective, FirstLetterUpperDirective, LicenseComponent, LoadingPageComponent],
   imports: [
     CommonModule,
     RouterModule,
