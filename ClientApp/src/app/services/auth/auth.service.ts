@@ -1,13 +1,15 @@
-import { ChangePassword } from '../../models/change-password/change-password.model';
+import { Profile } from '../../models/account/profile/profile';
+import { ChangeProfile } from '../../models/account/profile/change-profile.model';
+import { ChangePassword } from '../../models/account/change-password/change-password.model';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Login } from '../../models/login/login.model';
+import { Login } from '../../models/account/login/login.model';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { LoginResponse } from '../../models/login/login-response.model';
+import { LoginResponse } from '../../models/account/login/login-response.model';
 import { map } from 'rxjs/operators';
-import { Register } from '../../models/register/register.model';
+import { Register } from '../../models/account/register/register.model';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +48,18 @@ export class AuthService {
   logout(): void {
     localStorage.clear();
     this.isLoginSubject$.next(false);
+  }
+
+  // 獲取個人資訊
+  getProfile(): Observable<Profile> {
+    const url = `${this.urlRoot}/account/${this.getUserId()}/profile`;
+    return this.http.get<Profile>(url, this.httpOptions);
+  }
+
+  // 修改個人資訊
+  changeProfile(data: ChangeProfile): Observable<object> {
+    const url = `${this.urlRoot}/account/${this.getUserId()}/profile`;
+    return this.http.post(url, data, this.httpOptions);
   }
 
   // 更改密碼

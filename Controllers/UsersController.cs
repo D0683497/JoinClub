@@ -157,19 +157,5 @@ namespace JoinClub.Controllers
 
             return Ok();
         }
-
-        [HttpGet("{userId}", Name = nameof(GetUserById))]
-        public async Task<ActionResult<UserProfileViewModel>> GetUserById(string userId)
-        {
-            var user = await _userRepository.GetUserByIdAsync(userId);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            var model = _mapper.Map<UserProfileViewModel>(user);
-
-            return Ok(model);
-        }
     }
 }

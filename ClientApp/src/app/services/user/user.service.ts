@@ -1,4 +1,4 @@
-import { Profile } from '../../models/profile/profile';
+import { Profile } from '../../models/account/profile/profile';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
@@ -40,12 +40,6 @@ export class UserService {
   deleteUser(userId: string): Observable<object> {
     const url = `${this.urlRoot}/users/${userId}`;
     return this.http.delete(url, this.httpOptions);
-  }
-
-  // 使用 Id 獲取使用者
-  getUserById(userId: string): Observable<Profile> {
-    const url = `${this.urlRoot}/users/${userId}`;
-    return this.http.get<Profile>(url, this.httpOptions);
   }
 
 }

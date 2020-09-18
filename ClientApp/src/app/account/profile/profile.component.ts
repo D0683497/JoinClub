@@ -1,3 +1,4 @@
+import { ChangeProfile } from './../../models/account/profile/change-profile.model';
 import { UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -19,32 +20,29 @@ export class ProfileComponent implements OnInit {
   isfetchDataError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isUpdateLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   profileForm: FormGroup;
-  userId: string;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private userService: UserService,
     private snackBar: MatSnackBar) {
-      this.userId = this.authService.getUserId();
-      this.profileForm = this.fb.group({
-        email: [null, [Validators.required, Validators.email]],
-        userName: [null, [Validators.required, Validators.pattern(this.pattern)]],
-        phoneNumber: null,
-        nid: [null, Validators.required],
-        name: [null, Validators.required],
-        college: [null, Validators.required],
-        department: [null, Validators.required],
-        class: [null, Validators.required]
-      });
-    }
+  }
 
   ngOnInit(): void {
+    this.profileForm = this.fb.group({
+      email: [{value: null, disabled: true}, [Validators.required, Validators.email]],
+      userName: [{value: null, disabled: true}, [Validators.required, Validators.pattern(this.pattern)]],
+      phoneNumber: {value: null, disabled: true},
+      nid: [{value: null, disabled: true}, Validators.required],
+      name: [null, Validators.required],
+      college: [{value: null, disabled: true}, Validators.required],
+      department: [{value: null, disabled: true}, Validators.required],
+      class: [{value: null, disabled: true}, Validators.required]
+    });
     this.getData();
   }
 
   getData(): void {
-    this.userService.getUserById(this.userId).subscribe(
+    this.authService.getProfile().subscribe(
       (res) => {
         Object.keys(res).forEach(prop => {
           const controlName = prop.charAt(0).toLowerCase() + prop.slice(1); // 讓首字母變成小寫
@@ -80,9 +78,9 @@ export class ProfileComponent implements OnInit {
     this.snackBar.open('修改失敗', '關閉', { duration: 5000 });
   }
 
-  onSubmit(data: User): void {
+  onSubmit(data: ChangeProfile): void {
     this.isUpdateLoading$.next(true);
-    this.userService.updateUser(this.userId, data).subscribe(
+    this.authService.changeProfile(data).subscribe(
       (res) => {
         this.snackBar.open('修改成功', '關閉', { duration: 5000 });
         this.isUpdateLoading$.next(false);

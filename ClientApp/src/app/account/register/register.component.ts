@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { Register } from '../../models/register/register.model';
+import { Register } from '../../models/account/register/register.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -74,9 +74,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  onSubmit(registerForm: Register): void {
+  onSubmit(data: Register): void {
     this.isLoading$.next(true);
-    this.authService.register(registerForm).subscribe(
+    this.authService.register(data).subscribe(
       (res) => { this.registerSuccess(); },
       (err: HttpErrorResponse) => {
         this.registerFail(err);

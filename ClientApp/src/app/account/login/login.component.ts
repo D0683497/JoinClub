@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { Login } from 'src/app/models/login/login.model';
+import { Login } from '../../models/account/login/login.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';

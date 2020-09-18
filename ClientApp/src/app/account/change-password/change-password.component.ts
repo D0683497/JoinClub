@@ -1,5 +1,5 @@
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { ChangePassword } from '../../models/change-password/change-password.model';
+import { AuthService } from '../../services/auth/auth.service';
+import { ChangePassword } from '../../models/account/change-password/change-password.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';

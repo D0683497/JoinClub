@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using JoinClub.Data;
 using JoinClub.Entities.Application;
 using JoinClub.Models.Account;
+using JoinClub.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +70,42 @@ namespace JoinClub.Controllers
             }
             
             _logger.LogError($"{user.Id}修改密碼失敗");
+            return BadRequest();
+        }
+
+        [Authorize]
+        [HttpGet("{userId}/profile", Name = nameof(GetProfile))]
+        public async Task<ActionResult<UserProfileViewModel>> GetProfile(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var model = _mapper.Map<UserProfileViewModel>(user);
+            
+            return Ok(model);
+        }
+        
+        [Authorize]
+        [HttpPost("{userId}/profile", Name = nameof(ChangeProfile))]
+        public async Task<IActionResult> ChangeProfile(string userId, UserProfileUpdateViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Name = model.Name;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+
             return BadRequest();
         }
     }
