@@ -11,8 +11,8 @@ export class FirstLetterUpperDirective {
   constructor(@Self() private ngControl: NgControl) { }
 
   @HostListener('keyup', ['$event']) onKeyDowns(event: KeyboardEvent): void {
-    if (this.ngControl.value?.trim() !== '') {
-      const value: string = this.ngControl.value;
+    const value: string = this.ngControl.value;
+    if (value != null) {
       this.ngControl.reset(value.charAt(0).toUpperCase() + value.slice(1));
     }
   }
