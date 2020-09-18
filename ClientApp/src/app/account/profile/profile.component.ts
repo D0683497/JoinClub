@@ -1,11 +1,9 @@
 import { ChangeProfile } from './../../models/account/profile/change-profile.model';
-import { UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from 'src/app/models/user/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -20,11 +18,13 @@ export class ProfileComponent implements OnInit {
   isfetchDataError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isUpdateLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   profileForm: FormGroup;
+  role: string;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private snackBar: MatSnackBar) {
+      this.role = this.authService.getRole();
   }
 
   ngOnInit(): void {

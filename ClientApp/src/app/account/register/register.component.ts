@@ -58,7 +58,12 @@ export class RegisterComponent implements OnInit {
     if (err.status === 400) {
       const validationErrors = err.error.errors;
       Object.keys(validationErrors).forEach(prop => {
-        const controlName = prop.charAt(0).toLowerCase() + prop.slice(1); // 讓首字母變成小寫
+        let controlName: string;
+        if (prop === 'NID') {
+          controlName = prop.toLowerCase();
+        } else {
+          controlName = prop.charAt(0).toLowerCase() + prop.slice(1); // 讓首字母變成小寫
+        }
 
         // 雖然可能有多個錯誤，但後面的會蓋掉前面的
         validationErrors[prop].forEach(element => {

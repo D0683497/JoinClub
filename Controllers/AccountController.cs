@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using AutoMapper;
+using JoinClub.Data;
 using JoinClub.Entities.Application;
 using JoinClub.Models.Account;
 using JoinClub.Models.User;
@@ -17,15 +20,18 @@ namespace JoinClub.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly ApplicationDbContext _applicationDbContext;
 
         public AccountController(
             ILogger<AccountController> logger, 
             UserManager<ApplicationUser> userManager, 
-            IMapper mapper)
+            IMapper mapper, 
+            ApplicationDbContext applicationDbContext)
         {
             _logger = logger;
             _userManager = userManager;
             _mapper = mapper;
+            _applicationDbContext = applicationDbContext;
         }
 
         [AllowAnonymous]
@@ -34,14 +40,35 @@ namespace JoinClub.Controllers
         {
             var entity = _mapper.Map<ApplicationUser>(model);
             
-            var createUserResult = await _userManager.CreateAsync(entity, model.Password);
-            if (createUserResult.Succeeded)
+            using (var transaction = _applicationDbContext.Database.BeginTransaction())
             {
-                _logger.LogInformation($"註冊{model.UserName}成功");
-                return Ok();
-            }
+                var createUserResult = await _userManager.CreateAsync(entity, model.Password);
+                if (!createUserResult.Succeeded)
+                {
+                    await transaction.RollbackAsync();
+                    _logger.LogError($"{model.UserName}建立失敗");
+                    return BadRequest("註冊失敗");
+                }
             
-            return BadRequest("註冊失敗");
+                var currentUser = await _userManager.FindByNameAsync(model.UserName);
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, string.IsNullOrEmpty(currentUser.Id) ? "" : currentUser.Id),
+                    new Claim(ClaimTypes.Name, string.IsNullOrEmpty(currentUser.UserName) ? "" : currentUser.UserName),
+                };
+                var addClaimResult = await _userManager.AddClaimsAsync(currentUser, claims);
+                if (!addClaimResult.Succeeded)
+                {
+                    await transaction.RollbackAsync();
+                    _logger.LogError($"{model.UserName}添加聲明");
+                    return BadRequest("註冊失敗");
+                }
+                
+                await transaction.CommitAsync();
+                _logger.LogInformation($"{model.UserName}建立成功");
+            }
+
+            return Ok();
         }
         
         [Authorize]

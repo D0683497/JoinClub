@@ -51,12 +51,12 @@ namespace JoinClub.Controllers
                 return BadRequest("登入失敗");
             }
 
-            var role = await _userManager.GetRolesAsync(user);
-            if (!role.Any())
-            {
-                _logger.LogError($"{model.UserName}尚未入社");
-                return BadRequest("尚未入社");
-            }
+            // var role = await _userManager.GetRolesAsync(user);
+            // if (!role.Any())
+            // {
+            //     _logger.LogError($"{model.UserName}尚未入社");
+            //     return BadRequest("尚未入社");
+            // }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, true);
             if (result.IsLockedOut)

@@ -4,11 +4,11 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>個人資訊</mat-card-title>
-        <mat-chip-list aria-label="Fish selection">
-          <mat-chip color="primary" selected>申請入社</mat-chip>
-          <mat-chip>社員</mat-chip>
-          <mat-chip color="accent" selected>管理員</mat-chip>
-          <mat-chip color="warn" selected>幹部</mat-chip>
+        <mat-chip-list [ngSwitch]="role" aria-label="Fish selection">
+          <mat-chip *ngSwitchCase="'Member'">社員</mat-chip>
+          <mat-chip *ngSwitchCase="'Admin'" color="accent" selected>管理員</mat-chip>
+          <mat-chip *ngSwitchCase="'Staff'" color="warn" selected>幹部</mat-chip>
+          <mat-chip *ngSwitchDefault color="primary" selected>申請入社</mat-chip>
         </mat-chip-list>
       </mat-card-header>
       <mat-card-content>

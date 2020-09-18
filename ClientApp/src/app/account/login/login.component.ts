@@ -55,15 +55,15 @@ export class LoginComponent implements OnInit {
         });
         break;
       }
-      case '尚未入社': {
-        Swal.fire({
-          icon: 'warning',
-          title: '尚未入社',
-          confirmButtonText: '確認',
-          showCloseButton: true
-        });
-        break;
-      }
+      // case '尚未入社': {
+      //   Swal.fire({
+      //     icon: 'warning',
+      //     title: '尚未入社',
+      //     confirmButtonText: '確認',
+      //     showCloseButton: true
+      //   });
+      //   break;
+      // }
       default: {
         Swal.fire({
           icon: 'error',
