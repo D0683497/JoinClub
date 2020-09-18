@@ -44,14 +44,9 @@ export class ProfileComponent implements OnInit {
   getData(): void {
     this.userService.getUserById(this.userId).subscribe(
       (res) => {
-        this.profileForm.controls.email.setValue(res.email);
-        this.profileForm.controls.userName.setValue(res.userName);
-        this.profileForm.controls.phoneNumber.setValue(res.phoneNumber);
-        this.profileForm.controls.nid.setValue(res.nid);
-        this.profileForm.controls.name.setValue(res.name);
-        this.profileForm.controls.college.setValue(res.college);
-        this.profileForm.controls.department.setValue(res.department);
-        this.profileForm.controls.class.setValue(res.class);
+        Object.keys(res).forEach(prop => {
+          this.profileForm.controls[prop].setValue(res[prop]);
+        });
         this.isfetchDataError$.next(false);
         this.isLoading$.next(false);
       },
