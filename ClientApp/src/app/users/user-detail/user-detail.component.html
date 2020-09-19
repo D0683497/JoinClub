@@ -3,9 +3,6 @@
   <header>
     <div mat-dialog-title>使用者詳情</div>
     <button type="button" (click)="deleteUser(userDetailForm.controls['id'].value)" mat-button color="accent">
-      <mat-icon *ngIf="(isDeleteLoading$ | async)">
-        <mat-spinner color="primary" diameter="20"></mat-spinner>
-      </mat-icon>
       刪除
     </button>
   </header>
@@ -146,10 +143,7 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-raised-button type="submit" color="primary" [disabled]="!userDetailForm.valid || (isUpdateLoading$ | async)">
-      <mat-icon *ngIf="(isUpdateLoading$ | async)">
-        <mat-spinner color="accent" diameter="20"></mat-spinner>
-      </mat-icon>
+    <button mat-raised-button type="submit" color="primary" [disabled]="!userDetailForm.valid">
       修改
     </button>
     <button type="button" mat-button mat-dialog-close>關閉</button>

@@ -5,7 +5,6 @@ import { Register } from '../../models/account/register/register.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 import { MustMatch } from '../../shared/helpers/must-match.validator';
 
 @Component({
@@ -16,7 +15,6 @@ import { MustMatch } from '../../shared/helpers/must-match.validator';
 export class RegisterComponent implements OnInit {
 
   pattern = new RegExp(/[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+/gm);
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   registerForm: FormGroup;
   hidePassword = true;
   hideConfirmPassword = true;
@@ -80,12 +78,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(data: Register): void {
-    this.isLoading$.next(true);
     this.authService.register(data).subscribe(
       (res) => { this.registerSuccess(); },
       (err: HttpErrorResponse) => {
         this.registerFail(err);
-        this.isLoading$.next(false);
       }
     );
   }

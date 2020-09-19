@@ -15,7 +15,6 @@ import { BehaviorSubject } from 'rxjs';
 export class LoginComponent implements OnInit {
 
   pattern = new RegExp(/[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+/gm);
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   loginForm: FormGroup;
   hide = true;
 
@@ -77,12 +76,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(loginForm: Login): void {
-    this.isLoading$.next(true);
     this.authService.login(loginForm).subscribe(
       (res) => { this.loginSuccess(); },
       (err: HttpErrorResponse) => {
         this.loginFail(err);
-        this.isLoading$.next(false);
       }
     );
   }

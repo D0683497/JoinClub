@@ -1,18 +1,7 @@
-mat-card {
-  min-width: 120px;
-  margin: 20px;
-  text-align: center;
-}
-
-mat-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-mat-card-content {
+mat-dialog-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  min-height: 145px;
+  min-width: 145px;
 }

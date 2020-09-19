@@ -1,6 +1,6 @@
 <mat-card>
   <!-- Content -->
-  <ng-container *ngIf="!(isfetchDataError$ | async) && !(isLoading$ | async)">
+  <ng-container *ngIf="!(isfetchDataError$ | async)">
     <mat-card-header>
       <mat-card-title>使用者列表</mat-card-title>
     </mat-card-header>
@@ -100,16 +100,6 @@
     <mat-card-actions>
       <mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [length]="pageLength" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
     </mat-card-actions>
-  </ng-container>
-   <!-- Loading -->
-   <ng-container *ngIf="(isLoading$ | async)">
-    <mat-card-header>
-      <mat-card-title>載入中</mat-card-title>
-    </mat-card-header>
-    <mat-divider [inset]="true"></mat-divider>
-    <mat-card-content class="center-card">
-      <mat-spinner></mat-spinner>
-    </mat-card-content>
   </ng-container>
   <!-- Error -->
   <ng-container *ngIf="(isfetchDataError$ | async)">

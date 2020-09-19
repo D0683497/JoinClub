@@ -1,5 +1,7 @@
+import { LoadingPageComponent } from './../../shared/loading-page/loading-page.component';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +11,9 @@ export class LoadingService {
   // tslint:disable-next-line: variable-name
   private _loading = false;
   loadingStatus: Subject<boolean> = new Subject();
+  dialogId: string;
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   get loading(): boolean {
     return this._loading;
@@ -23,10 +26,15 @@ export class LoadingService {
 
   startLoading(): void {
     this.loading = true;
+    const dialogRef = this.dialog.open(LoadingPageComponent, {
+      disableClose: true
+    });
+    this.dialogId = dialogRef.id;
   }
 
   stopLoading(): void {
     this.loading = false;
+    this.dialog.getDialogById(this.dialogId).close();
   }
 
 }

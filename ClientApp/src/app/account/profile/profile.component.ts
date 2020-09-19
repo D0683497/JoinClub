@@ -1,4 +1,4 @@
-import { ChangeProfile } from './../../models/account/profile/change-profile.model';
+import { ChangeProfile } from '../../models/account/profile/change-profile.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -14,9 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ProfileComponent implements OnInit {
 
   pattern = new RegExp(/[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+/gm);
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   isfetchDataError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  isUpdateLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   profileForm: FormGroup;
   role: string;
 
@@ -49,19 +47,16 @@ export class ProfileComponent implements OnInit {
           this.profileForm.controls[controlName].setValue(res[prop]);
         });
         this.isfetchDataError$.next(false);
-        this.isLoading$.next(false);
       },
       (err) => {
         this.snackBar.open('獲取資料失敗', '關閉', { duration: 5000 });
         this.isfetchDataError$.next(true);
-        this.isLoading$.next(false);
       }
     );
   }
 
   reload(): void {
     this.isfetchDataError$.next(false);
-    this.isLoading$.next(true);
     this.ngOnInit();
   }
 
@@ -79,15 +74,12 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit(data: ChangeProfile): void {
-    this.isUpdateLoading$.next(true);
     this.authService.changeProfile(data).subscribe(
       (res) => {
         this.snackBar.open('修改成功', '關閉', { duration: 5000 });
-        this.isUpdateLoading$.next(false);
       },
       (err: HttpErrorResponse) => {
         this.updateFail(err);
-        this.isUpdateLoading$.next(false);
       }
     );
   }

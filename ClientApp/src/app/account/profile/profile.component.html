@@ -1,5 +1,5 @@
 <!-- Content -->
-<ng-container *ngIf="!(isfetchDataError$ | async) && !(isLoading$ | async)">
+<ng-container *ngIf="!(isfetchDataError$ | async)">
   <form [formGroup]="profileForm" #formDirective="ngForm" novalidate (ngSubmit)="onSubmit(profileForm.value)">
     <mat-card>
       <mat-card-header>
@@ -148,18 +148,6 @@
       </mat-card-actions>
     </mat-card>
   </form>
-</ng-container>
-<!-- Loading -->
-<ng-container *ngIf="(isLoading$ | async)">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>載入中</mat-card-title>
-    </mat-card-header>
-    <mat-divider [inset]="true"></mat-divider>
-    <mat-card-content class="center-card">
-      <mat-spinner></mat-spinner>
-    </mat-card-content>
-  </mat-card>
 </ng-container>
 <!-- Error -->
 <ng-container *ngIf="(isfetchDataError$ | async)">

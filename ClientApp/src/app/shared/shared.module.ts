@@ -13,7 +13,16 @@ import { LicenseComponent } from './license/license.component';
 import { LoadingPageComponent } from './loading-page/loading-page.component';
 
 @NgModule({
-  declarations: [LayoutComponent, ToolbarComponent, MenuComponent, HomeComponent, EmptySetNullDirective, FirstLetterUpperDirective, LicenseComponent, LoadingPageComponent],
+  declarations: [
+    LayoutComponent,
+    ToolbarComponent,
+    MenuComponent,
+    HomeComponent,
+    EmptySetNullDirective,
+    FirstLetterUpperDirective,
+    LicenseComponent,
+    LoadingPageComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -29,6 +38,9 @@ import { LoadingPageComponent } from './loading-page/loading-page.component';
     MaterialSharedModule,
     EmptySetNullDirective,
     FirstLetterUpperDirective
+  ],
+  entryComponents: [
+    LoadingPageComponent
   ]
 })
 export class SharedModule { }

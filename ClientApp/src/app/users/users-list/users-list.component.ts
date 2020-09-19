@@ -32,7 +32,6 @@ export class UsersListComponent implements OnInit {
   pageSizeOptions: number[] = [10, 20, 30, 40, 50];
   displayedColumns: string[] = ['nid', 'name', 'college', 'department', 'class', 'action'];
   isfetchDataError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   constructor(
     private userService: UserService,
@@ -60,19 +59,16 @@ export class UsersListComponent implements OnInit {
       data => {
         this.dataSource.data = data;
         this.isfetchDataError$.next(false);
-        this.isLoading$.next(false);
       },
       error => {
         this.snackBar.open('獲取資料失敗', '關閉', { duration: 5000 });
         this.isfetchDataError$.next(true);
-        this.isLoading$.next(false);
       }
     );
   }
 
   reload(): void {
     this.isfetchDataError$.next(false);
-    this.isLoading$.next(true);
     this.ngOnInit();
   }
 

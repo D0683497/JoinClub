@@ -183,10 +183,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button type="submit" color="primary" [disabled]="!registerForm.valid || (isLoading$ | async)">
-        <mat-icon *ngIf="(isLoading$ | async)">
-          <mat-spinner color="accent" diameter="20"></mat-spinner>
-        </mat-icon>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!registerForm.valid">
         註冊
       </button>
     </mat-card-actions>

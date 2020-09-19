@@ -2,7 +2,6 @@ import { AuthService } from '../../services/auth/auth.service';
 import { ChangePassword } from '../../models/account/change-password/change-password.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import { MustMatch } from '../../shared/helpers/must-match.validator';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -15,7 +14,6 @@ import { Router } from '@angular/router';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   changePasswordForm: FormGroup;
   hideCurrentPassword = true;
   hideNewPassword = true;
@@ -55,7 +53,6 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onSubmit(data: ChangePassword): void {
-    this.isLoading$.next(true);
     this.authService.changePassword(data).subscribe(
       (res) => {
         this.authService.logout();
@@ -70,7 +67,6 @@ export class ChangePasswordComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         this.changePasswordFail(err);
-        this.isLoading$.next(false);
       }
     );
   }

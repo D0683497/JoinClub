@@ -5,7 +5,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-user-detail',
@@ -15,8 +14,6 @@ import { BehaviorSubject } from 'rxjs';
 export class UserDetailComponent implements OnInit {
 
   pattern = new RegExp(/[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+/gm);
-  isUpdateLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  isDeleteLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   userDetailForm: FormGroup;
 
   constructor(
@@ -41,14 +38,12 @@ export class UserDetailComponent implements OnInit {
   }
 
   deleteUser(userId: string): void {
-    this.isDeleteLoading$.next(true);
     this.userService.deleteUser(userId).subscribe(
       (res) => {
         this.dialogRef.close();
         this.snackBar.open('刪除成功', '關閉', { duration: 5000 });
       },
       (err) => {
-        this.isDeleteLoading$.next(false);
         this.snackBar.open('刪除失敗', '關閉', { duration: 5000 });
       }
     );
@@ -68,7 +63,6 @@ export class UserDetailComponent implements OnInit {
   }
 
   onSubmit(userDetailForm: User): void {
-    this.isUpdateLoading$.next(true);
     this.userService.updateUser(this.data.id, userDetailForm).subscribe(
       (res) => {
         this.snackBar.open('修改成功', '關閉', { duration: 5000 });
@@ -76,7 +70,6 @@ export class UserDetailComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         this.updateFail(err);
-        this.isUpdateLoading$.next(false);
       }
     );
   }
