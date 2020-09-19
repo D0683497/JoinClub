@@ -14,7 +14,7 @@ export class ToolbarComponent {
   isLoggedIn$: Observable<boolean>;
 
   constructor(private authService: AuthService, private router: Router) {
-    this.isLoggedIn$ = authService.isLoggedIn();
+    this.isLoggedIn$ = authService.getLoginStatus();
   }
 
   logout(): void {
