@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AccountService } from '../../services/account/account.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,11 +22,11 @@ export class ProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar) {
-      this.role = this.authService.getRole();
-  }
+    private snackBar: MatSnackBar,
+    private accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.role = this.authService.getRole();
     this.profileForm = this.fb.group({
       email: [{value: null, disabled: true}, [Validators.required, Validators.email]],
       userName: [{value: null, disabled: true}, [Validators.required, Validators.pattern(this.pattern)]],
@@ -40,7 +41,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getData(): void {
-    this.authService.getProfile().subscribe(
+    this.accountService.getProfile().subscribe(
       (res) => {
         Object.keys(res).forEach(prop => {
           const controlName = prop.charAt(0).toLowerCase() + prop.slice(1); // 讓首字母變成小寫
@@ -74,7 +75,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit(data: ChangeProfile): void {
-    this.authService.changeProfile(data).subscribe(
+    this.accountService.changeProfile(data).subscribe(
       (res) => {
         this.snackBar.open('修改成功', '關閉', { duration: 5000 });
       },

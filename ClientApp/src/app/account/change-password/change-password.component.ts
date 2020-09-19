@@ -1,4 +1,4 @@
-import { AuthService } from '../../services/auth/auth.service';
+import { AccountService } from '../../services/account/account.service';
 import { ChangePassword } from '../../models/account/change-password/change-password.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -21,7 +21,7 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private accountService: AccountService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -53,9 +53,9 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onSubmit(data: ChangePassword): void {
-    this.authService.changePassword(data).subscribe(
+    this.accountService.changePassword(data).subscribe(
       (res) => {
-        this.authService.logout();
+        this.accountService.logout();
         Swal.fire({
           icon: 'success',
           title: '修改密碼成功',

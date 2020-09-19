@@ -1,6 +1,6 @@
+import { AccountService } from '../../services/account/account.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
 import { Register } from '../../models/account/register/register.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
@@ -21,8 +21,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(data: Register): void {
-    this.authService.register(data).subscribe(
+    this.accountService.register(data).subscribe(
       (res) => { this.registerSuccess(); },
       (err: HttpErrorResponse) => {
         this.registerFail(err);

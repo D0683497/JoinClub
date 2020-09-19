@@ -1,11 +1,10 @@
+import { AccountService } from './../../services/account/account.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Login } from '../../models/account/login/login.model';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private accountService: AccountService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -76,7 +75,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(loginForm: Login): void {
-    this.authService.login(loginForm).subscribe(
+    this.accountService.login(loginForm).subscribe(
       (res) => { this.loginSuccess(); },
       (err: HttpErrorResponse) => {
         this.loginFail(err);

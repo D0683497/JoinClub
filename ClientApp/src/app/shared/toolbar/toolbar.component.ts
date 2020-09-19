@@ -1,5 +1,6 @@
+import { AccountService } from '../../services/account/account.service';
 import { AuthService } from '../../services/auth/auth.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -9,16 +10,22 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent {
+export class ToolbarComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.isLoggedIn$ = authService.getLoginStatus();
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private accountService: AccountService) {
+  }
+
+  ngOnInit(): void {
+    this.isLoggedIn$ = this.authService.getLoginStatus();
   }
 
   logout(): void {
-    this.authService.logout();
+    this.accountService.logout();
     Swal.fire({
       icon: 'success',
       title: '成功登出',

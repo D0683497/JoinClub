@@ -5,8 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './loading-page.component.html',
   styleUrls: ['./loading-page.component.scss']
 })
-export class LoadingPageComponent {
-
-  constructor() { }
-
-}
+export class LoadingPageComponent { }
