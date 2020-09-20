@@ -24,6 +24,10 @@ export class ToolbarComponent implements OnInit {
     this.isLoggedIn$ = this.authService.getLoginStatus();
   }
 
+  getUserName(): string {
+    return this.authService.getUniqueName();
+  }
+
   logout(): void {
     this.accountService.logout();
     Swal.fire({

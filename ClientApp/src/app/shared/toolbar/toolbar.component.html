@@ -1,8 +1,23 @@
 <ng-container *ngIf="(isLoggedIn$ | async); else notLogin">
-  <a mat-flat-button (click)="logout()" class="login-button">
-    <mat-icon>exit_to_app</mat-icon>
-    <span>登出</span>
-  </a>
+  <button mat-flat-button class="login-button" [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+    <span>{{ getUserName() }}</span>
+  </button>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button type="button" mat-menu-item routerLink="/account/profile" routerLinkActive="active">
+      <mat-icon>portrait</mat-icon>
+      <span>個人資訊</span>
+    </button>
+    <button type="button" mat-menu-item routerLink="/account/change-password" routerLinkActive="active">
+      <mat-icon>lock</mat-icon>
+      <span>更改密碼</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button type="button" mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>登出</span>
+    </button>
+  </mat-menu>
 </ng-container>
 <ng-template #notLogin>
   <a [routerLink]="['/account/login']" mat-flat-button class="login-button">
