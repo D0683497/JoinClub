@@ -8,7 +8,7 @@
           <mat-chip *ngSwitchCase="'Member'">社員</mat-chip>
           <mat-chip *ngSwitchCase="'Admin'" color="accent" selected>管理員</mat-chip>
           <mat-chip *ngSwitchCase="'Staff'" color="warn" selected>幹部</mat-chip>
-          <mat-chip *ngSwitchDefault color="primary" selected>申請入社</mat-chip>
+          <mat-chip *ngSwitchDefault color="primary" (click)="joinClub()" selected>申請入社</mat-chip>
         </mat-chip-list>
       </mat-card-header>
       <mat-card-content>

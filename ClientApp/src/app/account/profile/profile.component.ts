@@ -1,3 +1,4 @@
+import { JoinClubComponent } from './../join-club/join-club.component';
 import { ChangeProfile } from '../../models/account/profile/change-profile.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -6,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AccountService } from '../../services/account/account.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +25,8 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private accountService: AccountService) { }
+    private accountService: AccountService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
@@ -83,6 +86,13 @@ export class ProfileComponent implements OnInit {
         this.updateFail(err);
       }
     );
+  }
+
+  joinClub(): void {
+    const dialogRef = this.dialog.open(JoinClubComponent);
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
 }
