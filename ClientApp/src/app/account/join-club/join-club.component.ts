@@ -8,12 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JoinClubComponent implements OnInit {
 
-  userId: string;
+  joinCode: string;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    const userId = this.authService.getUserId();
+    this.joinCode = `HackerSir-join-code-${userId}`;
   }
 
 }

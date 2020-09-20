@@ -35,6 +35,20 @@ export const FRONTENDLICENSES: License[] = [
     officialWebsite: 'https://sweetalert2.github.io/',
     gitHub: 'https://github.com/sweetalert2/sweetalert2',
     license: 'https://github.com/sweetalert2/sweetalert2/blob/master/LICENSE'
+  },
+  {
+    title: 'angularx-qrcode',
+    description: 'About Angular4/5/6/7/8/9/10 QRCode generator component library for QR Codes (Quick Response) with AOT support based on node-qrcode',
+    officialWebsite: 'https://www.npmjs.com/package/angularx-qrcode',
+    gitHub: 'https://github.com/Cordobo/angularx-qrcode',
+    license: 'https://github.com/Cordobo/angularx-qrcode/blob/master/LICENCE'
+  },
+  {
+    title: '@zxing/ngx-scanner',
+    description: 'Angular (2+) QR code, Barcode, DataMatrix, scanner component using ZXing.',
+    officialWebsite: 'https://www.npmjs.com/package/@zxing/ngx-scanner',
+    gitHub: 'https://github.com/zxing-js/ngx-scanner',
+    license: 'https://github.com/zxing-js/ngx-scanner/blob/master/LICENSE'
   }
 ];
 

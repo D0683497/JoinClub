@@ -1,0 +1,43 @@
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-bottom: 1vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+@media screen and (min-width: 320px) {
+  form {
+    min-width: 200px;
+  }
+}
+
+@media screen and (min-width: 375px) {
+  form {
+    min-width: 250px;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  form {
+    min-width: 250px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  form {
+    min-width: 500px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  form {
+    min-width: 700px;
+  }
+}

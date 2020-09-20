@@ -1,0 +1,152 @@
+
+<form [formGroup]="checkJoinForm" #formDirective="ngForm" novalidate (ngSubmit)="onSubmit(checkJoinForm.value)">
+  <header>
+    <div mat-dialog-title>審核入社</div>
+    <!-- <button type="button" (click)="deleteUser(userDetailForm.controls['id'].value)" mat-button color="accent">
+      刪除
+    </button> -->
+  </header>
+  <mat-dialog-content>
+    <!-- Id -->
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>識別碼</mat-label>
+          <input type="text" matInput formControlName="id">
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- email -->
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>電子郵件</mat-label>
+          <input type="email" matInput formControlName="email" required>
+          <mat-error *ngIf="checkJoinForm.controls['email'].hasError('required')">
+            電子郵件是<strong>必填的</strong>
+          </mat-error>
+          <mat-error *ngIf="checkJoinForm.controls['email'].hasError('email')">
+            電子郵件<strong>格式錯誤</strong>
+          </mat-error>
+          <mat-error *ngIf="checkJoinForm.controls['email'].hasError('server')">
+            {{ checkJoinForm.controls['email'].getError('server') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- userName -->
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>使用者名稱</mat-label>
+          <input type="text" matInput formControlName="userName" required>
+          <mat-hint>使用者名稱為登入時的帳號</mat-hint>
+          <mat-error *ngIf="checkJoinForm.controls['userName'].hasError('required')">
+            使用者名稱是<strong>必填的</strong>
+          </mat-error>
+          <mat-error *ngIf="checkJoinForm.controls['userName'].hasError('pattern')">
+            使用者名稱只能是<strong>字母或數字或<code>{{ ' - . @ + # $ % \\ / ( ) [ ] * & : >  ^ ! { } =' }}</code></strong>
+          </mat-error>
+          <mat-error *ngIf="checkJoinForm.controls['userName'].hasError('server')">
+            {{ checkJoinForm.controls['userName'].getError('server') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- phoneNumber -->
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>手機號碼</mat-label>
+          <input matInput type="tel" formControlName="phoneNumber" appEmptySetNull>
+          <mat-error *ngIf="checkJoinForm.controls['phoneNumber'].hasError('server')">
+            {{ checkJoinForm.controls['phoneNumber'].getError('server') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- NID -->
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>學號</mat-label>
+          <input matInput type="text" formControlName="nid" required appFirstLetterUpper>
+          <mat-hint>系統會自動將首字母轉為大寫</mat-hint>
+          <mat-error *ngIf="checkJoinForm.controls['nid'].hasError('required')">
+            學號是<strong>必填的</strong>
+          </mat-error>
+          <mat-error *ngIf="checkJoinForm.controls['nid'].hasError('server')">
+            {{ checkJoinForm.controls['nid'].getError('server') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Name -->
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>真實姓名</mat-label>
+          <input matInput type="text" formControlName="name" required>
+          <mat-error *ngIf="checkJoinForm.controls['name'].hasError('required')">
+            真實姓名是<strong>必填的</strong>
+          </mat-error>
+          <mat-error *ngIf="checkJoinForm.controls['name'].hasError('server')">
+            {{ checkJoinForm.controls['name'].getError('server') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- College -->
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>學院</mat-label>
+          <input matInput type="text" formControlName="college" required>
+          <mat-error *ngIf="checkJoinForm.controls['college'].hasError('required')">
+            學院是<strong>必填的</strong>
+          </mat-error>
+          <mat-error *ngIf="checkJoinForm.controls['college'].hasError('server')">
+            {{ checkJoinForm.controls['college'].getError('server') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Department -->
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>系所</mat-label>
+          <input matInput type="text" formControlName="department" required>
+          <mat-error *ngIf="checkJoinForm.controls['department'].hasError('required')">
+            系所是<strong>必填的</strong>
+          </mat-error>
+          <mat-error *ngIf="checkJoinForm.controls['department'].hasError('server')">
+            {{ checkJoinForm.controls['department'].getError('server') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Class -->
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>班級</mat-label>
+          <input matInput type="text" formControlName="class" required>
+          <mat-error *ngIf="checkJoinForm.controls['class'].hasError('required')">
+            班級是<strong>必填的</strong>
+          </mat-error>
+          <mat-error *ngIf="checkJoinForm.controls['class'].hasError('server')">
+            {{ checkJoinForm.controls['class'].getError('server') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button type="submit" color="primary" [disabled]="!checkJoinForm.valid">
+      修改資料
+    </button>
+    <button type="button" mat-raised-button color="primary">申請通過</button>
+    <button type="button" mat-button mat-dialog-close>關閉</button>
+  </mat-dialog-actions>
+</form>
