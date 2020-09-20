@@ -15,30 +15,34 @@ export class ScanResultComponent implements OnInit {
 
   pattern = new RegExp(/[\w\-\.\@\+\#\$\%\\\/\(\)\[\]\*\&\:\>\<\^\!\{\}\=]+/gm);
   checkJoinForm: FormGroup;
+  role: string;
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) private data: User,
+    @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<ScanResultComponent>,
     private snackBar: MatSnackBar,
     private userService: UserService) { }
 
   ngOnInit(): void {
+    console.log(this.data);
+
+    this.role = this.data.role;
     this.checkJoinForm = this.fb.group({
-      id: [{value: this.data.id, disabled: true}],
-      email: [this.data.email, [Validators.required, Validators.email]],
-      userName: [this.data.userName, [Validators.required, Validators.pattern(this.pattern)]],
-      phoneNumber: this.data.phoneNumber,
-      nid: [this.data.nid, Validators.required],
-      name: [this.data.name, Validators.required],
-      college: [this.data.college, Validators.required],
-      department: [this.data.department, Validators.required],
-      class: [this.data.class, Validators.required],
+      id: [{value: this.data.user.id, disabled: true}],
+      email: [this.data.user.email, [Validators.required, Validators.email]],
+      userName: [this.data.user.userName, [Validators.required, Validators.pattern(this.pattern)]],
+      phoneNumber: this.data.user.phoneNumber,
+      nid: [this.data.user.nid, Validators.required],
+      name: [this.data.user.name, Validators.required],
+      college: [this.data.user.college, Validators.required],
+      department: [this.data.user.department, Validators.required],
+      class: [this.data.user.class, Validators.required],
     });
   }
 
   onSubmit(checkJoinForm: User): void {
-    this.userService.updateUser(this.data.id, checkJoinForm).subscribe(
+    this.userService.updateUser(this.data.user.id, checkJoinForm).subscribe(
       (res) => {
         this.snackBar.open('修改成功', '關閉', { duration: 3000 });
         this.dialogRef.close();
@@ -59,9 +63,19 @@ export class ScanResultComponent implements OnInit {
         });
       });
     }
-    this.snackBar.open('修改失敗', '關閉', { duration: 5000 });
+    this.snackBar.open('修改失敗', '關閉', { duration: 3000 });
   }
 
-
+  join(): void {
+    this.userService.joinUserById(this.data.user.id).subscribe(
+      (res) => {
+        this.snackBar.open('申請成功', '關閉', { duration: 3000 });
+        this.dialogRef.close();
+      },
+      (err) => {
+        this.snackBar.open('申請失敗', '關閉', { duration: 3000 });
+      }
+    );
+  }
 
 }

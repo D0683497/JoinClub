@@ -24,17 +24,20 @@ namespace JoinClub.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public UsersController(
             ILogger<UsersController> logger, 
             IUserRepository userRepository, 
             IMapper mapper, 
-            ApplicationDbContext applicationDbContext)
+            ApplicationDbContext applicationDbContext, 
+            UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             _userRepository = userRepository;
             _mapper = mapper;
             _applicationDbContext = applicationDbContext;
+            _userManager = userManager;
         }
 
         [HttpGet(Name = nameof(GetAllUsers))]
@@ -170,6 +173,42 @@ namespace JoinClub.Controllers
             var model = _mapper.Map<UserViewModel>(user);
 
             return Ok(model);
+        }
+        
+        [HttpGet("{userId}/role", Name = nameof(GetUserRoleById))]
+        public async Task<ActionResult<string>> GetUserRoleById(string userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var rolesName = await _userManager.GetRolesAsync(user);
+
+            return Ok(rolesName);
+        }
+        
+        [HttpPost("{userId}/join", Name = nameof(JoinUserById))]
+        public async Task<ActionResult<string>> JoinUserById(string userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var claim = new Claim(ClaimTypes.Role, "Member");
+            
+            var result = await _userManager.AddClaimAsync(user, claim);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation($"{userId}入社成功");
+                return NoContent();
+            }
+
+            _logger.LogInformation($"{userId}入社失敗");
+            return BadRequest();
         }
     }
 }

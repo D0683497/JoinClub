@@ -3,7 +3,7 @@ import { ScanResultComponent } from '../scan-result/scan-result.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-check-join',
@@ -26,8 +26,7 @@ export class CheckJoinComponent implements OnInit {
     private dialog: MatDialog,
     private userService: UserService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onCodeResult(resultString: string): void {
     if (this.canScan) {
@@ -43,14 +42,19 @@ export class CheckJoinComponent implements OnInit {
   }
 
   showResultDialog(userId: string): void {
-    this.userService.getUserById(userId).subscribe(
-      (res) => {
-        const dialogRef = this.dialog.open(ScanResultComponent, {data: res});
+    const userDataOberserval = this.userService.getUserById(userId);
+    const roleDataOberserval = this.userService.getUserRoleById(userId);
+
+    forkJoin([userDataOberserval, roleDataOberserval]).subscribe(
+      results => {
+        const dialogRef = this.dialog.open(ScanResultComponent, {
+          data: { user: results[0], role: results[1][0] }
+        });
         dialogRef.afterClosed().subscribe(() => {
           this.canScan = true;
         });
       },
-      (err) => {
+      error => {
         this.canScan = true;
         this.snackBar.open('發生錯誤', '關閉', { duration: 3000 });
       }

@@ -1,4 +1,3 @@
-import { Profile } from '../../models/account/profile/profile';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
@@ -46,6 +45,18 @@ export class UserService {
   getUserById(userId: string): Observable<User> {
     const url = `${this.urlRoot}/users/${userId}`;
     return this.http.get<User>(url, this.httpOptions);
+  }
+
+  // 使用 Id 獲取使用者角色
+  getUserRoleById(userId: string): Observable<string[]> {
+    const url = `${this.urlRoot}/users/${userId}/role`;
+    return this.http.get<string[]>(url, this.httpOptions);
+  }
+
+  // 使用 Id 讓使用者入社
+  joinUserById(userId: string): Observable<object> {
+    const url = `${this.urlRoot}/users/${userId}/join`;
+    return this.http.post(url, this.httpOptions);
   }
 
 }

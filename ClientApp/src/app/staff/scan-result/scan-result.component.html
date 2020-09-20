@@ -2,9 +2,12 @@
 <form [formGroup]="checkJoinForm" #formDirective="ngForm" novalidate (ngSubmit)="onSubmit(checkJoinForm.value)">
   <header>
     <div mat-dialog-title>審核入社</div>
-    <!-- <button type="button" (click)="deleteUser(userDetailForm.controls['id'].value)" mat-button color="accent">
-      刪除
-    </button> -->
+    <mat-chip-list [ngSwitch]="role" aria-label="Fish selection">
+      <mat-chip *ngSwitchCase="'Member'">社員</mat-chip>
+      <mat-chip *ngSwitchCase="'Admin'" color="accent" selected>管理員</mat-chip>
+      <mat-chip *ngSwitchCase="'Staff'" color="warn" selected>幹部</mat-chip>
+      <mat-chip *ngSwitchDefault color="primary" selected>申請中</mat-chip>
+    </mat-chip-list>
   </header>
   <mat-dialog-content>
     <!-- Id -->
@@ -146,7 +149,7 @@
     <button mat-stroked-button type="submit" color="primary" [disabled]="!checkJoinForm.valid">
       修改資料
     </button>
-    <button type="button" mat-raised-button color="primary">申請通過</button>
+    <button type="button" mat-raised-button (click)="join()" color="primary">申請通過</button>
     <button type="button" mat-button mat-dialog-close>關閉</button>
   </mat-dialog-actions>
 </form>
