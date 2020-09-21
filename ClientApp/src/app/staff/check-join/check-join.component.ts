@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, forkJoin } from 'rxjs';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-check-join',
@@ -13,6 +14,7 @@ import { BehaviorSubject, forkJoin } from 'rxjs';
 export class CheckJoinComponent implements OnInit {
 
   openScanner = false;
+  searchForm: FormGroup;
 
   availableDevices: MediaDeviceInfo[];
   currentDevice: MediaDeviceInfo = null;
@@ -24,9 +26,14 @@ export class CheckJoinComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private userService: UserService) { }
+    private userService: UserService,
+    private fb: FormBuilder) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.searchForm = this.fb.group({
+      nid: [null, Validators.required]
+    });
+  }
 
   onCodeResult(resultString: string): void {
     if (this.canScan) {
@@ -39,6 +46,22 @@ export class CheckJoinComponent implements OnInit {
         this.snackBar.open('掃描失敗', '關閉', { duration: 3000 });
       }
     }
+  }
+
+  onSubmit(searchForm: any, formDirective: FormGroupDirective): void {
+    this.userService.getUserIdByNID(searchForm.nid).subscribe(
+      (res: any) => {
+        this.showResultDialog(res.nid);
+        formDirective.resetForm();
+        this.searchForm.reset();
+      },
+      (err) => {
+        console.log(err);
+        this.snackBar.open('查無資訊', '關閉', { duration: 3000 });
+        formDirective.resetForm();
+        this.searchForm.reset();
+      }
+    );
   }
 
   showResultDialog(userId: string): void {

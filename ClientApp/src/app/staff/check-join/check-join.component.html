@@ -56,6 +56,23 @@
       <mat-icon class="tab-icon">person_search</mat-icon>
       Search
     </ng-template>
-    Content 2
+    <form [formGroup]="searchForm" #formDirective="ngForm" novalidate (ngSubmit)="onSubmit(searchForm.value, formDirective)">
+      <!-- NID -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>學號</mat-label>
+            <input matInput type="text" formControlName="nid" required appFirstLetterUpper>
+            <mat-hint>系統會自動將首字母轉為大寫</mat-hint>
+            <mat-error *ngIf="searchForm.controls['nid'].hasError('required')">
+              學號是<strong>必填的</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!searchForm.valid">
+        查詢
+      </button>
+    </form>
   </mat-tab>
 </mat-tab-group>

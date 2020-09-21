@@ -59,4 +59,10 @@ export class UserService {
     return this.http.post(url, this.httpOptions);
   }
 
+  // 使用 nid 獲取 id
+  getUserIdByNID(nid: string): Observable<object> {
+    const url = `${this.urlRoot}/users/${nid}/nid-to-id`;
+    return this.http.get(url, this.httpOptions);
+  }
+
 }

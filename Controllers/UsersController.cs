@@ -9,9 +9,11 @@ using JoinClub.Entities.Application;
 using JoinClub.Helpers;
 using JoinClub.Models.User;
 using JoinClub.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace JoinClub.Controllers
@@ -40,6 +42,7 @@ namespace JoinClub.Controllers
             _userManager = userManager;
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpGet(Name = nameof(GetAllUsers))]
         public async Task<ActionResult<IEnumerable<UserViewModel>>> GetAllUsers([FromQuery] UserResourceParameters parameters)
         {
@@ -53,12 +56,14 @@ namespace JoinClub.Controllers
             return Ok(models);
         }
         
+        [Authorize(Roles = "Admin, Staff")]
         [HttpGet("length", Name = nameof(GetAllUsersLength))]
         public async Task<ActionResult<int>> GetAllUsersLength()
         {
             return Ok(await _userRepository.GetAllUsersLengthAsync());
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost("{userId}", Name = nameof(UpdateUser))]
         public async Task<IActionResult> UpdateUser(string userId, UserUpdateViewModel model)
         {
@@ -144,6 +149,7 @@ namespace JoinClub.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpDelete("{userId}", Name = nameof(DeleteUser))]
         public async Task<IActionResult> DeleteUser(string userId)
         {
@@ -161,6 +167,7 @@ namespace JoinClub.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpGet("{userId}", Name = nameof(GetUserById))]
         public async Task<ActionResult<UserViewModel>> GetUserById(string userId)
         {
@@ -175,6 +182,7 @@ namespace JoinClub.Controllers
             return Ok(model);
         }
         
+        [Authorize(Roles = "Admin, Staff")]
         [HttpGet("{userId}/role", Name = nameof(GetUserRoleById))]
         public async Task<ActionResult<string>> GetUserRoleById(string userId)
         {
@@ -189,6 +197,7 @@ namespace JoinClub.Controllers
             return Ok(rolesName);
         }
         
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost("{userId}/join", Name = nameof(JoinUserById))]
         public async Task<ActionResult<string>> JoinUserById(string userId)
         {
@@ -196,6 +205,13 @@ namespace JoinClub.Controllers
             if (user == null)
             {
                 return NotFound();
+            }
+
+            var hasClaims = (await _userManager.GetClaimsAsync(user))
+                .Any(x => x.Type == ClaimTypes.Role);
+            if (hasClaims)
+            {
+                return BadRequest();
             }
 
             var claim = new Claim(ClaimTypes.Role, "Member");
@@ -209,6 +225,19 @@ namespace JoinClub.Controllers
 
             _logger.LogInformation($"{userId}入社失敗");
             return BadRequest();
+        }
+
+        [Authorize(Roles = "Admin, Staff")]
+        [HttpGet("{NID}/nid-to-id", Name = nameof(GetUserIdByNID))]
+        public async Task<ActionResult<string>> GetUserIdByNID(string NID)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.NID == NID);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { NID =  user.Id });
         }
     }
 }

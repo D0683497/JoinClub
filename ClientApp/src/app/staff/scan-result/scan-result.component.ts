@@ -25,8 +25,6 @@ export class ScanResultComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-    console.log(this.data);
-
     this.role = this.data.role;
     this.checkJoinForm = this.fb.group({
       id: [{value: this.data.user.id, disabled: true}],
