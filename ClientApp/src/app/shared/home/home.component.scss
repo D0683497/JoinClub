@@ -1,20 +1,14 @@
-.container {
-  margin-top: 10vh;
-  margin-bottom: 10vh;
-  height: 60vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+@import 'open-iconic-bootstrap.min';
+@import 'animate';
 
-img {
-  height: 80vmin;
-  width: 80vmin;
-}
+@import 'owl.theme.default.min';
+@import 'owl.carousel.min';
+@import 'magnific-popup';
 
-@media screen and (min-width: 768px){
-  img {
-    height: 60vmin;
-    width: 60vmin;
-  }
-}
+@import 'aos';
+
+@import 'ionicons.min';
+
+@import 'flaticon';
+@import 'icomoon';
+@import 'style';

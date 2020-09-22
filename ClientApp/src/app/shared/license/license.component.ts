@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FRONTENDLICENSES, BACKENDLICENSES, IDELICENSES, OTHERLICENSES } from './mock-licenses';
+import { FRONTENDLICENSES, BACKENDLICENSES, IDELICENSES, OTHERLICENSES, TEMPLATELICENSES } from './mock-licenses';
 
 @Component({
   selector: 'app-license',
@@ -12,6 +12,7 @@ export class LicenseComponent implements OnInit {
   backendLicenses = BACKENDLICENSES;
   ideLicenses = IDELICENSES;
   otherLicenses = OTHERLICENSES;
+  templateLicenses = TEMPLATELICENSES;
   panelOpenState: boolean;
 
   constructor() { }

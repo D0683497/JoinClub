@@ -123,3 +123,13 @@ export const OTHERLICENSES: License[] = [
     license: 'https://github.com/toptal/gitignore.io/blob/master/LICENSE.md'
   }
 ];
+
+export const TEMPLATELICENSES: License[] = [
+  {
+    title: 'Snipp',
+    description: 'Get online with Snipp free creative business website template and start to scale your brand above and beyond and reach new levels of success.',
+    officialWebsite: 'https://colorlib.com/wp/template/snipp/',
+    gitHub: '',
+    license: 'https://colorlib.com/wp/licence/'
+  }
+];

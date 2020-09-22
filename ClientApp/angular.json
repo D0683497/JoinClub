@@ -32,7 +32,21 @@
               "./node_modules/sweetalert2/src/sweetalert2.scss",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/owl.carousel2/dist/owl.carousel.min.js",
+              "./node_modules/stellar.js/jquery.stellar.min.js",
+              "./node_modules/scrollax/scrollax.min.js",
+              "./node_modules/waypoints/lib/jquery.waypoints.min.js",
+              "./node_modules/jquery.animate-number/jquery.animateNumber.min.js"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/css",
+                "./node_modules/owl.carousel2/dist/assets",
+                "./node_modules/aos/dist"
+              ]
+          }
           },
           "configurations": {
             "production": {

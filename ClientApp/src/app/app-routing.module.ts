@@ -5,24 +5,33 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './shared/home/home.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   {
-    path: '',
+    path: 'license',
     component: LayoutComponent,
     children: [
-      { path: '', component: HomeComponent },
-      { path: 'license', component: LicenseComponent },
-      {
-        path: 'account',
-        loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
-      },
-      {
-        path: 'users',
-        loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
-      },
-      {
-        path: 'staff',
-        loadChildren: () => import('./staff/staff.module').then(m => m.StaffModule)
-      }
+      { path: '', component: LicenseComponent }
+    ]
+  },
+  {
+    path: 'account',
+    component: LayoutComponent,
+    children: [
+      { path: '', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) }
+    ]
+  },
+  {
+    path: 'users',
+    component: LayoutComponent,
+    children: [
+      { path: '', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) }
+    ]
+  },
+  {
+    path: 'staff',
+    component: LayoutComponent,
+    children: [
+      { path: '', loadChildren: () => import('./staff/staff.module').then(m => m.StaffModule) }
     ]
   }
 ];
