@@ -12,6 +12,9 @@ import { FirstLetterUpperDirective } from './helpers/first-letter-upper/first-le
 import { LicenseComponent } from './license/license.component';
 import { LoadingPageComponent } from './loading-page/loading-page.component';
 
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CountUpModule } from 'ngx-countup';
+
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -28,7 +31,9 @@ import { LoadingPageComponent } from './loading-page/loading-page.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialSharedModule
+    MaterialSharedModule,
+    CarouselModule,
+    CountUpModule
   ],
   exports: [
     CommonModule,
