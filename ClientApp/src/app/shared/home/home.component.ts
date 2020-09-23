@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
-import * as AOS from 'aos';
-
-declare var $: any;
-declare var Scrollax: any;
+import * as Aos from 'aos';
 declare var particlesJS: any;
 
 @Component({
@@ -32,10 +29,10 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    AOS.init({duration: 800, easing: 'slide'});
+    Aos.init({duration: 800, easing: 'ease'});
 
     this.loader();
-    new Scrollax().init();
+    $(window).Scrollax();
 
     this.scrollWindow();
     this.contentWayPoint();
@@ -104,7 +101,7 @@ export class HomeComponent implements OnInit {
           });
         }, 100);
       }
-    } , { offset: '95%' } );
+    }, { offset: '95%' } );
   }
 
 }
