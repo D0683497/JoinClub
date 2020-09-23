@@ -3,10 +3,6 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import * as AOS from 'aos';
 
 declare var $: any;
-declare var stellar: any;
-declare var Scrollax: any;
-declare var waypoints: any;
-declare var animateNumber: any;
 
 @Component({
   selector: 'app-home',
@@ -29,6 +25,7 @@ export class HomeComponent implements OnInit {
     });
     this.fullHeight();
     this.loader();
+    this.carousel();
     $.Scrollax();
 
     $('nav .dropdown').hover(() => {
@@ -49,6 +46,32 @@ export class HomeComponent implements OnInit {
     this.counter();
     this.contentWayPoint();
     this.OnePageNav();
+
+    $('.image-popup').magnificPopup({
+      type: 'image',
+      closeOnContentClick: true,
+      closeBtnInside: false,
+      fixedContentPos: true,
+      mainClass: 'mfp-no-margins mfp-with-zoom',
+      gallery: {
+        enabled: true,
+        navigateByImgClick: true,
+        preload: [0, 1]
+      },
+      image: { verticalFit: true },
+      zoom: {
+        enabled: true,
+        duration: 300
+      }
+    });
+    $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
+      disableOn: 700,
+      type: 'iframe',
+      mainClass: 'mfp-fade',
+      removalDelay: 160,
+      preloader: false,
+      fixedContentPos: false
+    });
   }
 
   fullHeight(): void {
@@ -64,6 +87,23 @@ export class HomeComponent implements OnInit {
         $('#ftco-loader').removeClass('show');
       }
     }, 1);
+  }
+
+  carousel(): void {
+    $('.carousel-testimony').owlCarousel({
+      center: true,
+      loop: true,
+      items: 1,
+      margin: 30,
+      stagePadding: 0,
+      nav: true,
+      navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
+      responsive:{
+        0: { items: 1 },
+        600: { items: 2 },
+        1000: { items: 3 }
+      }
+    });
   }
 
   scrollWindow(): void {

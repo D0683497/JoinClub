@@ -38,13 +38,17 @@
               "./node_modules/stellar.js/jquery.stellar.min.js",
               "./node_modules/scrollax/scrollax.min.js",
               "./node_modules/waypoints/lib/jquery.waypoints.min.js",
-              "./node_modules/jquery.animate-number/jquery.animateNumber.min.js"
+              "./node_modules/jquery.animate-number/jquery.animateNumber.min.js",
+              "./node_modules/magnific-popup/dist/jquery.magnific-popup.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/assets/css",
                 "./node_modules/owl.carousel2/dist/assets",
-                "./node_modules/aos/dist"
+                "./node_modules/aos/dist",
+                "./node_modules/magnific-popup/dist",
+                "./node_modules/bootstrap/dist/css"
               ]
           }
           },
