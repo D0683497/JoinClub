@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
   <div class="container">
-    <a class="navbar-brand" href="index.html">Snipp.</a>
+    <a class="navbar-brand" href="index.html">HackerSir</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="oi oi-menu"></span> Menu
     </button>
@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a href="index.html" class="nav-link">Home</a>
+          <a href="index.html" class="nav-link">首頁</a>
         </li>
         <li class="nav-item">
           <a href="about.html" class="nav-link">About</a>
@@ -30,7 +30,7 @@
           <a href="contact.html" class="nav-link">Contact</a>
         </li>
         <li class="nav-item cta">
-          <a href="contact.html" class="nav-link"><span>Get in touch</span></a>
+          <a routerLink="/account/login" class="nav-link"><span>登入</span></a>
         </li>
       </ul>
     </div>
@@ -43,9 +43,9 @@
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
       <div class="col-md-6 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-        <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We love to create <strong>Beautiful</strong> websites</h1>
+        <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">逢甲大學 <strong>黑客社</strong> 入社系統</h1>
         <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-          <a href="#" class="btn btn-primary btn-outline-white px-5 py-3">Get in touch</a>
+          <a routerLink="/account/register" class="btn btn-primary btn-outline-white px-5 py-3">立即加入</a>
         </p>
       </div>
     </div>
@@ -156,8 +156,8 @@
       </div>
       <div class="row mt-5 d-flex justify-content-center">
         <div class="col-md-8 text-center heading-section ftco-animate">
-          <h2 class="h1">UI/UX, visual, <strong class="px-3">Web designer</strong> with more than 12 years of experience in designing websites and mobile apps.</h2>
-          <p><a href="#" class="btn btn-primary mt-3 py-3 px-5">Get in touch</a></p>
+          <h2 class="h1">我們致力於 <strong class="px-3">推廣各項程式設計、資訊安全概念及相關資訊議題</strong> ，來提升全校學生的資訊安全意識、各種新事物的好奇心</h2>
+          <p><a href="https://github.com/HackerSir/Articles-of-association" class="btn btn-primary mt-3 py-3 px-5">查看本社社團規章</a></p>
         </div>
       </div>
     </div>
@@ -178,8 +178,8 @@
         <div class="media block-6 services d-block text-center">
           <div class="d-flex justify-content-center"><div class="icon color-3 d-flex justify-content-center mb-3"><span class="align-self-center icon-lightbulb-o"></span></div></div>
           <div class="media-body p-2 mt-3">
-            <h3 class="heading">Strategy</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <h3 class="heading">CheckIn</h3>
+            <p>學生社團博覽會，打卡集點抽獎系統</p>
           </div>
         </div>
       </div>
@@ -187,8 +187,8 @@
         <div class="media block-6 services d-block text-center">
           <div class="d-flex justify-content-center"><div class="icon color-1 d-flex justify-content-center mb-3"><span class="align-self-center icon-laptop"></span></div></div>
           <div class="media-body p-2 mt-3">
-            <h3 class="heading">Design</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <h3 class="heading">Vote</h3>
+            <p>逢甲學生自治選舉系統，提供學生自治選舉相關資訊、即時開票直播</p>
           </div>
         </div>
       </div>
@@ -196,8 +196,8 @@
         <div class="media block-6 services d-block text-center">
           <div class="d-flex justify-content-center"><div class="icon color-2 d-flex justify-content-center mb-3"><span class="align-self-center icon-gear"></span></div></div>
           <div class="media-body p-2 mt-3">
-            <h3 class="heading">Development</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <h3 class="heading">Join</h3>
+            <p>黑客社入社系統，提供社員方便、快速加入社團</p>
           </div>
         </div>
       </div>
@@ -288,7 +288,7 @@
   <div class="container">
     <div class="row justify-content-center mb-5 pb-5">
       <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-        <h2>Our achievements</h2>
+        <h2>影響力</h2>
         <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in</p>
       </div>
     </div>
@@ -297,7 +297,7 @@
         <div class="block-18 text-center">
           <div class="text">
             <strong class="number" [countUp]="400" data-number="400">0</strong>
-            <span>Customers are satisfied with our professional support</span>
+            <span>申請入社人數</span>
           </div>
         </div>
       </div>
@@ -305,7 +305,7 @@
         <div class="block-18 text-center">
           <div class="text">
             <strong class="number" [countUp]="1000" data-number="1000">0</strong>
-            <span>Amazing preset options to be mixed and combined</span>
+            <span>目前社員人數</span>
           </div>
         </div>
       </div>
@@ -313,7 +313,7 @@
         <div class="block-18 text-center">
           <div class="text">
             <strong class="number" [countUp]="8000" data-number="8000">0</strong>
-            <span>Average response time on live chat support channel</span>
+            <span>活動參與人次</span>
           </div>
         </div>
       </div>
@@ -326,7 +326,7 @@
     <div class="row justify-content-center mb-5 pb-5">
       <div class="col-md-7 text-center heading-section ftco-animate">
         <span class="subheading">Blog</span>
-        <h2>Recent Blog</h2>
+        <h2>課程與活動</h2>
         <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in</p>
       </div>
     </div>

@@ -6,19 +6,16 @@ import { MenuComponent } from './menu/menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialSharedModule } from './material-shared/material-shared.module';
-import { HomeComponent } from './home/home.component';
 import { EmptySetNullDirective } from './helpers/empty-set-null/empty-set-null.directive';
 import { FirstLetterUpperDirective } from './helpers/first-letter-upper/first-letter-upper.directive';
 import { LicenseComponent } from './license/license.component';
 import { LoadingPageComponent } from './loading-page/loading-page.component';
-import { CountUpModule } from 'ngx-countup';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     ToolbarComponent,
     MenuComponent,
-    HomeComponent,
     EmptySetNullDirective,
     FirstLetterUpperDirective,
     LicenseComponent,
@@ -29,8 +26,7 @@ import { CountUpModule } from 'ngx-countup';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialSharedModule,
-    CountUpModule
+    MaterialSharedModule
   ],
   exports: [
     CommonModule,
