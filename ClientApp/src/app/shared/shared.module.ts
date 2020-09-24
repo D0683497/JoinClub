@@ -11,8 +11,6 @@ import { EmptySetNullDirective } from './helpers/empty-set-null/empty-set-null.d
 import { FirstLetterUpperDirective } from './helpers/first-letter-upper/first-letter-upper.directive';
 import { LicenseComponent } from './license/license.component';
 import { LoadingPageComponent } from './loading-page/loading-page.component';
-
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CountUpModule } from 'ngx-countup';
 
 @NgModule({
@@ -32,7 +30,6 @@ import { CountUpModule } from 'ngx-countup';
     FormsModule,
     ReactiveFormsModule,
     MaterialSharedModule,
-    CarouselModule,
     CountUpModule
   ],
   exports: [

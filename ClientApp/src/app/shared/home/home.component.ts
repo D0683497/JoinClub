@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 
 import * as Aos from 'aos';
 declare var particlesJS: any;
@@ -11,29 +10,22 @@ declare var particlesJS: any;
 })
 export class HomeComponent implements OnInit {
 
-  owlOptions: OwlOptions = {
-    center: true,
-    loop: true,
-    items: 1,
-    margin: 30,
-    stagePadding: 0,
-    nav: true,
-    navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-    responsive: {
-      0: { items: 1 },
-      600: { items: 2 },
-      1000: { items: 3 }
-    }
-  };
-
   constructor() { }
 
   ngOnInit(): void {
     Aos.init({duration: 800, easing: 'ease'});
 
+    $(window).stellar({
+      responsive: true,
+      parallaxBackgrounds: true,
+      parallaxElements: true,
+      horizontalScrolling: false,
+      hideDistantElements: false,
+      scrollProperty: 'scroll'
+    });
+
     this.loader();
     $(window).Scrollax();
-
     this.scrollWindow();
     this.contentWayPoint();
 
