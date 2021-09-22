@@ -1,0 +1,41 @@
+.mat-toolbar.mat-primary {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 2; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+.navbar-brand {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-button {
+  border: 1px solid white;
+  padding: 0 10px;
+}
+
+.navbar-button span {
+  margin-left: 5px;
+}
+
+button.active {
+  background: rgba(192,192,192,.30);
+  color: #4169E1;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+a.mat-list-item.active {
+  background: rgba(63,81,181,.15); color: #3f51b5;
+}
+
+a.mat-list-item mat-icon {
+  margin-right: 8px;
+}
+
+.text-center {
+  text-align: center;
+}
